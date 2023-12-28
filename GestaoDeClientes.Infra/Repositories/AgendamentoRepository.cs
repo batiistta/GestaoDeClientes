@@ -35,7 +35,7 @@ namespace GestaoDeClientes.Infra.Repositories
             }
         }
 
-        public async Task DeleteAsync(Agendamento agendamento)
+        public async Task DeleteAsync(string id)
         {
             using (var connection = new SqliteConnection("Data Source" + dbPath))
             {
@@ -43,7 +43,7 @@ namespace GestaoDeClientes.Infra.Repositories
                 connection.Open();
                 connection.Execute(AgendamentoSql.Delete, new
                 {
-                    Id = agendamento.Id
+                    Id = id
                 });
 
             }

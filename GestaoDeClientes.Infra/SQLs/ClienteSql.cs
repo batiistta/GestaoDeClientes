@@ -15,7 +15,7 @@ namespace GestaoDeClientes.Infra.SQLs
                 Email,
                 Telefone,
                 DataNascimento,
-                Endereco,
+                DataCadastro,
                 Ativo
             ) VALUES (
                 @Id,
@@ -23,7 +23,7 @@ namespace GestaoDeClientes.Infra.SQLs
                 @Email,
                 @Telefone,
                 @DataNascimento,
-                @Endereco,
+                @DataCadastro,
                 @Ativo
             );";
 
@@ -33,7 +33,7 @@ namespace GestaoDeClientes.Infra.SQLs
                 Email = @Email,
                 Telefone = @Telefone,
                 DataNascimento = @DataNascimento,
-                Endereco = @Endereco,
+                DataCadastro = @DataCadastro,
                 Ativo = @Ativo
             WHERE Id = @Id;";
 

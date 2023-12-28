@@ -10,7 +10,7 @@ namespace GestaoDeClientes.Infra.Interfaces
     {
         Task AddAsync(T entity);
         Task UpdateAsync(T entity);
-        Task DeleteAsync(T entity);
+        Task DeleteAsync(string id);
         Task<T> GetByIdAsync(Guid id);
         Task<T> GetByNomeAsync(string nome);
         Task<IEnumerable<T>> GetAllAsync();

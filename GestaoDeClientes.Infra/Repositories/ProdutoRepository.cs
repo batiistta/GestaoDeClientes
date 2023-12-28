@@ -33,7 +33,7 @@ namespace GestaoDeClientes.Infra.Repositories
             }
         }
 
-        public async Task DeleteAsync(Produto produto)
+        public async Task DeleteAsync(string id)
         {
             using (var connection = new SqliteConnection("Data Source" + dbPath))
             {
@@ -41,7 +41,7 @@ namespace GestaoDeClientes.Infra.Repositories
                 connection.Open();
                 connection.Execute(ProdutoSql.Delete, new
                 {
-                    Id = produto.Id
+                    Id = id
                 });
             }
         }

@@ -15,7 +15,7 @@ namespace GestaoDeClientes.Infra.SQLs
                 Email VARCHAR(200) ,
                 Telefone VARCHAR(30) ,
                 DataNascimento DATETIME ,
-                Endereco VARCHAR(200) ,
+                DataCadastro DATETIME ,
                 Ativo BIT 
             );
             

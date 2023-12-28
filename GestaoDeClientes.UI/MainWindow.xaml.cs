@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GestaoDeClientes.Shared;
+using GestaoDeClientes.UI.Views;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +25,42 @@ namespace GestaoDeClientes.UI
         public MainWindow()
         {
             InitializeComponent();
+            ChipOperador.Content = Global.Instance;
+        }
+
+        public void ShowPopUpBackground(bool show)
+        {
+            if (show)
+                PopUpBackground.Visibility = Visibility.Visible;
+            else
+                PopUpBackground.Visibility = Visibility.Collapsed;
+        }
+
+        private void LimparViews()
+        {
+            clienteView.Visibility = Visibility.Hidden;
+        }
+
+        private void switchSreen(UserControl screen)
+        {
+            if(screen != null)
+            {
+                if (screen.GetType() == typeof(ClienteView))
+                {
+                    clienteView.Visibility = Visibility.Visible;
+                    return;
+                }
+            }
+        }
+
+        private void btnCliente_Click(object sender, RoutedEventArgs e)
+        {
+            switchSreen(clienteView);
+        }
+
+        private void btnSair_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

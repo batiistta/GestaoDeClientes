@@ -25,9 +25,9 @@ namespace GestaoDeClientes.Infra.Repositories
                 {
                     Id = cliente.Id,
                     Nome = cliente.Nome,
-                    Email = cliente.Email,
                     Telefone = cliente.Telefone,
                     DataNascimento = cliente.DataNascimento,
+                    DataCadastro = cliente.DataCadastro,
                     Endereco = cliente.Endereco,
                     Ativo = cliente.Ativo
                 });
@@ -35,7 +35,7 @@ namespace GestaoDeClientes.Infra.Repositories
             }
         }
 
-        public async Task DeleteAsync(Cliente entity)
+        public async Task DeleteAsync(string id)
         {
             using (var connection = new SqliteConnection("Data Source" + dbPath))
             {
@@ -43,7 +43,7 @@ namespace GestaoDeClientes.Infra.Repositories
                 connection.Open();
                 connection.Execute(ClienteSql.Delete, new
                 {
-                    Id = entity.Id
+                    Id = id
                 });
 
             }
@@ -87,7 +87,7 @@ namespace GestaoDeClientes.Infra.Repositories
             }
         }
 
-        public async Task UpdateAsync(Cliente entity)
+        public async Task UpdateAsync(Cliente cliente)
         {
             using (var connection = new SqliteConnection("Data Source" + dbPath))
             {
@@ -95,13 +95,13 @@ namespace GestaoDeClientes.Infra.Repositories
                 connection.Open();
                 connection.Execute(ClienteSql.Update, new
                 {
-                    Id = entity.Id,
-                    Nome = entity.Nome,
-                    Email = entity.Email,
-                    Telefone = entity.Telefone,
-                    DataNascimento = entity.DataNascimento,
-                    Endereco = entity.Endereco,
-                    Ativo = entity.Ativo
+                    Id = cliente.Id,
+                    Nome = cliente.Nome,
+                    Telefone = cliente.Telefone,
+                    DataNascimento = cliente.DataNascimento,
+                    DataCadastro = cliente.DataCadastro,
+                    Endereco = cliente.Endereco,
+                    Ativo = cliente.Ativo
                 });
             }
         }
