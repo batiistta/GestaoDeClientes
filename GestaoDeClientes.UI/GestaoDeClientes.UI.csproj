@@ -104,12 +104,16 @@
     <Compile Include="Views\AgendamentoView.xaml.cs">
       <DependentUpon>AgendamentoView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\CadastrarClienteView.xaml.cs">
+      <DependentUpon>CadastrarClienteView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ClienteView.xaml.cs">
       <DependentUpon>ClienteView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\MinLengthValidationRule.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -135,6 +139,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\AgendamentoView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CadastrarClienteView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

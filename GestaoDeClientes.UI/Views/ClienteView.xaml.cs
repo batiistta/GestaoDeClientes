@@ -34,7 +34,21 @@ namespace GestaoDeClientes.UI.Views
 
         private void UserControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
+            busySalvarCarteirasIndicator.IsBusy = false;
+        }
 
+        private void switchSreen(UserControl screen)
+        {
+            if (screen.GetType() == typeof(CadastrarClienteView))
+            {
+                cadastrarClienteView.Visibility = Visibility.Visible;
+                return;
+            }
+            //else if(screen.GetType() == typeof(ClienteView))
+            //{
+            //    this.Visibility = Visibility.Visible;
+            //    return;
+            //}
         }
 
         private async void btnBuscarClientes_Click(object sender, RoutedEventArgs e)
@@ -62,24 +76,33 @@ namespace GestaoDeClientes.UI.Views
 
         private async void btnCadastrarClientes_Click(object sender, RoutedEventArgs e)
         {
-            modalCadastrar.Visibility = Visibility.Visible; // Open the modal with the name "modalCadastrar"
-            //try
-            //{
-            //    Cliente cliente = new Cliente();
-            //    cliente.Id = Guid.NewGuid();
-            //    cliente.Nome = "NomeTeste";
-            //    cliente.Telefone = "TelefoneTeste";
-            //    cliente.DataNascimento = DateTime.Now;
-            //    cliente.DataCadastro = DateTime.Now;
-            //    cliente.Endereco = "EnderecoTeste";
-            //    cliente.Ativo = true;
+            try
+            {
+                CadastrarClienteView cadastrarClienteView = new CadastrarClienteView();
+                this.IsEnabled = false;
+                contentControl.Content = cadastrarClienteView;
 
-            //    await clienteRepository.AddAsync(cliente);
-            //}
-            //catch (Exception ex)
-            //{
-            //    ErrorMessageBox.Show(ex.Message, "Erro", ErrorMessageBox.MessageBoxStatus.Error);
-            //}
+                cadastrarClienteView.ChildWindowClosed += (s, args) =>
+                {
+                    // Reativa interação com ClienteView quando CadastrarClienteView é fechado
+                    this.IsEnabled = true;
+
+                    // Remove CadastrarClienteView do ContentControl
+                    contentControl.Content = null;
+                };
+
+                // Mostra CadastrarClienteView
+                // Como UserControl não possui ShowDialog, você pode usar a lógica de visibilidade conforme necessário
+                cadastrarClienteView.Visibility = Visibility.Visible;
+
+                //busySalvarCarteirasIndicator.IsBusy = true;
+                //switchSreen(cadastrarClienteView);
+            }
+            catch (Exception ex)
+            {
+                ErrorMessageBox.Show(ex.Message, "Erro", ErrorMessageBox.MessageBoxStatus.Error);
+            }
+            
         }
 
         private async void btnAtualizarClientes_Click(object sender, RoutedEventArgs e)
