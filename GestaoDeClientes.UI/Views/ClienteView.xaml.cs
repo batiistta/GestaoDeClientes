@@ -78,25 +78,9 @@ namespace GestaoDeClientes.UI.Views
         {
             try
             {
-                CadastrarClienteView cadastrarClienteView = new CadastrarClienteView();
-                this.IsEnabled = false;
-                contentControl.Content = cadastrarClienteView;
-
-                cadastrarClienteView.ChildWindowClosed += (s, args) =>
-                {
-                    // Reativa interação com ClienteView quando CadastrarClienteView é fechado
-                    this.IsEnabled = true;
-
-                    // Remove CadastrarClienteView do ContentControl
-                    contentControl.Content = null;
-                };
-
-                // Mostra CadastrarClienteView
-                // Como UserControl não possui ShowDialog, você pode usar a lógica de visibilidade conforme necessário
-                cadastrarClienteView.Visibility = Visibility.Visible;
-
-                //busySalvarCarteirasIndicator.IsBusy = true;
-                //switchSreen(cadastrarClienteView);
+                gridPrincipal.IsEnabled = false;
+                switchSreen(cadastrarClienteView);
+                
             }
             catch (Exception ex)
             {
