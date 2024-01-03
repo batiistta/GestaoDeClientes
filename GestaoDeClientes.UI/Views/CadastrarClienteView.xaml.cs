@@ -23,7 +23,9 @@ namespace GestaoDeClientes.UI.Views
     public partial class CadastrarClienteView : UserControl
     {
         public event EventHandler ChildWindowClosed;
-        ClienteRepository clienteRepository = new ClienteRepository();        
+        ClienteRepository clienteRepository = new ClienteRepository();
+        public event EventHandler OnCancelarClicado;
+
         public CadastrarClienteView()
         {
             InitializeComponent();
@@ -61,9 +63,9 @@ namespace GestaoDeClientes.UI.Views
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
-            LimparCampos();
-            FecharUserControl();
+            LimparCampos();            
             this.Visibility = Visibility.Hidden;
+            OnCancelarClicado?.Invoke(this, EventArgs.Empty);
         }
 
 
@@ -81,9 +83,7 @@ namespace GestaoDeClientes.UI.Views
             bindingExpression.UpdateSource();
             if (bindingExpression?.HasError == true)
             {
-                btnCadastrar.IsEnabled = false;
-                // Se houver erros, mostra a mensagem de erro
-                //MessageBox.Show(bindingExpression.ValidationError.ErrorContent.ToString(), "Erro de Validação", MessageBoxButton.OK, MessageBoxImage.Error);
+                btnCadastrar.IsEnabled = false;                
             }
             else
             {
@@ -91,15 +91,22 @@ namespace GestaoDeClientes.UI.Views
             }
         }
 
-        private void FecharUserControl()
-        {
-            // Dispara o evento de fechamento
-            ChildWindowClosed?.Invoke(this, EventArgs.Empty);
-        }
-
         private void UserControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             LimparCampos();
+        }
+
+        private void txtNome_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (!IsTextOnly(e.Text))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private bool IsTextOnly(string input)
+        {
+            return System.Text.RegularExpressions.Regex.IsMatch(input, @"^[a-zA-Z]+$");
         }
     }
 }

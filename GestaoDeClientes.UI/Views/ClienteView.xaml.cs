@@ -34,7 +34,7 @@ namespace GestaoDeClientes.UI.Views
 
         private void UserControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            busySalvarCarteirasIndicator.IsBusy = false;
+            busySalvarCarteirasIndicator.IsBusy = false;           
         }
 
         private void switchSreen(UserControl screen)
@@ -78,7 +78,8 @@ namespace GestaoDeClientes.UI.Views
         {
             try
             {
-                gridPrincipal.IsEnabled = false;
+                cadastrarClienteView.OnCancelarClicado += CadastrarClienteView_OnCancelarClicado;
+                gridPrincipal.IsEnabled = false;                
                 switchSreen(cadastrarClienteView);
                 
             }
@@ -87,6 +88,11 @@ namespace GestaoDeClientes.UI.Views
                 ErrorMessageBox.Show(ex.Message, "Erro", ErrorMessageBox.MessageBoxStatus.Error);
             }
             
+        }
+
+        private void CadastrarClienteView_OnCancelarClicado(object sender, EventArgs e)
+        {
+            gridPrincipal.IsEnabled = true;
         }
 
         private async void btnAtualizarClientes_Click(object sender, RoutedEventArgs e)
