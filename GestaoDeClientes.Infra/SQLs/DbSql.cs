@@ -28,14 +28,14 @@ namespace GestaoDeClientes.Infra.SQLs
                 Ativo BIT 
             );
             
-            CREATE TABLE IF NOT EXISTS AGENDAMENTO(
+            CREATE TABLE IF NOT EXISTS Agendamento(
                 Id TEXT PRIMARY KEY,
                 IdCliente TEXT NOT NULL,
                 DataAgendamento DATETIME NOT NULL ,
                 ValorTotal DECIMAL(10,2) NOT NULL ,
                 ValorCusto DECIMAL(10,2) NOT NULL ,
                 Observacao VARCHAR(200) ,   
-                Lucro DECIMAL(10,2) AS (ValorTotal - ValorCusto) PERSISTED,
+                Lucro DECIMAL(10, 2) NOT NULL,
                 Ativo BIT 
             );"
         ;

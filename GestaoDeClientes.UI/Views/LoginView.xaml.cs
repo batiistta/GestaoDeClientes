@@ -1,4 +1,5 @@
-﻿using GestaoDeClientes.UI.Popup;
+﻿using GestaoDeClientes.Infra;
+using GestaoDeClientes.UI.Popup;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +28,7 @@ namespace GestaoDeClientes.UI.Views
             InitializeComponent();
         }
 
-        private void btnLogin_Click(object sender, RoutedEventArgs e)
+        private async void btnLogin_Click(object sender, RoutedEventArgs e)
         {
             this.Hide();
 
@@ -59,6 +60,9 @@ namespace GestaoDeClientes.UI.Views
             //    pbPassword.Password = string.Empty;
             //    txtUserName.Focus();
             //}
+
+            StartupRepository startupRepository = new StartupRepository();
+            await startupRepository.VerifyDatabase();
 
         }
 
