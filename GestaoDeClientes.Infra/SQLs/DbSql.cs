@@ -25,6 +25,7 @@ namespace GestaoDeClientes.Infra.SQLs
                 Descricao VARCHAR(200) ,
                 ValorCompra DECIMAL(10,2) ,
                 ValorUnitario DECIMAL(10,2) ,
+                Quantidade INT,
                 Ativo BIT 
             );
             

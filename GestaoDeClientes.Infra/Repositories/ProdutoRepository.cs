@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Net.Http;
+using System.CodeDom;
 
 namespace GestaoDeClientes.Infra.Repositories
 {
@@ -48,12 +50,20 @@ namespace GestaoDeClientes.Infra.Repositories
 
         public async Task<IEnumerable<Produto>> GetAllAsync()
         {
-            using (var connection = new SqliteConnection("Data Source" + dbPath))
+            try
             {
-                SQLitePCL.Batteries.Init();
-                connection.Open();
-                return connection.Query<Produto>(ProdutoSql.GetAll);
+                string connString = string.Format("Data Source={0}", dbPath);
+                using (var connection = new SqliteConnection(connString))
+                {
+                    SQLitePCL.Batteries.Init();
+                    connection.Open();
+                    return connection.Query<Produto>(ProdutoSql.GetAll);
+                }
             }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }           
         }
 
         public Task<Produto> GetByNomeAsync(string nome)
