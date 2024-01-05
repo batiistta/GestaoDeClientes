@@ -95,7 +95,8 @@
                                                     materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
                                                     materialDesign:ButtonProgressAssist.Value="-1"
                                                     ToolTip="Cadastrar Produto" 
-                                                    Cursor="Hand"
+                                                    Cursor="Hand" Click="btnCadastrarProduto_Click"
+                                                        
                                             />
 
                                                 <Button Margin="20,0,0,0"
@@ -171,9 +172,7 @@
                         </Border>
                     </Grid>
                 </Grid>
-                <Grid Grid.Row="1" Grid.Column="1">
-                    <local:CadastrarClienteView x:Name="cadastrarClienteView" Visibility="Hidden"></local:CadastrarClienteView>
-                    <ContentControl x:Name="contentControl"/>
+                <Grid Grid.Row="1" Grid.Column="1">                    
                 </Grid>
             </Grid>
         </xctk:BusyIndicator>

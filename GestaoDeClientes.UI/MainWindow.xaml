@@ -131,6 +131,7 @@
                 <!--TODO: implementar esse metodo na proxima atualização-->
                 <local:ClienteView x:Name="clienteView" Visibility="Hidden"></local:ClienteView>
                 <local:ProdutoView x:Name="produtoView" Visibility="Hidden"></local:ProdutoView>
+                <local:CadastrarProdutoView x:Name="cadastrarProdutoView" Visibility="Hidden"></local:CadastrarProdutoView>
                 <!--<local:CadastrarClienteView x:Name="cadastrarClienteView" Visibility="Hidden"></local:CadastrarClienteView>-->
                 <!--<local:InformarIndex x:Name="informarIndex"  Visibility="Hidden" ConsultarDigitalizacaoButtonClick="viewDigitalizacaoConsulta_ConsultarButtonClick"></local:InformarIndex>-->
 

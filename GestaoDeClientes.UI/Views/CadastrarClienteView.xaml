@@ -26,10 +26,10 @@
                                                      Kind="AccountCircleOutline"
                             />-->
                             <TextBlock HorizontalAlignment="Center"
-                                       Text="Cadastro de clientes"
-                                       FontWeight="Bold"
+                                       Text="Cadastro de Produto"
+                                       FontWeight="DemiBold"
                                        FontSize="20"                                       
-                                       FontFamily="verdana" Foreground="Black"
+                                       FontFamily="verdana" Foreground="Gray"
                             />
                         </StackPanel>
 

@@ -1,5 +1,6 @@
 ﻿using GestaoDeClientes.Domain.Models;
 using GestaoDeClientes.Infra.Repositories;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,7 +35,7 @@ namespace GestaoDeClientes.UI.Views
             if (this.IsVisible)
             {
                 CarregarProdutos();
-            }   
+            }
         }
 
         private void CarregarProdutos()
@@ -44,6 +45,19 @@ namespace GestaoDeClientes.UI.Views
                 ProdutoRepository produtoRepository = new ProdutoRepository();
                 produtos = produtoRepository.GetAllAsync().Result.ToList();
                 listProdutos.ItemsSource = produtos;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void btnCadastrarProduto_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                CadastrarProdutoView cadastrarProdutoView = new CadastrarProdutoView();
+                this.Content = cadastrarProdutoView;
             }
             catch (Exception ex)
             {
