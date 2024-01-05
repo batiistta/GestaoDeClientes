@@ -23,6 +23,8 @@ namespace GestaoDeClientes.UI.Views
     /// </summary>
     public partial class ClienteView : UserControl
     {
+
+        CadastrarClienteView cadastrarClienteView = new CadastrarClienteView();
         ClienteRepository clienteRepository = new ClienteRepository();
         public ClienteView()
         {
@@ -35,21 +37,7 @@ namespace GestaoDeClientes.UI.Views
         private void UserControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             busySalvarCarteirasIndicator.IsBusy = false;           
-        }
-
-        private void switchSreen(UserControl screen)
-        {
-            if (screen.GetType() == typeof(CadastrarClienteView))
-            {
-                cadastrarClienteView.Visibility = Visibility.Visible;
-                return;
-            }
-            //else if(screen.GetType() == typeof(ClienteView))
-            //{
-            //    this.Visibility = Visibility.Visible;
-            //    return;
-            //}
-        }
+        }        
 
         private async void btnBuscarClientes_Click(object sender, RoutedEventArgs e)
         {
@@ -78,10 +66,9 @@ namespace GestaoDeClientes.UI.Views
         {
             try
             {
+                primeiraGrid.Children.Add(cadastrarClienteView);
                 cadastrarClienteView.OnCancelarClicado += CadastrarClienteView_OnCancelarClicado;
-                gridPrincipal.IsEnabled = false;                
-                switchSreen(cadastrarClienteView);
-                
+                gridPrincipal.IsEnabled = false;       
             }
             catch (Exception ex)
             {
@@ -166,7 +153,7 @@ namespace GestaoDeClientes.UI.Views
             }
         }
 
-        public async Task DeleteAsync(string id)
+        private async Task DeleteAsync(string id)
         {
             try
             {

@@ -57,7 +57,7 @@
                                         <TextBox.Text>
                                             <Binding Path="DataContext.Nome" RelativeSource="{RelativeSource AncestorType={x:Type UserControl}}" UpdateSourceTrigger="PropertyChanged">
                                                 <Binding.ValidationRules>
-                                                    <local:MinLengthValidationRule MinLength="4" />
+                                                <local:MinLengthValidationRule MinLength="4" />
                                                 </Binding.ValidationRules>
                                             </Binding>
                                         </TextBox.Text>
@@ -71,19 +71,29 @@
                                 <Label Content="Telefone:" 
                                     FontWeight="Bold" 
                                     Foreground="#FF4D4D4D"/>
-                                <TextBox x:Name="txtTelefone"
-                                     Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"
+                            <TextBox x:Name="txtTelefone"
+                                     PreviewTextInput="txtTelefone_PreviewTextInput"
+                                     TextChanged="txtTelefone_TextChanged"
                                      VerticalAlignment="Center" 
                                      Width="300" 
                                      Height="32" 
                                      Background="#FFFBFCFF" 
                                      Foreground="Black"
                                      materialDesign:TextFieldAssist.CharacterCounterVisibility="Hidden"
-                                     MaxLength="20"                                      
+                                     MaxLength="16"                                      
                                      BorderBrush="#89000000"
-                                     CaretBrush="#FFFF5722" SelectionBrush="#FFFF8A50" BorderThickness="0,0,0,1"
-                                />
-                            </StackPanel>
+                                     CaretBrush="#FFFF5722" 
+                                     SelectionBrush="#FFFF8A50" 
+                                     BorderThickness="0,0,0,1">
+                                    <TextBox.Text>
+                                        <Binding Path="DataContext.Telefone" RelativeSource="{RelativeSource AncestorType={x:Type UserControl}}" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <local:TelefoneValidationRule/>
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                            </TextBox>
+                        </StackPanel>
 
                             <StackPanel Width="300"  
                                     Margin="0,18,0,0">
@@ -91,17 +101,28 @@
                                 <Label Content="Endereço:" 
                                     FontWeight="Bold" 
                                     Foreground="#FF4D4D4D"/>
-                                <TextBox x:Name="txtEndereco"
-                                     Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"
+                            <TextBox x:Name="txtEndereco"
+                                     PreviewTextInput="txtEndereco_PreviewTextInput"
                                      VerticalAlignment="Center" 
                                      Width="300" 
                                      Height="32" 
                                      Background="#FFFBFCFF" 
                                      Foreground="Black"
                                      materialDesign:TextFieldAssist.CharacterCounterVisibility="Hidden"
-                                     MaxLength="100" BorderBrush="#89000000" CaretBrush="#FFFF5722" SelectionBrush="#FFFF8A50" BorderThickness="0,0,0,1"
-                                />
-                            </StackPanel>
+                                     MaxLength="100" 
+                                     BorderBrush="#89000000" 
+                                     CaretBrush="#FFFF5722" 
+                                     SelectionBrush="#FFFF8A50" 
+                                     BorderThickness="0,0,0,1">
+                                <TextBox.Text>
+                                    <Binding Path="DataContext.Endereco" RelativeSource="{RelativeSource AncestorType={x:Type UserControl}}" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <local:EnderecoValidationRule MinLength="10" />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+                        </StackPanel>
 
                             <StackPanel Orientation="Horizontal" 
                                             VerticalAlignment="Center" 
