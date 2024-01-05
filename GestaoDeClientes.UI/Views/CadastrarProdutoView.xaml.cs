@@ -47,27 +47,37 @@ namespace GestaoDeClientes.UI.Views
             }
         }
 
-        private async Task btnCadastar_Click(object sender, RoutedEventArgs e)
+        private void btnCadastar_Click(object sender, RoutedEventArgs e)
         {
-            Produto produto = new Produto();
-            produto.Nome = txtNomeProduto.Text;
-            produto.Descricao = txtDescricaoProduto.Text;
-            produto.ValorCompra = Convert.ToDecimal(txtValorCompraProduto.Text);
-            produto.ValorUnitario = Convert.ToDecimal(txtValorUnitarioProduto.Text);
-            produto.Quantidade = Convert.ToInt32(txtQuantidadeProduto.Text);
-            produto.Ativo = true;
-
-            try
+            if (!txtNomeProduto.Text.Any() || !txtDescricaoProduto.Text.Any() ||
+                !txtValorCompraProduto.Text.Any() || !txtValorUnitarioProduto.Text.Any() ||
+                !txtQuantidadeProduto.Text.Any())
             {
-                ProdutoRepository produtoRepository = new ProdutoRepository();
-                await produtoRepository.AddAsync(produto);
-                MessageBox.Show("Produto cadastrado com sucesso!");
-                ProdutoView produtoView = new ProdutoView();
-                this.Content = produtoView;
+                MessageBox.Show("Por favor, preencha todos os campos!", "Atenção", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show(ex.Message);
+                Produto produto = new Produto();
+                produto.Nome = txtNomeProduto.Text;
+                produto.Descricao = txtDescricaoProduto.Text;
+                produto.ValorCompra = Convert.ToDecimal(txtValorCompraProduto.Text);
+                produto.ValorUnitario = Convert.ToDecimal(txtValorUnitarioProduto.Text);
+                produto.Quantidade = Convert.ToInt32(txtQuantidadeProduto.Text);
+                produto.Ativo = true;
+
+                try
+                {
+                    ProdutoRepository produtoRepository = new ProdutoRepository();
+                    produtoRepository.AddAsync(produto);
+                    MessageBox.Show("Produto cadastrado com sucesso!");
+                    ProdutoView produtoView = new ProdutoView();
+                    this.Content = produtoView;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
         }
     }
