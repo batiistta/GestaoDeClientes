@@ -14,10 +14,10 @@ namespace GestaoDeClientes.Infra.Repositories
 {
     public class ClienteRepository : IRepository<Cliente>
     {
-        private string dbPath = Util.Util.GetDbFilePath();
+        string connString = string.Format("Data Source={0}", Util.Util.GetDbFilePath());
         public async Task AddAsync(Cliente cliente)
         {            
-            using (var connection = new SqliteConnection("Data Source" + dbPath))
+            using (var connection = new SqliteConnection(connString))
             {
                 SQLitePCL.Batteries.Init();
                 connection.Open();
@@ -37,7 +37,7 @@ namespace GestaoDeClientes.Infra.Repositories
 
         public async Task DeleteAsync(string id)
         {
-            using (var connection = new SqliteConnection("Data Source" + dbPath))
+            using (var connection = new SqliteConnection(connString))
             {
                 SQLitePCL.Batteries.Init();
                 connection.Open();
@@ -51,7 +51,7 @@ namespace GestaoDeClientes.Infra.Repositories
 
         public async Task<IEnumerable<Cliente>> GetAllAsync()
         {
-            using (var connection = new SqliteConnection("Data Source" + dbPath))
+            using (var connection = new SqliteConnection(connString))
             {
                 SQLitePCL.Batteries.Init();
                 connection.Open();
@@ -61,7 +61,7 @@ namespace GestaoDeClientes.Infra.Repositories
 
         public async Task<Cliente> GetByIdAsync(Guid id)
         {
-            using (var connection = new SqliteConnection("Data Source" + dbPath))
+            using (var connection = new SqliteConnection(connString))
             {
                 SQLitePCL.Batteries.Init();
                 connection.Open();
@@ -75,7 +75,7 @@ namespace GestaoDeClientes.Infra.Repositories
 
         public async Task<Cliente> GetByNomeAsync(string nome)
         {
-            using (var connection = new SqliteConnection("Data Source" + dbPath))
+            using (var connection = new SqliteConnection(connString))
             {
                 SQLitePCL.Batteries.Init();
                 connection.Open();
@@ -89,7 +89,7 @@ namespace GestaoDeClientes.Infra.Repositories
 
         public async Task UpdateAsync(Cliente cliente)
         {
-            using (var connection = new SqliteConnection("Data Source" + dbPath))
+            using (var connection = new SqliteConnection(connString))
             {
                 SQLitePCL.Batteries.Init();
                 connection.Open();

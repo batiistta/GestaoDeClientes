@@ -30,7 +30,7 @@ namespace GestaoDeClientes.UI.Views
         {
             InitializeComponent();
             this.DataContext = new Cliente();            
-        }
+        }        
 
         #region Botões
         private async void btnCadastar_Click(object sender, RoutedEventArgs e)
@@ -143,7 +143,7 @@ namespace GestaoDeClientes.UI.Views
         private void UserControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             LimparCampos();
-        }
+        }        
         #endregion
     }
 }

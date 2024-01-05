@@ -26,19 +26,33 @@ namespace GestaoDeClientes.UI.Views
 
         CadastrarClienteView cadastrarClienteView = new CadastrarClienteView();
         ClienteRepository clienteRepository = new ClienteRepository();
+        List<Cliente> clientes = new List<Cliente>();
+
         public ClienteView()
         {
             InitializeComponent();            
         }
-
+        #region Eventos
         public static readonly RoutedEvent ConsultarDigitalizacaoButtonClickEvent = EventManager.RegisterRoutedEvent(
-        "ClientesButtonClick", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(ClienteView));
+       "ClientesButtonClick", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(ClienteView));
 
         private void UserControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            busySalvarCarteirasIndicator.IsBusy = false;           
-        }        
+            busySalvarCarteirasIndicator.IsBusy = false;
+        }
 
+        private void listViewFiles_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (this.IsVisible)
+            {
+                CarregarClientes();
+            }
+        }
+        private void CadastrarClienteView_OnCancelarClicado(object sender, EventArgs e)
+        {
+            gridPrincipal.IsEnabled = true;
+        }
+        #region Botões
         private async void btnBuscarClientes_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -61,8 +75,7 @@ namespace GestaoDeClientes.UI.Views
                 ErrorMessageBox.Show(ex.Message, "Erro", ErrorMessageBox.MessageBoxStatus.Error);
             }
         }
-
-        private async void btnCadastrarClientes_Click(object sender, RoutedEventArgs e)
+        private async void btnCadastrar_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -76,47 +89,30 @@ namespace GestaoDeClientes.UI.Views
             }
             
         }
-
-        private void CadastrarClienteView_OnCancelarClicado(object sender, EventArgs e)
+        private async void btnAtualizar_Click(object sender, RoutedEventArgs e)
         {
-            gridPrincipal.IsEnabled = true;
+
         }
-
-        private async void btnAtualizarClientes_Click(object sender, RoutedEventArgs e)
+        private async void btnLimpar_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                Cliente cliente = new Cliente();
-                cliente.Id = Guid.NewGuid();
-                cliente.Nome = "NomeTeste";
-                cliente.Telefone = "TelefoneTeste";
-                cliente.DataNascimento = DateTime.Now;
-                cliente.DataCadastro = DateTime.Now;
-                cliente.Endereco = "EnderecoTeste";
-                cliente.Ativo = true;
 
-                await Update(cliente);
-            }
-            catch (Exception ex)
+        }
+        private async void btnDeletar_Click(object sender, RoutedEventArgs e)
+        {
+            Button btnDeletar = sender as Button;
+            Cliente clienteParaDeletar = btnDeletar.DataContext as Cliente;
+
+            if (ErrorMessageBox.Show("Deseja realmente deletar o produto " + clienteParaDeletar.Nome + "?", "Atenção", ErrorMessageBox.MessageBoxStatus.Ok))
             {
-                ErrorMessageBox.Show(ex.Message, "Erro", ErrorMessageBox.MessageBoxStatus.Error);
+                await DeleteAsync(clienteParaDeletar.Id.ToString());
+                ErrorMessageBox.Show("Produto deletado com sucesso!", ErrorMessageBox.MessageBoxStatus.Ok);
+                CarregarClientes();
             }
         }
+        #endregion
+        #endregion
 
-        private async void btnDeletarClientes_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                var client = GetByNomeAsync("NomeTeste");
-                await DeleteAsync(client.Id.ToString());
-
-            }
-            catch (Exception ex)
-            {
-                ErrorMessageBox.Show(ex.Message, "Erro", ErrorMessageBox.MessageBoxStatus.Error);
-            }
-        }
-
+        #region Métodos
         private async Task<IEnumerable<Cliente>> GetAllAsync()
         {
             try
@@ -176,5 +172,20 @@ namespace GestaoDeClientes.UI.Views
                 throw ex;
             }
         }
+
+        private void CarregarClientes()
+        {
+            try
+            {
+                ProdutoRepository produtoRepository = new ProdutoRepository();
+                clientes = clienteRepository.GetAllAsync().Result.ToList();
+                listClientes.ItemsSource = clientes;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+        #endregion
     }
 }
