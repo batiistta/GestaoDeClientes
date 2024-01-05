@@ -141,8 +141,8 @@
                                                             <RowDefinition Height="*"></RowDefinition>
                                                         </Grid.RowDefinitions>
                                                         <ListView x:Name="listProdutos"
-                                                              ItemsSource="{Binding CarregarProdutos}"
-                                                              SelectionMode="Single" IsVisibleChanged="listViewFiles_IsVisibleChanged">
+                                                          ItemsSource="{Binding CarregarProdutos}"
+                                                          SelectionMode="Single" IsVisibleChanged="listViewFiles_IsVisibleChanged">     
                                                             <ListView.RenderTransform>
                                                                 <TransformGroup>
                                                                     <ScaleTransform/>
@@ -155,14 +155,30 @@
                                                                 <GridView>
                                                                     <GridViewColumn Header="Nome" DisplayMemberBinding="{Binding Nome}" Width="200"/>
                                                                     <GridViewColumn Header="Descrição" DisplayMemberBinding="{Binding Descricao}" Width="200"/>
-                                                                    <GridViewColumn Header="Valor Unitario" DisplayMemberBinding="{Binding ValorUnitario}" Width="200"/>
+                                                                    <GridViewColumn Header="Valor Unitário" DisplayMemberBinding="{Binding ValorUnitario}" Width="200"/>
                                                                     <GridViewColumn Header="Valor Compra" DisplayMemberBinding="{Binding ValorCompra}" Width="200"/>
-                                                                    <GridViewColumn Header="Quantidade" DisplayMemberBinding="{Binding Quantidade}" Width="200"></GridViewColumn>
-                                                                    <GridViewColumn Header="Ativo" DisplayMemberBinding="{Binding Ativo}" Width="200"></GridViewColumn>
+                                                                    <GridViewColumn Header="Quantidade" DisplayMemberBinding="{Binding Quantidade}" Width="200"/>
+                                                                    <GridViewColumn Header="Ativo" DisplayMemberBinding="{Binding Ativo}" Width="100"/>
+                                                                    <GridViewColumn Header="Ações" Width="150">
+                                                                        <GridViewColumn.CellTemplate>
+                                                                            <DataTemplate>
+                                                                                <StackPanel Orientation="Horizontal">
+                                                                                    <Button Click="btnDeletar_Click">
+                                                                                        <materialDesign:PackIcon Kind="Delete" Width="15" Height="15"/>
+                                                                                    </Button>
+                                                                                    <TextBlock Width="5"/>
+                                                                                    <Button Click="btnAtualizar_Click">
+                                                                                        <materialDesign:PackIcon Kind="Pencil" Width="15" Height="15"/>
+                                                                                    </Button>
+                                                                                </StackPanel>
+                                                                            </DataTemplate>
+                                                                        </GridViewColumn.CellTemplate>
+                                                                    </GridViewColumn>
                                                                 </GridView>
                                                             </ListView.View>
                                                         </ListView>
                                                     </Grid>
+
                                                 </ScrollViewer>
                                             </Border>
                                         </Grid>

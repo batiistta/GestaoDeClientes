@@ -64,5 +64,32 @@ namespace GestaoDeClientes.UI.Views
                 MessageBox.Show(ex.Message);
             }
         }
+
+        private void btnDeletar_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Button btnDeletar = sender as Button;
+                    
+                Produto produtoParaDeletar = btnDeletar.DataContext as Produto;
+
+                if (MessageBox.Show("Deseja realmente deletar o produto " + produtoParaDeletar.Nome + "?", "Atenção", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                {
+                    ProdutoRepository produtoRepository = new ProdutoRepository();
+                    produtoRepository.DeleteAsync(produtoParaDeletar.Id);
+                    MessageBox.Show("Produto deletado com sucesso!");
+                    CarregarProdutos();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void btnAtualizar_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

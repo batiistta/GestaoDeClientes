@@ -37,7 +37,7 @@ namespace GestaoDeClientes.Infra.SQLs
                 Ativo = @Ativo
             WHERE Id = @Id;";
 
-        public static string Delete = @"Remove from Produto where Id = @Id";
+        public static string Delete = @"DELETE from Produto where Id = @Id";
 
         public static string GetById = @"SELECT * FROM Produto WHERE Id = @Id";
 

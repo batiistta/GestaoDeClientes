@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net.Http;
 using System.CodeDom;
+using System.Windows;
 
 namespace GestaoDeClientes.Infra.Repositories
 {
@@ -37,20 +38,28 @@ namespace GestaoDeClientes.Infra.Repositories
 
         public async Task DeleteAsync(string id)
         {
-            using (var connection = new SqliteConnection(connString))
+            try
             {
-                SQLitePCL.Batteries.Init();
-                connection.Open();
-                connection.Execute(ProdutoSql.Delete, new
+                using (var connection = new SqliteConnection(connString))
                 {
-                    Id = id
-                });
+                    SQLitePCL.Batteries.Init();
+                    connection.Open();
+                    connection.Execute(ProdutoSql.Delete, new
+                    {
+                        Id = id
+                    });
+                }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
         }
 
         public async Task<IEnumerable<Produto>> GetAllAsync()
         {
-            
+
             using (var connection = new SqliteConnection(connString))
             {
                 SQLitePCL.Batteries.Init();
