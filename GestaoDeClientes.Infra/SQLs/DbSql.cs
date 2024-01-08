@@ -12,7 +12,7 @@ namespace GestaoDeClientes.Infra.SQLs
             CREATE TABLE IF NOT EXISTS Cliente(
                 Id TEXT PRIMARY KEY,
                 Nome VARCHAR(200) NOT NULL ,
-                Email VARCHAR(200) ,
+                Endereco VARCHAR(200) ,
                 Telefone VARCHAR(30) ,
                 DataNascimento DATETIME ,
                 DataCadastro DATETIME ,

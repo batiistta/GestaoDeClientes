@@ -12,7 +12,6 @@ namespace GestaoDeClientes.Infra.SQLs
             INSERT INTO Cliente(
                 Id,
                 Nome,
-                Email,
                 Telefone,
                 DataNascimento,
                 DataCadastro,
@@ -20,7 +19,6 @@ namespace GestaoDeClientes.Infra.SQLs
             ) VALUES (
                 @Id,
                 @Nome,
-                @Email,
                 @Telefone,
                 @DataNascimento,
                 @DataCadastro,

@@ -35,25 +35,25 @@ namespace GestaoDeClientes.UI.Views
         #region Botões
         private async void btnCadastar_Click(object sender, RoutedEventArgs e)
         {
-            //try
-            //{        
-            //    Cliente cliente = new Cliente();
-            //    cliente.Id = Guid.NewGuid();
-            //    cliente.Nome = "NomeTeste";
-            //    cliente.Telefone = "TelefoneTeste";
-            //    cliente.DataNascimento = DateTime.Now;
-            //    cliente.DataCadastro = DateTime.Now;
-            //    cliente.Endereco = "EnderecoTeste";
-            //    cliente.Ativo = true;
+            try
+            {
+                Cliente cliente = new Cliente();
+                cliente.Id = Guid.NewGuid();
+                cliente.Nome = "NomeTeste";
+                cliente.Telefone = "TelefoneTeste";
+                cliente.DataNascimento = DateTime.Now;
+                cliente.DataCadastro = DateTime.Now;
+                cliente.Endereco = "EnderecoTeste";
+                cliente.Ativo = true;
 
-            //    await clienteRepository.AddAsync(cliente);
+                await clienteRepository.AddAsync(cliente);
 
-            //    ErrorMessageBox.Show("Cliente cadastrado com sucesso!", "Sucesso", ErrorMessageBox.MessageBoxStatus.Ok);
-            //}
-            //catch (Exception ex)
-            //{
-            //    ErrorMessageBox.Show(ex.Message, "Erro", ErrorMessageBox.MessageBoxStatus.Error);
-            //}
+                ErrorMessageBox.Show("Cliente cadastrado com sucesso!", "Sucesso", ErrorMessageBox.MessageBoxStatus.Ok);
+            }
+            catch (Exception ex)
+            {
+                ErrorMessageBox.Show(ex.Message, "Erro", ErrorMessageBox.MessageBoxStatus.Error);
+            }
         }
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
