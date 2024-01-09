@@ -8,15 +8,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Net.Http;
+using System.CodeDom;
+using System.Windows;
 
 namespace GestaoDeClientes.Infra.Repositories
 {
     public class ProdutoRepository : IRepository<Produto>
     {
-        private string dbPath = Util.Util.GetDbFilePath();
+        string connString = string.Format("Data Source={0}", Util.Util.GetDbFilePath());
         public async Task AddAsync(Produto produto)
         {
-            using (var connection = new SqliteConnection("Data Source" + dbPath))
+            using (var connection = new SqliteConnection(connString))
             {
                 SQLitePCL.Batteries.Init();
                 connection.Open();
@@ -35,20 +38,29 @@ namespace GestaoDeClientes.Infra.Repositories
 
         public async Task DeleteAsync(string id)
         {
-            using (var connection = new SqliteConnection("Data Source" + dbPath))
+            try
             {
-                SQLitePCL.Batteries.Init();
-                connection.Open();
-                connection.Execute(ProdutoSql.Delete, new
+                using (var connection = new SqliteConnection(connString))
                 {
-                    Id = id
-                });
+                    SQLitePCL.Batteries.Init();
+                    connection.Open();
+                    connection.Execute(ProdutoSql.Delete, new
+                    {
+                        Id = id
+                    });
+                }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
         }
 
         public async Task<IEnumerable<Produto>> GetAllAsync()
         {
-            using (var connection = new SqliteConnection("Data Source" + dbPath))
+
+            using (var connection = new SqliteConnection(connString))
             {
                 SQLitePCL.Batteries.Init();
                 connection.Open();
@@ -58,7 +70,7 @@ namespace GestaoDeClientes.Infra.Repositories
 
         public Task<Produto> GetByNomeAsync(string nome)
         {
-            using (var connection = new SqliteConnection("Data Source" + dbPath))
+            using (var connection = new SqliteConnection(connString))
             {
                 SQLitePCL.Batteries.Init();
                 connection.Open();
@@ -71,7 +83,7 @@ namespace GestaoDeClientes.Infra.Repositories
 
         public Task<Produto> GetByIdAsync(Guid id)
         {
-            using (var connection = new SqliteConnection("Data Source" + dbPath))
+            using (var connection = new SqliteConnection(connString))
             {
                 SQLitePCL.Batteries.Init();
                 connection.Open();
@@ -84,7 +96,7 @@ namespace GestaoDeClientes.Infra.Repositories
 
         public async Task UpdateAsync(Produto produto)
         {
-            using (var connection = new SqliteConnection("Data Source" + dbPath))
+            using (var connection = new SqliteConnection(connString))
             {
                 SQLitePCL.Batteries.Init();
                 connection.Open();
