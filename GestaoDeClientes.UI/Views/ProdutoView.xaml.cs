@@ -23,6 +23,9 @@ namespace GestaoDeClientes.UI.Views
     /// </summary>
     public partial class ProdutoView : UserControl
     {
+        DetalhesProdutoView atualizarProdutoView = new DetalhesProdutoView();
+        CadastrarProdutoView cadastrarProdutoView = new CadastrarProdutoView();
+        ProdutoRepository produtoRepository = new ProdutoRepository();
         List<Produto> produtos = new List<Produto>();
 
         public ProdutoView()
@@ -42,7 +45,6 @@ namespace GestaoDeClientes.UI.Views
         {
             try
             {
-                ProdutoRepository produtoRepository = new ProdutoRepository();
                 produtos = produtoRepository.GetAllAsync().Result.ToList();
                 listProdutos.ItemsSource = produtos;
             }
@@ -56,8 +58,9 @@ namespace GestaoDeClientes.UI.Views
         {
             try
             {
-                CadastrarProdutoView cadastrarProdutoView = new CadastrarProdutoView();
-                this.Content = cadastrarProdutoView;
+                primeiraGrid.Children.Add(cadastrarProdutoView);
+                cadastrarProdutoView.OnCancelarClicado += CadastrarProdutoView_OnCancelarClicado;
+                gridPrincipal.IsEnabled = false;
             }
             catch (Exception ex)
             {
@@ -65,7 +68,18 @@ namespace GestaoDeClientes.UI.Views
             }
         }
 
-        private void btnDeletar_Click(object sender, RoutedEventArgs e)
+        private void CadastrarProdutoView_OnCancelarClicado(object sender, EventArgs e)
+        {
+            primeiraGrid.Children.Remove(cadastrarProdutoView);
+            gridPrincipal.IsEnabled = true;
+        }
+        private void DetalhesProdutoView_OnCancelarClicado(object sender, EventArgs e)
+        {
+            primeiraGrid.Children.Remove(atualizarProdutoView);
+            gridPrincipal.IsEnabled = true;
+        }
+
+        private async void btnDeletar_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -76,7 +90,7 @@ namespace GestaoDeClientes.UI.Views
                 if (MessageBox.Show("Deseja realmente deletar o produto " + produtoParaDeletar.Nome + "?", "Atenção", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 {
                     ProdutoRepository produtoRepository = new ProdutoRepository();
-                    produtoRepository.DeleteAsync(produtoParaDeletar.Id);
+                    await produtoRepository.DeleteAsync(produtoParaDeletar.Id);
                     MessageBox.Show("Produto deletado com sucesso!");
                     CarregarProdutos();
                 }
@@ -94,10 +108,12 @@ namespace GestaoDeClientes.UI.Views
                 Button btnAtualizar = sender as Button;
 
                 Produto produtoParaAtualizar = btnAtualizar.DataContext as Produto;
+                
+                atualizarProdutoView = new DetalhesProdutoView(produtoParaAtualizar);
 
-                DetalhesProdutoView atualizarProdutoView = new DetalhesProdutoView(produtoParaAtualizar);
-
-                this.Content = atualizarProdutoView;
+                primeiraGrid.Children.Add(atualizarProdutoView);
+                atualizarProdutoView.OnCancelarClicado += DetalhesProdutoView_OnCancelarClicado;
+                gridPrincipal.IsEnabled = false;
 
             }
             catch (Exception ex)

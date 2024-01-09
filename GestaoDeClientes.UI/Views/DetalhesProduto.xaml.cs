@@ -1,4 +1,6 @@
 ﻿using GestaoDeClientes.Domain.Models;
+using GestaoDeClientes.Infra.Repositories;
+using GestaoDeClientes.UI.Popup;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +23,10 @@ namespace GestaoDeClientes.UI.Views
     /// </summary>
     public partial class DetalhesProdutoView : UserControl
     {
+        public event EventHandler ChildWindowClosed;
+        public event EventHandler OnCancelarClicado;
+        private string id;
+        ProdutoRepository produtoRepository = new ProdutoRepository();
         public DetalhesProdutoView()
         {
             InitializeComponent();
@@ -29,11 +35,43 @@ namespace GestaoDeClientes.UI.Views
         public DetalhesProdutoView(Produto produto)
         {
             InitializeComponent();
+            this.DataContext = produto;
             txtNomeProduto.Text = produto.Nome;
             txtDescricaoProduto.Text = produto.Descricao;
             txtValorCompraProduto.Text = produto.ValorCompra.ToString();
             txtValorUnitarioProduto.Text = produto.ValorUnitario.ToString();
             txtQuantidadeProduto.Text = produto.Quantidade.ToString();            
         }
+
+        #region Botões
+        private async void btnAtualizar_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Produto produto = new Produto();
+                produto.Id = id;
+                produto.Nome = txtNomeProduto.Text;
+                produto.Descricao = txtDescricaoProduto.Text;
+                produto.ValorCompra = Convert.ToDecimal(txtValorCompraProduto.Text);
+                produto.ValorUnitario = Convert.ToDecimal(txtValorUnitarioProduto.Text);
+                produto.Quantidade = Convert.ToInt32(txtQuantidadeProduto.Text);
+                produto.Ativo = true;
+
+                await produtoRepository.UpdateAsync(produto);
+                ErrorMessageBox.Show("Produto atualizado com sucesso!", "Sucesso", ErrorMessageBox.MessageBoxStatus.Ok);
+                OnCancelarClicado?.Invoke(this, EventArgs.Empty);
+            }
+            catch (Exception ex)
+            {                
+                ErrorMessageBox.Show("Erro ao atualizar produto!", "Erro", ErrorMessageBox.MessageBoxStatus.Error);
+                OnCancelarClicado?.Invoke(this, EventArgs.Empty);
+            }
+        }
+        private void btnCancelar_Click(object sender, RoutedEventArgs e)
+        {
+            OnCancelarClicado?.Invoke(this, EventArgs.Empty);
+        }
+        #endregion
+
     }
 }

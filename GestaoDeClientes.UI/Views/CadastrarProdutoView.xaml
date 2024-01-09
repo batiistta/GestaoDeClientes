@@ -49,30 +49,45 @@
                                       BorderThickness="0,0,0,1">
                                     <TextBox.Text>
                                         <Binding Path="DataContext.Nome" RelativeSource="{RelativeSource AncestorType={x:Type UserControl}}" UpdateSourceTrigger="PropertyChanged">
-                                          
+                                            <Binding.ValidationRules>
+                                                <local:MinLengthValidationRule MinLength="3"/>
+                                            </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
                                 </TextBox>
                             </AdornerDecorator>
                         </StackPanel>
 
-                        <StackPanel Width="300"  
-                                 Margin="0,18,0,0">
+                        <StackPanel 
+                            Width="300"  
+                            Margin="0,18,0,0">
 
-                            <Label Content="Descrição:" 
-                                 FontWeight="Bold" 
-                                 Foreground="#FF4D4D4D"/>
-                            <TextBox x:Name="txtDescricaoProduto"
-                                  VerticalAlignment="Center" 
-                                  Width="300" 
-                                  Height="32" 
-                                  Background="#FFFBFCFF" 
-                                  Foreground="Black"
-                                  materialDesign:TextFieldAssist.CharacterCounterVisibility="Hidden"
-                                  MaxLength="20"                                      
-                                  BorderBrush="#89000000"
-                                  CaretBrush="#FFFF5722" SelectionBrush="#FFFF8A50" BorderThickness="0,0,0,1"
-                             />
+                            <Label 
+                                Content="Descrição:" 
+                                FontWeight="Bold" 
+                                Foreground="#FF4D4D4D"
+                            />
+                            <TextBox 
+                                x:Name="txtDescricaoProduto"
+                                VerticalAlignment="Center" 
+                                Width="300" 
+                                Height="32" 
+                                Background="#FFFBFCFF" 
+                                Foreground="Black"
+                                materialDesign:TextFieldAssist.CharacterCounterVisibility="Hidden"
+                                MaxLength="20"                                      
+                                BorderBrush="#89000000"
+                                CaretBrush="#FFFF5722" 
+                                SelectionBrush="#FFFF8A50" 
+                                BorderThickness="0,0,0,1">
+                                <TextBox.Text>
+                                    <Binding Path="DataContext.Descricao" RelativeSource="{RelativeSource AncestorType={x:Type UserControl}}" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <local:MinLengthValidationRule MinLength="10" />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
                         </StackPanel>
 
                         <StackPanel Width="300"  
@@ -88,73 +103,111 @@
                                   Background="#FFFBFCFF" 
                                   Foreground="Black"
                                   materialDesign:TextFieldAssist.CharacterCounterVisibility="Hidden"
-                                  MaxLength="100" BorderBrush="#89000000" CaretBrush="#FFFF5722" SelectionBrush="#FFFF8A50" BorderThickness="0,0,0,1"
-                             />
+                                  MaxLength="100" BorderBrush="#89000000" CaretBrush="#FFFF5722" SelectionBrush="#FFFF8A50" BorderThickness="0,0,0,1">
+                                <TextBox.Text>
+                                    <Binding Path="DataContext.ValorCompra" RelativeSource="{RelativeSource AncestorType={x:Type UserControl}}" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <local:MinLengthValidationRule MinLength="10" />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
                         </StackPanel>
 
-                        <StackPanel Width="300"  
-                                 Margin="0,18,0,0">
+                        <StackPanel 
+                            Width="300"  
+                            Margin="0,18,0,0">
 
-                                                    <Label Content="Valor Unitário:" 
-                                 FontWeight="Bold" 
-                                 Foreground="#FF4D4D4D"/>
-                                                    <TextBox x:Name="txtValorUnitarioProduto"
-                                  VerticalAlignment="Center" 
-                                  Width="300" 
-                                  Height="32" 
-                                  Background="#FFFBFCFF" 
-                                  Foreground="Black"
-                                  materialDesign:TextFieldAssist.CharacterCounterVisibility="Hidden"
-                                  MaxLength="100" BorderBrush="#89000000" CaretBrush="#FFFF5722" SelectionBrush="#FFFF8A50" BorderThickness="0,0,0,1"
-                             />
+                            <Label 
+                                Content="Valor Unitário:" 
+                                FontWeight="Bold" 
+                                Foreground="#FF4D4D4D"
+                            />
+                            <TextBox 
+                                x:Name="txtValorUnitarioProduto"
+                                VerticalAlignment="Center" 
+                                Width="300" 
+                                Height="32" 
+                                Background="#FFFBFCFF" 
+                                Foreground="Black"
+                                materialDesign:TextFieldAssist.CharacterCounterVisibility="Hidden"
+                                MaxLength="100" 
+                                BorderBrush="#89000000" 
+                                CaretBrush="#FFFF5722" 
+                                SelectionBrush="#FFFF8A50" 
+                                BorderThickness="0,0,0,1">
+                                <TextBox.Text>
+                                    <Binding Path="DataContext.ValorUnitario" RelativeSource="{RelativeSource AncestorType={x:Type UserControl}}" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <local:MinLengthValidationRule MinLength="10" />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
                         </StackPanel>
 
-                        <StackPanel Width="300"  
-                                 Margin="0,18,0,0">
+                        <StackPanel 
+                            Width="300"  
+                            Margin="0,18,0,0">
 
-                                                    <Label Content="Quantidade:" 
-                                 FontWeight="Bold" 
-                                 Foreground="#FF4D4D4D"/>
-                                                    <TextBox x:Name="txtQuantidadeProduto"
-                                  VerticalAlignment="Center" 
-                                  Width="300" 
-                                  Height="32" 
-                                  Background="#FFFBFCFF" 
-                                  Foreground="Black"
-                                  materialDesign:TextFieldAssist.CharacterCounterVisibility="Hidden"
-                                  MaxLength="100" BorderBrush="#89000000" CaretBrush="#FFFF5722" SelectionBrush="#FFFF8A50" BorderThickness="0,0,0,1"
-                             />
+                            <Label 
+                                Content="Quantidade:" 
+                                FontWeight="Bold" 
+                                Foreground="#FF4D4D4D"
+                            />
+                            <TextBox 
+                                x:Name="txtQuantidadeProduto"
+                                VerticalAlignment="Center" 
+                                Width="300" 
+                                Height="32" 
+                                Background="#FFFBFCFF" 
+                                Foreground="Black"
+                                materialDesign:TextFieldAssist.CharacterCounterVisibility="Hidden"
+                                MaxLength="100" BorderBrush="#89000000" 
+                                CaretBrush="#FFFF5722" 
+                                SelectionBrush="#FFFF8A50" 
+                                BorderThickness="0,0,0,1">
+                                <TextBox.Text>
+                                    <Binding Path="DataContext.Quantidade" RelativeSource="{RelativeSource AncestorType={x:Type UserControl}}" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <local:MinLengthValidationRule MinLength="10" />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
                         </StackPanel>
 
-                        <StackPanel Orientation="Horizontal" 
-                                         VerticalAlignment="Center" 
-                                         HorizontalAlignment="Center" 
-                                         Margin="0,20,0,0">
-
-                            <Button Foreground="White"
-                                     Content="Casdastrar" 
-                                     Name="btnCadastrar"
-                                     Height="34" 
-                                     Width="140" 
-                                     Margin="2,20,2,0" 
-                                     FontSize="15" 
-                                     Background="#FFFF5722"
-                                     FontWeight="Medium" 
-                                     BorderBrush="#FFFF5722" 
-                                     Click="btnCadastar_Click"
-                             />
-
-                            <Button Content="Cancelar" 
-                                     Name="btnCancelar"
-                                     Height="34" 
-                                     Width="140"  
-                                     Margin="20,20,2,0" 
-                                     FontSize="15" 
-                                     Foreground="White"
-                                     Background="#FFFF5722"
-                                     BorderBrush="#FFFF5722"
-                                     FontWeight="Medium"
-                                     Click="btnCancel_Click"
+                        <StackPanel 
+                            Orientation="Horizontal" 
+                            VerticalAlignment="Center" 
+                            HorizontalAlignment="Center" 
+                            Margin="0,20,0,0">
+                            <Button 
+                                Foreground="White"
+                                Content="Casdastrar" 
+                                Name="btnCadastrar"
+                                Height="34" 
+                                Width="140" 
+                                Margin="2,20,2,0" 
+                                FontSize="15" 
+                                Background="#FFFF5722"
+                                FontWeight="Medium" 
+                                BorderBrush="#FFFF5722" 
+                                Click="btnCadastar_Click"
+                            />
+                            
+                            <Button 
+                                Content="Cancelar" 
+                                Name="btnCancelar"
+                                Height="34" 
+                                Width="140"  
+                                Margin="20,20,2,0" 
+                                FontSize="15" 
+                                Foreground="White"
+                                Background="#FFFF5722"
+                                BorderBrush="#FFFF5722"
+                                FontWeight="Medium"
+                                Click="btnCancel_Click"
                              />
                         </StackPanel>
                     </StackPanel>

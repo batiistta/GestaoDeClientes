@@ -1,5 +1,6 @@
 ﻿using GestaoDeClientes.Domain.Models;
 using GestaoDeClientes.Infra.Repositories;
+using GestaoDeClientes.UI.Popup;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,9 @@ namespace GestaoDeClientes.UI.Views
     public partial class CadastrarProdutoView : UserControl
     {
         private ProdutoView _produtoView;
+        public event EventHandler ChildWindowClosed;
+        public event EventHandler OnCancelarClicado;
+        ProdutoRepository produtoRepository = new ProdutoRepository();
         public CadastrarProdutoView(ProdutoView produtoview)
         {
             InitializeComponent();
@@ -36,27 +40,12 @@ namespace GestaoDeClientes.UI.Views
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                ProdutoView produtoView = new ProdutoView();
-                this.Content = produtoView;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            OnCancelarClicado?.Invoke(this, EventArgs.Empty);
         }
 
-        private void btnCadastar_Click(object sender, RoutedEventArgs e)
+        private async void btnCadastar_Click(object sender, RoutedEventArgs e)
         {
-            if (!txtNomeProduto.Text.Any() || !txtDescricaoProduto.Text.Any() ||
-                !txtValorCompraProduto.Text.Any() || !txtValorUnitarioProduto.Text.Any() ||
-                !txtQuantidadeProduto.Text.Any())
-            {
-                MessageBox.Show("Por favor, preencha todos os campos!", "Atenção", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-            else
+            try
             {
                 Produto produto = new Produto();
                 produto.Id = Guid.NewGuid().ToString();
@@ -67,18 +56,16 @@ namespace GestaoDeClientes.UI.Views
                 produto.Quantidade = Convert.ToInt32(txtQuantidadeProduto.Text);
                 produto.Ativo = true;
 
-                try
-                {
-                    ProdutoRepository produtoRepository = new ProdutoRepository();
-                    produtoRepository.AddAsync(produto);
-                    MessageBox.Show("Produto cadastrado com sucesso!");
-                    ProdutoView produtoView = new ProdutoView();
-                    this.Content = produtoView;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
+                await produtoRepository.AddAsync(produto);
+
+                ErrorMessageBox.Show("Cliente cadastrado com sucesso!", "Sucesso", ErrorMessageBox.MessageBoxStatus.Ok);
+                OnCancelarClicado?.Invoke(this, EventArgs.Empty);
+
+            }
+            catch (Exception ex)
+            {                
+                ErrorMessageBox.Show(ex.Message, "Erro", ErrorMessageBox.MessageBoxStatus.Error);
+                OnCancelarClicado?.Invoke(this, EventArgs.Empty);
             }
         }
     }

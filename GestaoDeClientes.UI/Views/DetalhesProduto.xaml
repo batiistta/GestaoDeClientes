@@ -163,7 +163,7 @@
                                   Background="#FFFF5722"
                                   BorderBrush="#FFFF5722"
                                   FontWeight="Medium"
-                                  Click="btnCancelar_Click"  
+                                  Click="btnCancelar_Click" 
                           />
                         </StackPanel>
                     </StackPanel>
