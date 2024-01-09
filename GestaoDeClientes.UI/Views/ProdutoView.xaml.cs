@@ -95,7 +95,7 @@ namespace GestaoDeClientes.UI.Views
 
                 Produto produtoParaAtualizar = btnAtualizar.DataContext as Produto;
 
-                DetalhesProdutoView atualizarProdutoView = new DetalhesProdutoView(produtoParaAtualizar);
+                DetalhesProdutoView atualizarProdutoView = new DetalhesProdutoView(produtoParaAtualizar, this);
 
                 this.Content = atualizarProdutoView;
 
