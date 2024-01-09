@@ -14,6 +14,7 @@ namespace GestaoDeClientes.Infra.SQLs
                 Nome,
                 Telefone,
                 DataNascimento,
+                Endereco,
                 DataCadastro,
                 Ativo
             ) VALUES (
@@ -21,6 +22,7 @@ namespace GestaoDeClientes.Infra.SQLs
                 @Nome,
                 @Telefone,
                 @DataNascimento,
+                @Endereco,
                 @DataCadastro,
                 @Ativo
             );";
@@ -28,10 +30,9 @@ namespace GestaoDeClientes.Infra.SQLs
         public static string Update = @"
             UPDATE Cliente SET
                 Nome = @Nome,
-                Email = @Email,
                 Telefone = @Telefone,
+                Endereco = @Endereco,
                 DataNascimento = @DataNascimento,
-                DataCadastro = @DataCadastro,
                 Ativo = @Ativo
             WHERE Id = @Id;";
 

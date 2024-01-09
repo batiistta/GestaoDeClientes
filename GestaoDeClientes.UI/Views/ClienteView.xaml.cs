@@ -23,7 +23,7 @@ namespace GestaoDeClientes.UI.Views
     /// </summary>
     public partial class ClienteView : UserControl
     {
-
+        DetalhesClienteView detalhesClienteView = new DetalhesClienteView();
         CadastrarClienteView cadastrarClienteView = new CadastrarClienteView();
         ClienteRepository clienteRepository = new ClienteRepository();
         List<Cliente> clientes = new List<Cliente>();
@@ -50,6 +50,12 @@ namespace GestaoDeClientes.UI.Views
         }
         private void CadastrarClienteView_OnCancelarClicado(object sender, EventArgs e)
         {
+            primeiraGrid.Children.Remove(cadastrarClienteView);
+            gridPrincipal.IsEnabled = true;
+        }
+        private void DetalhesClienteView_OnCancelarClicado(object sender, EventArgs e)
+        {
+            primeiraGrid.Children.Remove(detalhesClienteView);
             gridPrincipal.IsEnabled = true;
         }
         #region Botões
@@ -91,11 +97,26 @@ namespace GestaoDeClientes.UI.Views
         }
         private async void btnAtualizar_Click(object sender, RoutedEventArgs e)
         {
-
+            try
+            {
+                Button btnAtualizar = sender as Button;
+                Cliente cliente = btnAtualizar.DataContext as Cliente;
+                detalhesClienteView = new DetalhesClienteView(cliente);
+                primeiraGrid.Children.Add(detalhesClienteView);
+                detalhesClienteView.OnCancelarClicado += DetalhesClienteView_OnCancelarClicado;
+                gridPrincipal.IsEnabled = false;
+            }
+            catch (Exception ex)
+            {
+                ErrorMessageBox.Show(ex.Message, "Erro", ErrorMessageBox.MessageBoxStatus.Error);
+            }
+            
+            detalhesClienteView.OnCancelarClicado += DetalhesClienteView_OnCancelarClicado;
         }
-        private async void btnLimpar_Click(object sender, RoutedEventArgs e)
+        private async void btnCancelar_Click(object sender, RoutedEventArgs e)
         {
-
+            listClientes.ItemsSource = null;
+            this.Visibility = Visibility.Hidden;
         }
         private async void btnDeletar_Click(object sender, RoutedEventArgs e)
         {
@@ -177,7 +198,6 @@ namespace GestaoDeClientes.UI.Views
         {
             try
             {
-                ProdutoRepository produtoRepository = new ProdutoRepository();
                 clientes = clienteRepository.GetAllAsync().Result.ToList();
                 listClientes.ItemsSource = clientes;
             }

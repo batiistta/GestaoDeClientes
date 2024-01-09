@@ -13,53 +13,59 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace GestaoDeClientes.UI.Views
 {
     /// <summary>
-    /// Lógica interna para CadastrarClienteView.xaml
+    /// Interação lógica para DetalhesClienteView.xam
     /// </summary>
-    public partial class CadastrarClienteView : UserControl
+    public partial class DetalhesClienteView : UserControl
     {
         ClienteRepository clienteRepository = new ClienteRepository();
-        public event EventHandler ChildWindowClosed;        
+        public event EventHandler ChildWindowClosed;
         public event EventHandler OnCancelarClicado;
-        private string dataNascimento;
+        private string id;
 
-        public CadastrarClienteView()
+        public DetalhesClienteView()
         {
             InitializeComponent();
-            this.DataContext = new Cliente();
-            txtDataNascimento.Text = DateTime.Now.ToString("dd/MM/yyyy");
-        }        
+        }
 
-        #region Botões
-        private async void btnCadastar_Click(object sender, RoutedEventArgs e)
+        public DetalhesClienteView(Cliente cliente)
         {
-            var dataNascimento = txtDataNascimento.SelectedDate;
+            InitializeComponent();
+            this.DataContext = cliente;
+            txtNome.Text = cliente.Nome;
+            txtTelefone.Text = cliente.Telefone;
+            txtDataNascimento.Text = cliente.DataNascimento.ToString("dd/MM/yyyy");
+            txtEndereco.Text = cliente.Endereco;    
+            id = cliente.Id;
+        }
+        #region Botões
+        private async void btnAtualizar_Click(object sender, RoutedEventArgs e)
+        {
             try
             {
                 Cliente cliente = new Cliente();
-                cliente.Id = Guid.NewGuid().ToString();
+                cliente.Id = id;
                 cliente.Nome = txtNome.Text;
                 cliente.Telefone = txtTelefone.Text;
-                cliente.DataNascimento = (DateTime)dataNascimento;
+                cliente.DataNascimento = DateTime.Parse(txtDataNascimento.Text);
                 cliente.DataCadastro = DateTime.Now;
                 cliente.Endereco = txtEndereco.Text;
-                cliente.Ativo = true;
 
-                await clienteRepository.AddAsync(cliente);
-
-                ErrorMessageBox.Show("Cliente cadastrado com sucesso!", "Sucesso", ErrorMessageBox.MessageBoxStatus.Ok);
+                await clienteRepository.UpdateAsync(cliente);
+                ErrorMessageBox.Show("Cliente atualizado com sucesso!", "Sucesso", ErrorMessageBox.MessageBoxStatus.Ok);
                 OnCancelarClicado?.Invoke(this, EventArgs.Empty);
-
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                ErrorMessageBox.Show(ex.Message, "Erro", ErrorMessageBox.MessageBoxStatus.Error);
                 OnCancelarClicado?.Invoke(this, EventArgs.Empty);
+                ErrorMessageBox.Show("Erro ao atualizar cliente!", "Erro", ErrorMessageBox.MessageBoxStatus.Error);
             }
+            
         }
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
@@ -73,11 +79,11 @@ namespace GestaoDeClientes.UI.Views
             bindingExpression.UpdateSource();
             if (bindingExpression?.HasError == true)
             {
-                btnCadastrar.IsEnabled = false;
+                btnAtualizar.IsEnabled = false;
             }
             else
             {
-                btnCadastrar.IsEnabled = true;
+                btnAtualizar.IsEnabled = true;
             }
         }
         private void txtTelefone_TextChanged(object sender, TextChangedEventArgs e)
@@ -112,7 +118,7 @@ namespace GestaoDeClientes.UI.Views
             {
                 e.Handled = true;
             }
-        }        
+        }
         private void txtTelefone_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             if (!IsNumberOnly(e.Text))
@@ -126,7 +132,7 @@ namespace GestaoDeClientes.UI.Views
             {
                 e.Handled = true;
             }
-        }    
+        }
         #endregion
         #region Métodos
         private bool IsNumberOnly(string text)
@@ -137,7 +143,7 @@ namespace GestaoDeClientes.UI.Views
         {
             return System.Text.RegularExpressions.Regex.IsMatch(input, @"^[a-zA-Z]+$");
         }
-             
         #endregion
+
     }
 }

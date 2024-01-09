@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="GestaoDeClientes.UI.Views.CadastrarClienteView"
+﻿<UserControl x:Class="GestaoDeClientes.UI.Views.DetalhesClienteView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,38 +7,43 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Height="400" Width="350" >
-    <Grid>        
-            <StackPanel VerticalAlignment="Center">
-                <Border Background="#FFFFFF" 
+        Height="400" Width="350">
+    <Grid>
+        <StackPanel VerticalAlignment="Center">
+            <Border Background="#FFFFFF" 
                     CornerRadius="30" 
                     Width="350" 
                     Height="400"
                     >
-                    <materialDesign:Card materialDesign:ElevationAssist.Elevation="Dp6">
-                        <StackPanel VerticalAlignment="Center">
+                <materialDesign:Card materialDesign:ElevationAssist.Elevation="Dp6">
+                    <StackPanel VerticalAlignment="Center">
 
-                            <StackPanel Width="auto"
+                        <StackPanel Width="auto"
                                         Height="auto">
-                                <TextBlock HorizontalAlignment="Center"
-                                           Text="Cadastrar cliente"
+                            <!--<materialDesign:PackIcon Width="24"
+                                                         Height="24"
+                                                         HorizontalAlignment="Center"
+                                                         Kind="AccountCircleOutline"
+                                />-->
+                            <TextBlock HorizontalAlignment="Center"
+                                           Text="Atualizar cliente"
                                            FontWeight="Bold"
                                            FontSize="20"                                       
                                            FontFamily="verdana" Foreground="Black"
                                 />
-                            </StackPanel>
+                        </StackPanel>
 
-                            <StackPanel 
+                        <StackPanel 
                                 Width="300"  
                                 Margin="0,18,0,0">
 
-                                <Label 
+                            <Label 
                                     Content="Nome:" 
                                     FontWeight="Bold" 
                                     Foreground="#FF4D4D4D"
                                 />
-                                <AdornerDecorator>
-                                    <TextBox 
+                            <AdornerDecorator>
+                                <TextBox 
                                         x:Name="txtNome"                                         
                                         VerticalAlignment="Center"
                                         TextChanged="txtNome_TextChanged"
@@ -53,26 +58,26 @@
                                         CaretBrush="#FFFF5722" 
                                         SelectionBrush="#FFFF8A50" 
                                         BorderThickness="0,0,0,1">
-                                            <TextBox.Text>
-                                                <Binding Path="DataContext.Nome" RelativeSource="{RelativeSource AncestorType={x:Type UserControl}}" UpdateSourceTrigger="PropertyChanged">
-                                                    <Binding.ValidationRules>
-                                                    <local:MinLengthValidationRule MinLength="4" />
-                                                    </Binding.ValidationRules>
-                                                </Binding>
-                                            </TextBox.Text>
-                                        </TextBox>
-                                    </AdornerDecorator>
-                            </StackPanel>
+                                    <TextBox.Text>
+                                        <Binding Path="DataContext.Nome" RelativeSource="{RelativeSource AncestorType={x:Type UserControl}}" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <local:MinLengthValidationRule MinLength="4" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </AdornerDecorator>
+                        </StackPanel>
 
-                            <StackPanel Width="300"  
+                        <StackPanel Width="300"  
                                     Margin="0,18,0,0">
 
-                                <Label 
+                            <Label 
                                     Content="Telefone:" 
                                     FontWeight="Bold" 
                                     Foreground="#FF4D4D4D"
                                 />
-                                <TextBox 
+                            <TextBox 
                                     x:Name="txtTelefone"
                                     PreviewTextInput="txtTelefone_PreviewTextInput"
                                     TextChanged="txtTelefone_TextChanged"
@@ -87,26 +92,26 @@
                                     CaretBrush="#FFFF5722" 
                                     SelectionBrush="#FFFF8A50" 
                                     BorderThickness="0,0,0,1">
-                                    <TextBox.Text>
-                                        <Binding Path="DataContext.Telefone" RelativeSource="{RelativeSource AncestorType={x:Type UserControl}}" UpdateSourceTrigger="PropertyChanged">
-                                            <Binding.ValidationRules>
-                                                <local:TelefoneValidationRule/>
-                                            </Binding.ValidationRules>
-                                        </Binding>
-                                    </TextBox.Text>
-                                </TextBox>
-                            </StackPanel>
-                            
-                            <StackPanel 
+                                <TextBox.Text>
+                                    <Binding Path="DataContext.Telefone" RelativeSource="{RelativeSource AncestorType={x:Type UserControl}}" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <local:TelefoneValidationRule/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+                        </StackPanel>
+
+                        <StackPanel 
                                 Width="300"  
                                 Margin="0,18,0,0">
 
-                                <Label 
+                            <Label 
                                     Content="Endereço:" 
                                     FontWeight="Bold" 
                                     Foreground="#FF4D4D4D"
                                 />
-                                <TextBox 
+                            <TextBox 
                                     x:Name="txtEndereco"
                                     PreviewTextInput="txtEndereco_PreviewTextInput"
                                     VerticalAlignment="Center" 
@@ -127,8 +132,8 @@
                                         </Binding.ValidationRules>
                                     </Binding>
                                 </TextBox.Text>
-                                </TextBox>
-                            </StackPanel>
+                            </TextBox>
+                        </StackPanel>
 
                         <StackPanel Width="300" Margin="0,18,0,0">
                             <Label 
@@ -153,7 +158,7 @@
                                                 <ControlTemplate>
                                                     <TextBox 
                                                         x:Name="Date_TextBox"
-                                                        Text="{Binding Path=SelectedDate, StringFormat={}{0:dd/MM/yyyy}, TargetNullValue=''}">                                                        
+                                                        Text="{Binding Path=SelectedDate, StringFormat={}{0:dd/MM/yyyy}, TargetNullValue=''}">
                                                     </TextBox>
                                                 </ControlTemplate>
                                             </Setter.Value>
@@ -169,10 +174,10 @@
                                 HorizontalAlignment="Center" 
                                 Margin="0,20,0,0">
 
-                                <Button 
+                            <Button 
                                     Foreground="White"
-                                    Content="Casdastrar" 
-                                    Name="btnCadastrar"
+                                    Content="Atualizar" 
+                                    Name="btnAtualizar"
                                     Height="34" 
                                     Width="140" 
                                     Margin="2,20,2,0" 
@@ -180,10 +185,10 @@
                                     Background="#FFFF5722"
                                     FontWeight="Medium" 
                                     BorderBrush="#FFFF5722" 
-                                    Click="btnCadastar_Click"
+                                    Click="btnAtualizar_Click"
                                 />
 
-                                <Button
+                            <Button
                                     Content="Cancelar" 
                                     Name="btnCancelar"
                                     Height="34" 
@@ -196,10 +201,11 @@
                                     FontWeight="Medium"
                                     Click="btnCancel_Click"
                                 />
-                            </StackPanel>
                         </StackPanel>
-                    </materialDesign:Card>
-                </Border>
-            </StackPanel>
-        </Grid>
+                    </StackPanel>
+                </materialDesign:Card>
+            </Border>
+        </StackPanel>
+    </Grid>
 </UserControl>
+
