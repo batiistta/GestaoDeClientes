@@ -59,6 +59,7 @@ namespace GestaoDeClientes.UI.Views
             else
             {
                 Produto produto = new Produto();
+                produto.Id = Guid.NewGuid().ToString();
                 produto.Nome = txtNomeProduto.Text;
                 produto.Descricao = txtDescricaoProduto.Text;
                 produto.ValorCompra = Convert.ToDecimal(txtValorCompraProduto.Text);
