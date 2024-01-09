@@ -70,7 +70,7 @@ namespace GestaoDeClientes.UI.Views
             try
             {
                 Button btnDeletar = sender as Button;
-                    
+
                 Produto produtoParaDeletar = btnDeletar.DataContext as Produto;
 
                 if (MessageBox.Show("Deseja realmente deletar o produto " + produtoParaDeletar.Nome + "?", "Atenção", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
@@ -89,7 +89,21 @@ namespace GestaoDeClientes.UI.Views
 
         private void btnAtualizar_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                Button btnAtualizar = sender as Button;
 
+                Produto produtoParaAtualizar = btnAtualizar.DataContext as Produto;
+
+                DetalhesProdutoView atualizarProdutoView = new DetalhesProdutoView(produtoParaAtualizar);
+
+                this.Content = atualizarProdutoView;
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }
