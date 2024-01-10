@@ -1,4 +1,5 @@
 ﻿using GestaoDeClientes.Domain;
+using GestaoDeClientes.Infra.Interfaces;
 using GestaoDeClientes.Infra.Repositories;
 using GestaoDeClientes.UI.Popup;
 using System;
@@ -21,13 +22,16 @@ namespace GestaoDeClientes.UI.Views
     /// <summary>
     /// Interação lógica para DetalhesClienteView.xam
     /// </summary>
-    public partial class DetalhesClienteView : UserControl
+    public partial class DetalhesClienteView : UserControl, IRemoverJanela
     {
+        #region Propriedades
         ClienteRepository clienteRepository = new ClienteRepository();
         public event EventHandler ChildWindowClosed;
         public event EventHandler OnCancelarClicado;
         private string id;
+        #endregion
 
+        #region Construtores
         public DetalhesClienteView()
         {
             InitializeComponent();
@@ -43,6 +47,8 @@ namespace GestaoDeClientes.UI.Views
             txtEndereco.Text = cliente.Endereco;    
             id = cliente.Id;
         }
+        #endregion
+
         #region Botões
         private async void btnAtualizar_Click(object sender, RoutedEventArgs e)
         {
@@ -72,6 +78,7 @@ namespace GestaoDeClientes.UI.Views
             OnCancelarClicado?.Invoke(this, EventArgs.Empty);
         }
         #endregion
+
         #region Eventos
         private void txtNome_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -134,6 +141,7 @@ namespace GestaoDeClientes.UI.Views
             }
         }
         #endregion
+
         #region Métodos
         private bool IsNumberOnly(string text)
         {
@@ -142,6 +150,15 @@ namespace GestaoDeClientes.UI.Views
         private bool IsTextOnly(string input)
         {
             return System.Text.RegularExpressions.Regex.IsMatch(input, @"^[a-zA-Z]+$");
+        }
+
+        public void RemoverJanela()
+        {
+            var parent = this.Parent as Panel;
+            if (parent != null)
+            {
+                parent.Children.Remove(this);
+            }
         }
         #endregion
 

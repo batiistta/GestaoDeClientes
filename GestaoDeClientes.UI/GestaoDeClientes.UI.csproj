@@ -110,6 +110,9 @@
     <Compile Include="Views\CadastrarProdutoView.xaml.cs">
       <DependentUpon>CadastrarProdutoView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\CadastrarUsuarioView.xaml.cs">
+      <DependentUpon>CadastrarUsuarioView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ClienteView.xaml.cs">
       <DependentUpon>ClienteView.xaml</DependentUpon>
     </Compile>
@@ -125,6 +128,9 @@
     <Compile Include="Views\ValidationRules.cs" />
     <Compile Include="Views\ProdutoView.xaml.cs">
       <DependentUpon>ProdutoView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UsuarioView.xaml.cs">
+      <DependentUpon>UsuarioView.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -162,6 +168,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\CadastrarUsuarioView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ClienteView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -179,6 +189,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ProdutoView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UsuarioView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

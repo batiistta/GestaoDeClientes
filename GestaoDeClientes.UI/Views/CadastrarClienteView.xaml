@@ -7,13 +7,13 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Height="400" Width="350" >
-    <Grid>        
+        Height="600" Width="800" >
+    <Grid x:Name="primeiraGrid">        
             <StackPanel VerticalAlignment="Center">
                 <Border Background="#FFFFFF" 
                     CornerRadius="30" 
-                    Width="350" 
-                    Height="400"
+                    Width="400" 
+                    Height="550"
                     >
                     <materialDesign:Card materialDesign:ElevationAssist.Elevation="Dp6">
                         <StackPanel VerticalAlignment="Center">
@@ -109,6 +109,7 @@
                                 <TextBox 
                                     x:Name="txtEndereco"
                                     PreviewTextInput="txtEndereco_PreviewTextInput"
+                                    TextChanged="txtEndereco_TextChanged"
                                     VerticalAlignment="Center" 
                                     Width="300" 
                                     Height="32" 

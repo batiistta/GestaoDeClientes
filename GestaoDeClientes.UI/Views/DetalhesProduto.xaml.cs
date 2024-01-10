@@ -1,4 +1,5 @@
 ﻿using GestaoDeClientes.Domain.Models;
+using GestaoDeClientes.Infra.Interfaces;
 using GestaoDeClientes.Infra.Repositories;
 using GestaoDeClientes.UI.Popup;
 using System;
@@ -21,7 +22,7 @@ namespace GestaoDeClientes.UI.Views
     /// <summary>
     /// Interação lógica para DetalhesProdutoView.xam
     /// </summary>
-    public partial class DetalhesProdutoView : UserControl
+    public partial class DetalhesProdutoView : UserControl, IRemoverJanela
     {
         public event EventHandler ChildWindowClosed;
         public event EventHandler OnCancelarClicado;
@@ -70,6 +71,16 @@ namespace GestaoDeClientes.UI.Views
         private void btnCancelar_Click(object sender, RoutedEventArgs e)
         {
             OnCancelarClicado?.Invoke(this, EventArgs.Empty);
+        }
+        #endregion
+        #region Métodos
+        public void RemoverJanela()
+        {
+            var parent = this.Parent as Panel;
+            if (parent != null)
+            {
+                parent.Children.Remove(this);
+            }
         }
         #endregion
 

@@ -1,4 +1,5 @@
 ﻿using GestaoDeClientes.Domain.Models;
+using GestaoDeClientes.Infra.Interfaces;
 using GestaoDeClientes.Infra.Repositories;
 using MaterialDesignThemes.Wpf;
 using System;
@@ -23,16 +24,28 @@ namespace GestaoDeClientes.UI.Views
     /// </summary>
     public partial class ProdutoView : UserControl
     {
+        #region Propriedades
         DetalhesProdutoView atualizarProdutoView = new DetalhesProdutoView();
         CadastrarProdutoView cadastrarProdutoView = new CadastrarProdutoView();
         ProdutoRepository produtoRepository = new ProdutoRepository();
         List<Produto> produtos = new List<Produto>();
+        #endregion
 
+        #region Construtores
         public ProdutoView()
         {
             InitializeComponent();
         }
+        #endregion
 
+        #region Eventos
+        private void UserControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (!this.IsVisible)
+            {
+                RemoverJanelasFilhas();
+            }
+        }
         private void listViewFiles_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (this.IsVisible)
@@ -40,20 +53,17 @@ namespace GestaoDeClientes.UI.Views
                 CarregarProdutos();
             }
         }
-
-        private void CarregarProdutos()
+        private void CadastrarProdutoView_OnCancelarClicado(object sender, EventArgs e)
         {
-            try
-            {
-                produtos = produtoRepository.GetAllAsync().Result.ToList();
-                listProdutos.ItemsSource = produtos;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            primeiraGrid.Children.Remove(cadastrarProdutoView);
+            gridPrincipal.IsEnabled = true;
         }
-
+        private void DetalhesProdutoView_OnCancelarClicado(object sender, EventArgs e)
+        {
+            primeiraGrid.Children.Remove(atualizarProdutoView);
+            gridPrincipal.IsEnabled = true;
+        }
+        #region Botões
         private void btnCadastrarProduto_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -67,18 +77,6 @@ namespace GestaoDeClientes.UI.Views
                 MessageBox.Show(ex.Message);
             }
         }
-
-        private void CadastrarProdutoView_OnCancelarClicado(object sender, EventArgs e)
-        {
-            primeiraGrid.Children.Remove(cadastrarProdutoView);
-            gridPrincipal.IsEnabled = true;
-        }
-        private void DetalhesProdutoView_OnCancelarClicado(object sender, EventArgs e)
-        {
-            primeiraGrid.Children.Remove(atualizarProdutoView);
-            gridPrincipal.IsEnabled = true;
-        }
-
         private async void btnDeletar_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -100,7 +98,6 @@ namespace GestaoDeClientes.UI.Views
                 MessageBox.Show(ex.Message);
             }
         }
-
         private void btnAtualizar_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -121,5 +118,32 @@ namespace GestaoDeClientes.UI.Views
                 MessageBox.Show(ex.Message);
             }
         }
+        #endregion
+        #endregion
+
+        #region Métodos
+        private void RemoverJanelasFilhas()
+        {
+            foreach (var child in primeiraGrid.Children.OfType<IRemoverJanela>().ToList())
+            {
+                child.RemoverJanela();
+            }
+
+            gridPrincipal.IsEnabled = true;
+        }
+        private void CarregarProdutos()
+        {
+            try
+            {
+                produtos = produtoRepository.GetAllAsync().Result.ToList();
+                listProdutos.ItemsSource = produtos;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+        #endregion
+
     }
 }

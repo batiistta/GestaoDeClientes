@@ -1,4 +1,5 @@
 ﻿using GestaoDeClientes.Domain;
+using GestaoDeClientes.Infra.Interfaces;
 using GestaoDeClientes.Infra.Repositories;
 using GestaoDeClientes.UI.Popup;
 using System;
@@ -23,22 +24,31 @@ namespace GestaoDeClientes.UI.Views
     /// </summary>
     public partial class ClienteView : UserControl
     {
+        #region Propriedades
         DetalhesClienteView detalhesClienteView = new DetalhesClienteView();
         CadastrarClienteView cadastrarClienteView = new CadastrarClienteView();
         ClienteRepository clienteRepository = new ClienteRepository();
         List<Cliente> clientes = new List<Cliente>();
+        #endregion
 
+        #region Construtores
         public ClienteView()
         {
             InitializeComponent();            
         }
+        #endregion
+
         #region Eventos
         public static readonly RoutedEvent ConsultarDigitalizacaoButtonClickEvent = EventManager.RegisterRoutedEvent(
        "ClientesButtonClick", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(ClienteView));
 
         private void UserControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            busySalvarCarteirasIndicator.IsBusy = false;
+            if(!this.IsVisible)
+            {
+                RemoverJanelasFilhas();
+            }
+
         }
 
         private void listViewFiles_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -134,6 +144,7 @@ namespace GestaoDeClientes.UI.Views
         #endregion
 
         #region Métodos
+
         private async Task<IEnumerable<Cliente>> GetAllAsync()
         {
             try
@@ -182,18 +193,6 @@ namespace GestaoDeClientes.UI.Views
             }
         }
 
-        private async Task Update(Cliente cliente)
-        {
-            try
-            {
-                await clienteRepository.UpdateAsync(cliente);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
         private void CarregarClientes()
         {
             try
@@ -205,6 +204,16 @@ namespace GestaoDeClientes.UI.Views
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void RemoverJanelasFilhas()
+        {
+            foreach (var child in primeiraGrid.Children.OfType<IRemoverJanela>().ToList())
+            {
+                child.RemoverJanela();                
+            }
+
+            gridPrincipal.IsEnabled = true;
         }
         #endregion
     }

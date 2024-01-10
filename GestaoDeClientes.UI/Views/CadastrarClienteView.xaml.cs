@@ -1,4 +1,5 @@
 ﻿using GestaoDeClientes.Domain;
+using GestaoDeClientes.Infra.Interfaces;
 using GestaoDeClientes.Infra.Repositories;
 using GestaoDeClientes.UI.Popup;
 using System;
@@ -20,19 +21,23 @@ namespace GestaoDeClientes.UI.Views
     /// <summary>
     /// Lógica interna para CadastrarClienteView.xaml
     /// </summary>
-    public partial class CadastrarClienteView : UserControl
+    public partial class CadastrarClienteView : UserControl, IRemoverJanela
     {
+        #region Propriedades
         ClienteRepository clienteRepository = new ClienteRepository();
         public event EventHandler ChildWindowClosed;        
         public event EventHandler OnCancelarClicado;
         private string dataNascimento;
+        #endregion
 
+        #region Construtor
         public CadastrarClienteView()
         {
             InitializeComponent();
             this.DataContext = new Cliente();
             txtDataNascimento.Text = DateTime.Now.ToString("dd/MM/yyyy");
         }        
+        #endregion
 
         #region Botões
         private async void btnCadastar_Click(object sender, RoutedEventArgs e)
@@ -66,21 +71,71 @@ namespace GestaoDeClientes.UI.Views
             OnCancelarClicado?.Invoke(this, EventArgs.Empty);
         }
         #endregion
+
         #region Eventos
         private void txtNome_TextChanged(object sender, TextChangedEventArgs e)
         {
-            BindingExpression bindingExpression = txtNome.GetBindingExpression(TextBox.TextProperty);
-            bindingExpression.UpdateSource();
-            if (bindingExpression?.HasError == true)
-            {
-                btnCadastrar.IsEnabled = false;
-            }
-            else
-            {
-                btnCadastrar.IsEnabled = true;
-            }
+            VerificarErrosEBloquearBotao();
         }
         private void txtTelefone_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            VerificarErrosEBloquearBotao();
+            FormatarTelefone(sender, e);
+            
+        }
+        private void txtEndereco_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            VerificarErrosEBloquearBotao();
+        }
+        private void txtNome_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (!IsTextOnly(e.Text))
+            {
+                e.Handled = true;
+            }
+        }        
+        private void txtTelefone_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (!IsNumberOnly(e.Text))
+            {
+                e.Handled = true;
+            }
+        }
+        private void txtEndereco_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (!System.Text.RegularExpressions.Regex.IsMatch(e.Text, @"^[a-zA-Z0-9\s\-,()]*$"))
+            {
+                e.Handled = true;
+            }
+        }    
+        #endregion
+
+        #region Métodos
+        private bool IsNumberOnly(string text)
+        {
+            return System.Text.RegularExpressions.Regex.IsMatch(text, @"^[0-9]+$");
+        }
+        private bool IsTextOnly(string input)
+        {
+            return System.Text.RegularExpressions.Regex.IsMatch(input, @"^[a-zA-Z]+$");
+        }
+        private void Limpar()
+        {
+            txtNome.Text = string.Empty;
+            txtTelefone.Text = string.Empty;
+            txtEndereco.Text = string.Empty;
+            txtDataNascimento.Text = string.Empty;
+        }
+        public void RemoverJanela()
+        {
+            Limpar();
+            var parent = this.Parent as Panel;
+            if (parent != null)
+            {
+                parent.Children.Remove(this);
+            }
+        }
+        private void FormatarTelefone(object sender, TextChangedEventArgs e)
         {
             if (sender is TextBox textBox)
             {
@@ -106,38 +161,28 @@ namespace GestaoDeClientes.UI.Views
                 textBox.CaretIndex = textBox.Text.Length;
             }
         }
-        private void txtNome_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        private bool VerificarErrosEmCampos(params TextBox[] textBoxes)
         {
-            if (!IsTextOnly(e.Text))
+            foreach (var textBox in textBoxes)
             {
-                e.Handled = true;
+                BindingExpression bindingExpression = textBox.GetBindingExpression(TextBox.TextProperty);
+                bindingExpression?.UpdateSource();
+
+                if (bindingExpression?.HasError == true)
+                {
+                    return true;
+                }
             }
-        }        
-        private void txtTelefone_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            if (!IsNumberOnly(e.Text))
-            {
-                e.Handled = true;
-            }
+            return false;
         }
-        private void txtEndereco_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        private void VerificarErrosEBloquearBotao()
         {
-            if (!System.Text.RegularExpressions.Regex.IsMatch(e.Text, @"^[a-zA-Z0-9\s\-,()]*$"))
-            {
-                e.Handled = true;
-            }
-        }    
-        #endregion
-        #region Métodos
-        private bool IsNumberOnly(string text)
-        {
-            return System.Text.RegularExpressions.Regex.IsMatch(text, @"^[0-9]+$");
+            var textBoxesNaGrid = primeiraGrid.Children.OfType<TextBox>().ToArray();
+
+            bool algumErro = VerificarErrosEmCampos(textBoxesNaGrid);
+
+            btnCadastrar.IsEnabled = algumErro;
         }
-        private bool IsTextOnly(string input)
-        {
-            return System.Text.RegularExpressions.Regex.IsMatch(input, @"^[a-zA-Z]+$");
-        }
-             
         #endregion
     }
 }
