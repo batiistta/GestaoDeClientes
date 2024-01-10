@@ -1,4 +1,5 @@
 ﻿using GestaoDeClientes.Infra;
+using GestaoDeClientes.Infra.Repositories;
 using GestaoDeClientes.UI.Popup;
 using System;
 using System.Collections.Generic;
@@ -30,39 +31,53 @@ namespace GestaoDeClientes.UI.Views
 
         private async void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-            this.Hide();
-
-            //busySalvarCarteirasIndicator.IsBusy = true;
-            //var userName = txtUserName.Text;
-            //var password = pbPassword.Password;
-            //try
-            //{
-            //    if (String.IsNullOrEmpty(txtUserName.Text))
-            //    {
-            //        ErrorMessageBox.Show("O preenchimento do campo Username é obrigatório!", "Error", ErrorMessageBox.MessageBoxStatus.Error);
-            //        return;
-            //    }
-
-            //    if (String.IsNullOrEmpty(pbPassword.Password))
-            //    {
-            //        ErrorMessageBox.Show("O preenchimento do campo Senha é obrigatório!", "Error", ErrorMessageBox.MessageBoxStatus.Error);
-            //        return;
-            //    }
-            //    this.isAutenticado = true;
-            //    busySalvarCarteirasIndicator.IsBusy = false;
-            //    this.Hide();
-            //}
-            //catch(Exception ex)
-            //{
-            //    busySalvarCarteirasIndicator.IsBusy = false;
-            //    ErrorMessageBox.Show(ex.Message, "Error", ErrorMessageBox.MessageBoxStatus.Error);
-            //    txtUserName.Text = string.Empty;
-            //    pbPassword.Password = string.Empty;
-            //    txtUserName.Focus();
-            //}
-
             StartupRepository startupRepository = new StartupRepository();
             await startupRepository.VerifyDatabase();
+
+            var userName = txtUserName.Text;
+            var password = pbPassword.Password;
+            try
+            {
+                if (String.IsNullOrEmpty(txtUserName.Text))
+                {
+                    ErrorMessageBox.Show("O preenchimento do campo Username é obrigatório!", "Error", ErrorMessageBox.MessageBoxStatus.Error);
+                    return;
+                }
+
+                if (String.IsNullOrEmpty(pbPassword.Password))
+                {
+                    ErrorMessageBox.Show("O preenchimento do campo Senha é obrigatório!", "Error", ErrorMessageBox.MessageBoxStatus.Error);
+                    return;
+                }
+
+                busySalvarCarteirasIndicator.IsBusy = true;
+                UsuarioRepository usuarioRepository = new UsuarioRepository();
+
+                this.isAutenticado = usuarioRepository.ValidarUsuario(userName, password);
+
+                if (!this.isAutenticado)
+                {
+                    busySalvarCarteirasIndicator.IsBusy = false;
+                    ErrorMessageBox.Show("Usuário ou senha inválidos!", "Error", ErrorMessageBox.MessageBoxStatus.Error);
+                    txtUserName.Text = string.Empty;
+                    pbPassword.Password = string.Empty;
+                    txtUserName.Focus();
+                    return;
+                }
+
+                busySalvarCarteirasIndicator.IsBusy = false;
+                this.Hide();
+            }
+            catch (Exception ex)
+            {
+                busySalvarCarteirasIndicator.IsBusy = false;
+                ErrorMessageBox.Show(ex.Message, "Error", ErrorMessageBox.MessageBoxStatus.Error);
+                txtUserName.Text = string.Empty;
+                pbPassword.Password = string.Empty;
+                txtUserName.Focus();
+            }
+
+
 
         }
 

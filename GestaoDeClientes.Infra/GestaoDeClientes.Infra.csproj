@@ -82,10 +82,12 @@
     <Compile Include="Repositories\AgendamentoRepository.cs" />
     <Compile Include="Repositories\ClienteRepository.cs" />
     <Compile Include="Repositories\ProdutoRepository.cs" />
+    <Compile Include="Repositories\UsuarioRepository.cs" />
     <Compile Include="SQLs\AgendamentoSql.cs" />
     <Compile Include="SQLs\ClienteSql.cs" />
     <Compile Include="SQLs\DbSql.cs" />
     <Compile Include="SQLs\ProdutoSql.cs" />
+    <Compile Include="SQLs\UsuarioSql.cs" />
     <Compile Include="StartupRepository.cs" />
   </ItemGroup>
   <ItemGroup>
