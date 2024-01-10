@@ -110,8 +110,11 @@ namespace GestaoDeClientes.UI.Views
         {
             if (!this.IsVisible)
             {
-                ProdutoView produtoView = new ProdutoView();
-                this.Content = produtoView;
+                if (!(this.Content is ProdutoView))
+                {
+                    ProdutoView produtoView = new ProdutoView();
+                    this.Content = produtoView;
+                }
             }
         }
     }
