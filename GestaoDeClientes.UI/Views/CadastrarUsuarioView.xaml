@@ -126,7 +126,7 @@
                                     FontSize="15" 
                                     Background="#FFFF5722"
                                     FontWeight="Medium" 
-                                    BorderBrush="#FFFF5722" 
+                                    BorderBrush="#FFFF5722" Click="btnCadastrarUsuario_Click" 
                             />
 
                             <Button Content="Cancelar" 
