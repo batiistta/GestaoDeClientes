@@ -97,7 +97,7 @@
                                                     materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
                                                     materialDesign:ButtonProgressAssist.Value="-1"
                                                     ToolTip="Cadastrar Usuario" 
-                                                    Cursor="Hand"
+                                                    Cursor="Hand" Click="btnCadastrarUsuario_Click"
                                             />
 
                                                 <Button Margin="20,0,0,0"
@@ -126,7 +126,7 @@
                                                         </Grid.RowDefinitions>
                                                         <ListView x:Name="listViewUsuarios"
                                                               ItemsSource="{Binding Usuarios}"
-                                                              SelectionMode="Single">
+                                                              SelectionMode="Single" IsVisibleChanged="listViewUsuarios_IsVisibleChanged">
                                                             <ListView.RenderTransform>
                                                                 <TransformGroup>
                                                                     <ScaleTransform/>

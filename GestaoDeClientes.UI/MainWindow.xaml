@@ -141,6 +141,7 @@
                 <local:CadastrarProdutoView x:Name="cadastrarProdutoView" Visibility="Hidden"></local:CadastrarProdutoView>
                 <local:DetalhesProdutoView x:Name="DetalhesProdutoViewView" Visibility="Hidden"></local:DetalhesProdutoView>
                 <local:UsuarioView x:Name="usuarioView" Visibility="Hidden"></local:UsuarioView>
+                <local:CadastrarClienteView x:Name="cadastrarClienteView" Visibility="Hidden"></local:CadastrarClienteView>
                 <!--<local:CadastrarClienteView x:Name="cadastrarClienteView" Visibility="Hidden"></local:CadastrarClienteView>-->
                 <!--<local:InformarIndex x:Name="informarIndex"  Visibility="Hidden" ConsultarDigitalizacaoButtonClick="viewDigitalizacaoConsulta_ConsultarButtonClick"></local:InformarIndex>-->
 

@@ -28,9 +28,13 @@ namespace GestaoDeClientes.UI.Views
 
         private void UserControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            if (this.IsVisible)
+            if (!this.IsVisible)
             {
-                CarregarUsuarios();
+                if (!(this.Content is UsuarioView))
+                {
+                    UsuarioView usuarioView = new UsuarioView();
+                    this.Content = usuarioView;
+                }
             }
         }
 
@@ -45,7 +49,29 @@ namespace GestaoDeClientes.UI.Views
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-            }           
+            }
+        }
+
+        private void btnCadastrarUsuario_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                CadastrarUsuarioView cadastrarUsuarioView = new CadastrarUsuarioView();
+                this.Content = cadastrarUsuarioView;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+        }
+
+        private void listViewUsuarios_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (this.IsVisible)
+            {
+                CarregarUsuarios();
+            }
         }
     }
 }
