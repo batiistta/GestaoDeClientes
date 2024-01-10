@@ -105,5 +105,14 @@ namespace GestaoDeClientes.UI.Views
                 MessageBox.Show(ex.Message);
             }
         }
+
+        private void UserControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (!this.IsVisible)
+            {
+                ProdutoView produtoView = new ProdutoView();
+                this.Content = produtoView;
+            }
+        }
     }
 }
