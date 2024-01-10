@@ -123,7 +123,6 @@
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ValidationRules.cs" />
-    <Compile Include="Views\MinLengthValidationRule.cs" />
     <Compile Include="Views\ProdutoView.xaml.cs">
       <DependentUpon>ProdutoView.xaml</DependentUpon>
     </Compile>
