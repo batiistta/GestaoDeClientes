@@ -1,5 +1,6 @@
 ﻿using GestaoDeClientes.Infra;
 using GestaoDeClientes.Infra.Repositories;
+using GestaoDeClientes.Shared;
 using GestaoDeClientes.UI.Popup;
 using System;
 using System.Collections.Generic;
@@ -64,6 +65,8 @@ namespace GestaoDeClientes.UI.Views
                     txtUserName.Focus();
                     return;
                 }
+
+                Global.Instance.UsuarioAutenticado = usuarioRepository.GetByUsername(userName);
 
                 busySalvarCarteirasIndicator.IsBusy = false;
                 this.Hide();

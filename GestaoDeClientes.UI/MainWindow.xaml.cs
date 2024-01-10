@@ -25,7 +25,7 @@ namespace GestaoDeClientes.UI
         public MainWindow()
         {
             InitializeComponent();
-            ChipOperador.Content = Global.Instance;
+            ChipOperador.Content = Global.Instance.UsuarioAutenticado.Nome;
         }
 
         public void ShowPopUpBackground(bool show)

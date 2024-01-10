@@ -39,7 +39,7 @@ namespace GestaoDeClientes.Infra.SQLs
         );
 
          INSERT OR IGNORE INTO Usuario (Id, Login, Senha, Nome, Email, DataCadastro)
-        VALUES ('adminId', 'admin', 'admin', 'Administrador', NULL, DATETIME('now'));
+        VALUES ('1', 'admin', 'admin', 'Administrador', NULL, DATETIME('now'));
         
         CREATE TABLE IF NOT EXISTS Agendamento(
             Id TEXT PRIMARY KEY,

@@ -40,7 +40,16 @@ namespace GestaoDeClientes.Infra.Repositories
                 string query = "SELECT COUNT(*) FROM Usuario WHERE Login = @Login AND Senha = @Senha;";
                 var count = connection.ExecuteScalar<int>(query, new { Login = login, Senha = senha });
 
-                return count > 0; 
+                return count > 0;
+            }
+        }
+
+        public Usuario GetByUsername(string username)
+        {
+            using (var connection = new SqliteConnection(connString))
+            {
+                connection.Open();
+                return connection.Query<Usuario>(UsuarioSql.GetByLogin, new { Login = username }).FirstOrDefault();
             }
         }
     }
