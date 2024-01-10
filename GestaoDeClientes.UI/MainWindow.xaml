@@ -10,7 +10,8 @@
         Title="Gestão de Clientes"
         WindowState="Maximized"
         MinWidth="1300"
-        MinHeight="800">
+        MinHeight="800"
+        >
     <Grid>
         <Grid x:Name="PopUpBackground" Visibility="Collapsed" Panel.ZIndex="1" Background="#FF000000" Opacity="0.5">
         </Grid>
@@ -104,8 +105,14 @@
                                 <materialDesign:PackIcon Kind="CalendarArrowLeft" Width="20" Height="20" VerticalAlignment="Center" Foreground="White"/>
                                 <Button  Command="{Binding HomePageCommand}" FontSize="16" Content="Agendamentos" Background="Transparent"
                                         BorderBrush="Transparent" Foreground="#FFF" Margin="10" Height="50"/>
-                            </Grid>       
-                            
+                            </Grid>
+
+                            <Grid>
+                                <materialDesign:PackIcon Kind="User" Width="20" Height="20" VerticalAlignment="Center" Foreground="White"/>
+                                <Button  Command="{Binding HomePageCommand}" FontSize="16" Content="Usuários" Background="Transparent"
+                                BorderBrush="Transparent" Foreground="#FFF" Margin="10" Height="50" Click="btnUsuario_Click"/>
+                            </Grid>
+
                         </StackPanel>
 
                         <Grid Grid.Row="1" Margin="10">
@@ -133,6 +140,7 @@
                 <local:ProdutoView x:Name="produtoView" Visibility="Hidden"></local:ProdutoView>
                 <local:CadastrarProdutoView x:Name="cadastrarProdutoView" Visibility="Hidden"></local:CadastrarProdutoView>
                 <local:DetalhesProdutoView x:Name="DetalhesProdutoViewView" Visibility="Hidden"></local:DetalhesProdutoView>
+                <local:UsuarioView x:Name="usuarioView" Visibility="Hidden"></local:UsuarioView>
                 <!--<local:CadastrarClienteView x:Name="cadastrarClienteView" Visibility="Hidden"></local:CadastrarClienteView>-->
                 <!--<local:InformarIndex x:Name="informarIndex"  Visibility="Hidden" ConsultarDigitalizacaoButtonClick="viewDigitalizacaoConsulta_ConsultarButtonClick"></local:InformarIndex>-->
 

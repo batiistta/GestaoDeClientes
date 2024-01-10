@@ -52,5 +52,14 @@ namespace GestaoDeClientes.Infra.Repositories
                 return connection.Query<Usuario>(UsuarioSql.GetByLogin, new { Login = username }).FirstOrDefault();
             }
         }
+
+        public IEnumerable<Usuario> GetAll()
+        {
+            using (var connection = new SqliteConnection(connString))
+            {
+                connection.Open();
+                return connection.Query<Usuario>(UsuarioSql.GetAll);
+            }
+        }
     }
 }

@@ -40,6 +40,7 @@ namespace GestaoDeClientes.UI
         {
             clienteView.Visibility = Visibility.Hidden;
             produtoView.Visibility = Visibility.Hidden;
+            usuarioView.Visibility = Visibility.Hidden;
         }
 
         private void switchSreen(UserControl screen)
@@ -58,6 +59,11 @@ namespace GestaoDeClientes.UI
                     produtoView.Visibility = Visibility.Visible;
                     return;
                 }
+                if (screen.GetType() == typeof(UsuarioView))
+                {
+                    usuarioView.Visibility = Visibility.Visible;
+                    return;
+                }
             }
         }
 
@@ -68,6 +74,10 @@ namespace GestaoDeClientes.UI
         private void btnProduto_Click(object sender, RoutedEventArgs e)
         {
             switchSreen(produtoView);
+        }
+        private void btnUsuario_Click(object sender, RoutedEventArgs e)
+        {
+            switchSreen(usuarioView);
         }
 
         private void btnSair_Click(object sender, RoutedEventArgs e)
