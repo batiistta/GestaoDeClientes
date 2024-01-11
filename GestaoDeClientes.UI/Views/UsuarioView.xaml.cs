@@ -73,5 +73,15 @@ namespace GestaoDeClientes.UI.Views
                 CarregarUsuarios();
             }
         }
+
+        private void btnDeletar_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnAtualizar_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

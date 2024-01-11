@@ -1,4 +1,5 @@
-﻿using GestaoDeClientes.UI.Views;
+﻿using GestaoDeClientes.Infra;
+using GestaoDeClientes.UI.Views;
 using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,10 @@ namespace GestaoDeClientes.UI
     {
         protected override void OnStartup(StartupEventArgs e)
         {
+            StartupRepository startupRepository = new StartupRepository();
+            startupRepository.VerifyDatabase();
+
+
             base.OnStartup(e);
             LoginView objloginView = new LoginView();
             objloginView.ShowDialog();

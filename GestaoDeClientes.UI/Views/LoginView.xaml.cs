@@ -32,9 +32,6 @@ namespace GestaoDeClientes.UI.Views
 
         private async void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-            StartupRepository startupRepository = new StartupRepository();
-            await startupRepository.VerifyDatabase();
-
             var userName = txtUserName.Text;
             var password = pbPassword.Password;
             try
