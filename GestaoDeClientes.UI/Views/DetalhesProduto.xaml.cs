@@ -22,10 +22,14 @@ namespace GestaoDeClientes.UI.Views
     /// </summary>
     public partial class DetalhesProdutoView : UserControl
     {
+        #region Propriedades
         private Produto _produto;
         private ProdutoView _produtoView;
         public event EventHandler ChildWindowClosed;
         public event EventHandler OnCancelarClicado;
+        #endregion
+
+        #region Construtores
         public DetalhesProdutoView()
         {
             InitializeComponent();
@@ -44,7 +48,9 @@ namespace GestaoDeClientes.UI.Views
             txtQuantidadeProduto.Text = _produto.Quantidade.ToString();
 
         }
+        #endregion
 
+        #region Eventos
         private void btnAtualizar_Click(object sender, RoutedEventArgs e)
         {
             if (txtNomeProduto.Text.Any())
@@ -78,5 +84,13 @@ namespace GestaoDeClientes.UI.Views
                 MessageBox.Show(ex.Message);
             }
         }
+        #endregion
+
+        #region Métodos
+        public void RemoverJanela()
+        {
+            OnCancelarClicado?.Invoke(this, EventArgs.Empty);
+        }
+        #endregion
     }
 }

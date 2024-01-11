@@ -27,29 +27,33 @@ namespace GestaoDeClientes.UI.Views
     public partial class CadastrarProdutoView : UserControl, IRemoverJanela
     {
         #region Propriedades
-        private ProdutoView _produtoView;
         public event EventHandler ChildWindowClosed;
         public event EventHandler OnCancelarClicado;
         ProdutoRepository produtoRepository = new ProdutoRepository();
-        private bool hasError;
+        List<BindingExpression> bindingExpressions = new List<BindingExpression>();
         #endregion
 
         #region Construtores
-        public CadastrarProdutoView(ProdutoView produtoview)
-        {
-            InitializeComponent();
-            _produtoView = produtoview;
-        }
         public CadastrarProdutoView()
         {
             InitializeComponent();
+            this.DataContext = new Produto();
         }
         #endregion
 
         #region Eventos
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        private void UserControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             txtNomeProduto.Focus();
+            Limpar();
+            btnCadastrar.IsEnabled = false;
+        }
+        private void txtNomeProduto_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (!IsTextOnly(e.Text))
+            {
+                e.Handled = true;
+            }
         }
         private void txtValor_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
@@ -59,14 +63,14 @@ namespace GestaoDeClientes.UI.Views
             }
         }
         private void txtValor_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            VerificarErrosEBloquearBotao();
+        {            
             TextBox textBox = sender as TextBox;
 
             if (decimal.TryParse(textBox.Text, out decimal value))
             {
                 textBox.Text = string.Format(CultureInfo.GetCultureInfo("pt-BR"), "{0:N2}", value);
             }
+            VerificarErrosEBloquearBotao();
         }
         private void txtDescricaoProduto_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -74,10 +78,6 @@ namespace GestaoDeClientes.UI.Views
         }
         private void txtNomeProduto_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (!IsTextOnly(txtNomeProduto.Text))
-            {
-                txtNomeProduto.Text = string.Empty;
-            }
             VerificarErrosEBloquearBotao();
         }
         #region Botões
@@ -133,33 +133,22 @@ namespace GestaoDeClientes.UI.Views
         public void RemoverJanela()
         {
             Limpar();
-            var parent = this.Parent as Panel;
-            if (parent != null)
-            {
-                parent.Children.Remove(this);
-            }
-        }
-        private bool VerificarErrosEmCampos(params TextBox[] textBoxes)
-        {
-            foreach (var textBox in textBoxes)
-            {
-                BindingExpression bindingExpression = textBox.GetBindingExpression(TextBox.TextProperty);
-                bindingExpression?.UpdateSource();
-
-                if (bindingExpression?.HasError == true)
-                {
-                    return true;
-                }
-            }
-            return false;
+            OnCancelarClicado?.Invoke(this, EventArgs.Empty);
         }
         private void VerificarErrosEBloquearBotao()
         {
-            var textBoxesNaGrid = primeiraGrid.Children.OfType<TextBox>().ToArray();
-
-            bool algumErro = VerificarErrosEmCampos(textBoxesNaGrid);
-
+            bindingExpressions.Add(txtNomeProduto.GetBindingExpression(TextBox.TextProperty));
+            bindingExpressions.Add(txtDescricaoProduto.GetBindingExpression(TextBox.TextProperty));
+            bindingExpressions.Add(txtQuantidadeProduto.GetBindingExpression(TextBox.TextProperty));
+            bindingExpressions.Add(txtValorCompraProduto.GetBindingExpression(TextBox.TextProperty));
+            bindingExpressions.Add(txtValorUnitarioProduto.GetBindingExpression(TextBox.TextProperty));
+            bool algumErro = bindingExpressions.Any(x =>
+            {
+                x?.UpdateSource();
+                return x?.HasError == true;
+            });
             btnCadastrar.IsEnabled = !algumErro;
+            bindingExpressions.Clear();
         }
         #endregion
     }

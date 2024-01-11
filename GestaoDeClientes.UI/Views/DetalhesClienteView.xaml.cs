@@ -154,11 +154,7 @@ namespace GestaoDeClientes.UI.Views
 
         public void RemoverJanela()
         {
-            var parent = this.Parent as Panel;
-            if (parent != null)
-            {
-                parent.Children.Remove(this);
-            }
+            OnCancelarClicado?.Invoke(this, EventArgs.Empty);
         }
         #endregion
 

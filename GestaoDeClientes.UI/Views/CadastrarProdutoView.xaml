@@ -7,7 +7,8 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="800">
+             d:DesignHeight="600" d:DesignWidth="800" 
+             IsVisibleChanged="UserControl_IsVisibleChanged">
     <Grid x:Name="primeiraGrid">
         <StackPanel VerticalAlignment="Center">
             <Border Background="#FFFFFF" 
@@ -38,6 +39,7 @@
                                 <TextBox 
                                     x:Name="txtNomeProduto" 
                                     TextChanged="txtNomeProduto_TextChanged"
+                                    PreviewTextInput="txtNomeProduto_PreviewTextInput"
                                     VerticalAlignment="Center"
                                     Width="300" 
                                     Height="32" 

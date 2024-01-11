@@ -7,7 +7,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Height="600" Width="800" >
+        Height="600" Width="800" IsVisibleChanged="UserControl_IsVisibleChanged">
     <Grid x:Name="primeiraGrid">        
             <StackPanel VerticalAlignment="Center">
                 <Border Background="#FFFFFF" 
@@ -16,7 +16,7 @@
                     Height="550"
                     >
                     <materialDesign:Card materialDesign:ElevationAssist.Elevation="Dp6">
-                        <StackPanel VerticalAlignment="Center">
+                        <StackPanel x:Name="stackPanelGrids" VerticalAlignment="Center">
 
                             <StackPanel Width="auto"
                                         Height="auto">

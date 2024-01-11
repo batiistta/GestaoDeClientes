@@ -28,6 +28,7 @@ namespace GestaoDeClientes.UI.Views
         public event EventHandler ChildWindowClosed;        
         public event EventHandler OnCancelarClicado;
         private string dataNascimento;
+        List<BindingExpression> bindingExpressions = new List<BindingExpression>();
         #endregion
 
         #region Construtor
@@ -68,20 +69,27 @@ namespace GestaoDeClientes.UI.Views
         }
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
+            Limpar();
             OnCancelarClicado?.Invoke(this, EventArgs.Empty);
         }
         #endregion
 
         #region Eventos
+        private void UserControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            txtNome.Focus();
+            Limpar();
+            btnCadastrar.IsEnabled = false;
+        }
         private void txtNome_TextChanged(object sender, TextChangedEventArgs e)
         {
             VerificarErrosEBloquearBotao();
         }
         private void txtTelefone_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            VerificarErrosEBloquearBotao();
+        {            
             FormatarTelefone(sender, e);
-            
+            VerificarErrosEBloquearBotao();
+
         }
         private void txtEndereco_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -129,11 +137,7 @@ namespace GestaoDeClientes.UI.Views
         public void RemoverJanela()
         {
             Limpar();
-            var parent = this.Parent as Panel;
-            if (parent != null)
-            {
-                parent.Children.Remove(this);
-            }
+            OnCancelarClicado?.Invoke(this, EventArgs.Empty);
         }
         private void FormatarTelefone(object sender, TextChangedEventArgs e)
         {
@@ -161,27 +165,18 @@ namespace GestaoDeClientes.UI.Views
                 textBox.CaretIndex = textBox.Text.Length;
             }
         }
-        private bool VerificarErrosEmCampos(params TextBox[] textBoxes)
-        {
-            foreach (var textBox in textBoxes)
-            {
-                BindingExpression bindingExpression = textBox.GetBindingExpression(TextBox.TextProperty);
-                bindingExpression?.UpdateSource();
-
-                if (bindingExpression?.HasError == true)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
         private void VerificarErrosEBloquearBotao()
         {
-            var textBoxesNaGrid = primeiraGrid.Children.OfType<TextBox>().ToArray();
-
-            bool algumErro = VerificarErrosEmCampos(textBoxesNaGrid);
-
-            btnCadastrar.IsEnabled = algumErro;
+           bindingExpressions.Add(txtNome.GetBindingExpression(TextBox.TextProperty));
+           bindingExpressions.Add(txtTelefone.GetBindingExpression(TextBox.TextProperty));
+           bindingExpressions.Add(txtEndereco.GetBindingExpression(TextBox.TextProperty));
+           bool algumErro = bindingExpressions.Any(x => 
+           {
+               x?.UpdateSource();
+                return x?.HasError == true;              
+           });
+           btnCadastrar.IsEnabled = !algumErro;
+           bindingExpressions.Clear();
         }
         #endregion
     }
