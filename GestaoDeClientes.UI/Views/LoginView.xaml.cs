@@ -38,13 +38,13 @@ namespace GestaoDeClientes.UI.Views
             {
                 if (String.IsNullOrEmpty(txtUserName.Text))
                 {
-                    ErrorMessageBox.Show("O preenchimento do campo Username é obrigatório!", "Error", ErrorMessageBox.MessageBoxStatus.Error);
+                    GCMessageBox.Show("O preenchimento do campo Username é obrigatório!", "Error", GCMessageBox.MessageBoxStatus.Error);
                     return;
                 }
 
                 if (String.IsNullOrEmpty(pbPassword.Password))
                 {
-                    ErrorMessageBox.Show("O preenchimento do campo Senha é obrigatório!", "Error", ErrorMessageBox.MessageBoxStatus.Error);
+                    GCMessageBox.Show("O preenchimento do campo Senha é obrigatório!", "Error", GCMessageBox.MessageBoxStatus.Error);
                     return;
                 }
 
@@ -56,7 +56,7 @@ namespace GestaoDeClientes.UI.Views
                 if (!this.isAutenticado)
                 {
                     busySalvarCarteirasIndicator.IsBusy = false;
-                    ErrorMessageBox.Show("Usuário ou senha inválidos!", "Error", ErrorMessageBox.MessageBoxStatus.Error);
+                    GCMessageBox.Show("Usuário ou senha inválidos!", "Error", GCMessageBox.MessageBoxStatus.Error);
                     txtUserName.Text = string.Empty;
                     pbPassword.Password = string.Empty;
                     txtUserName.Focus();
@@ -71,7 +71,7 @@ namespace GestaoDeClientes.UI.Views
             catch (Exception ex)
             {
                 busySalvarCarteirasIndicator.IsBusy = false;
-                ErrorMessageBox.Show(ex.Message, "Error", ErrorMessageBox.MessageBoxStatus.Error);
+                GCMessageBox.Show(ex.Message, "Error", GCMessageBox.MessageBoxStatus.Error);
                 txtUserName.Text = string.Empty;
                 pbPassword.Password = string.Empty;
                 txtUserName.Focus();

@@ -1,5 +1,6 @@
 ﻿using GestaoDeClientes.Domain.Models;
 using GestaoDeClientes.Infra.Repositories;
+using GestaoDeClientes.UI.Popup;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,7 +33,7 @@ namespace GestaoDeClientes.UI.Views
             if (!txtNome.Text.Any() || !txtLogin.Text.Any() ||
                 !txtSenha.Text.Any() || !txtEmail.Text.Any())
             {
-                MessageBox.Show("Por favor, preencha todos os campos!", "Atenção", MessageBoxButton.OK, MessageBoxImage.Warning);
+                GCMessageBox.Show("Por favor, preencha todos os campos!", "Atenção", GCMessageBox.MessageBoxStatus.Error);
                 return;
             }
 
@@ -46,18 +47,19 @@ namespace GestaoDeClientes.UI.Views
                 usuario.Senha = txtSenha.Text;
                 usuario.Email = txtEmail.Text;
                 usuario.DataCadastro = DateTime.Now;
+                usuario.Ativo = true;
 
                 try
                 {
                     UsuarioRepository usuarioRepository = new UsuarioRepository();
                     await usuarioRepository.AddAsync(usuario);
-                    MessageBox.Show("Usuário cadastrado com sucesso!", "Sucesso", MessageBoxButton.OK, MessageBoxImage.Information);
+                    GCMessageBox.Show("Usuário cadastrado com sucesso!", "Sucesso", GCMessageBox.MessageBoxStatus.Ok);
                     UsuarioView usuarioView = new UsuarioView();
                     this.Content = usuarioView;
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    GCMessageBox.Show(ex.Message);
                 }
             }
 

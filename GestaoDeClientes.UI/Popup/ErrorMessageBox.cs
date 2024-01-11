@@ -8,11 +8,11 @@ using System.Windows;
 
 namespace GestaoDeClientes.UI.Popup
 {
-    public class ErrorMessageBox
+    public class GCMessageBox
     {
         public static bool Show(string message)
         {
-            var msgForm = new ErrorMessageBoxDefault(message);
+            var msgForm = new GCMessageBoxDefault(message);
             msgForm.btnConfirmExhibition.Visibility = Visibility.Visible;
 
             return DisplayDefaultMessageBox(msgForm);
@@ -20,7 +20,7 @@ namespace GestaoDeClientes.UI.Popup
 
         public static bool Show(string message, MessageBoxStatus status)
         {
-            var msgForm = new ErrorMessageBoxDefault(message, status);
+            var msgForm = new GCMessageBoxDefault(message, status);
             msgForm.btnConfirmExhibition.Visibility = Visibility.Visible;
 
             return DisplayDefaultMessageBox(msgForm);
@@ -28,7 +28,7 @@ namespace GestaoDeClientes.UI.Popup
 
         public static bool Show(string message, string title)
         {
-            var msgForm = new ErrorMessageBoxDefault(title, message);
+            var msgForm = new GCMessageBoxDefault(title, message);
             msgForm.btnConfirmExhibition.Visibility = Visibility.Visible;
 
             return DisplayDefaultMessageBox(msgForm);
@@ -36,7 +36,7 @@ namespace GestaoDeClientes.UI.Popup
 
         public static bool Show(string message, string title, MessageBoxStatus status)
         {
-            var msgForm = new ErrorMessageBoxDefault(title, message, status);
+            var msgForm = new GCMessageBoxDefault(title, message, status);
             msgForm.btnConfirmExhibition.Visibility = Visibility.Visible;
 
             return DisplayDefaultMessageBox(msgForm);
@@ -44,14 +44,14 @@ namespace GestaoDeClientes.UI.Popup
 
         public static bool Confirm(string message)
         {
-            var msgForm = new ErrorMessageBoxDefault(message);
+            var msgForm = new GCMessageBoxDefault(message);
             msgForm.btnYesNoExhibition.Visibility = Visibility.Visible;
 
             return DisplayDefaultMessageBox(msgForm);
         }
         public static bool Confirm(string message, MessageBoxStatus status)
         {
-            var msgForm = new ErrorMessageBoxDefault(message, status);
+            var msgForm = new GCMessageBoxDefault(message, status);
             msgForm.btnYesNoExhibition.Visibility = Visibility.Visible;
 
             return DisplayDefaultMessageBox(msgForm);
@@ -60,7 +60,7 @@ namespace GestaoDeClientes.UI.Popup
 
         public static bool Confirm(string message, string title)
         {
-            var msgForm = new ErrorMessageBoxDefault(title, message);
+            var msgForm = new GCMessageBoxDefault(title, message);
             msgForm.btnYesNoExhibition.Visibility = Visibility.Visible;
 
             return DisplayDefaultMessageBox(msgForm);
@@ -68,13 +68,13 @@ namespace GestaoDeClientes.UI.Popup
 
         public static bool Confirm(string message, string title, MessageBoxStatus status)
         {
-            var msgForm = new ErrorMessageBoxDefault(title, message, status);
+            var msgForm = new GCMessageBoxDefault(title, message, status);
             msgForm.btnYesNoExhibition.Visibility = Visibility.Visible;
 
             return DisplayDefaultMessageBox(msgForm);
         }
 
-        public static bool DisplayDefaultMessageBox(ErrorMessageBoxDefault form)
+        public static bool DisplayDefaultMessageBox(GCMessageBoxDefault form)
         {
             var result = false;
 

@@ -63,13 +63,13 @@ namespace GestaoDeClientes.UI.Views
                 cliente.Endereco = txtEndereco.Text;
 
                 await clienteRepository.UpdateAsync(cliente);
-                ErrorMessageBox.Show("Cliente atualizado com sucesso!", "Sucesso", ErrorMessageBox.MessageBoxStatus.Ok);
+                GCMessageBox.Show("Cliente atualizado com sucesso!", "Sucesso", GCMessageBox.MessageBoxStatus.Ok);
                 OnCancelarClicado?.Invoke(this, EventArgs.Empty);
             }
             catch (Exception)
             {
                 OnCancelarClicado?.Invoke(this, EventArgs.Empty);
-                ErrorMessageBox.Show("Erro ao atualizar cliente!", "Erro", ErrorMessageBox.MessageBoxStatus.Error);
+                GCMessageBox.Show("Erro ao atualizar cliente!", "Erro", GCMessageBox.MessageBoxStatus.Error);
             }
             
         }

@@ -77,7 +77,7 @@ namespace GestaoDeClientes.UI.Views
             }
             catch (Exception ex)
             {
-                ErrorMessageBox.Show(ex.Message,"Erro", ErrorMessageBox.MessageBoxStatus.Error);
+                GCMessageBox.Show(ex.Message,"Erro", GCMessageBox.MessageBoxStatus.Error);
             }
         }
         private async void btnBuscarClientePorNome_Click(object sender, RoutedEventArgs e)
@@ -88,7 +88,7 @@ namespace GestaoDeClientes.UI.Views
             }
             catch (Exception ex)
             {
-                ErrorMessageBox.Show(ex.Message, "Erro", ErrorMessageBox.MessageBoxStatus.Error);
+                GCMessageBox.Show(ex.Message, "Erro", GCMessageBox.MessageBoxStatus.Error);
             }
         }
         private async void btnCadastrar_Click(object sender, RoutedEventArgs e)
@@ -101,7 +101,7 @@ namespace GestaoDeClientes.UI.Views
             }
             catch (Exception ex)
             {
-                ErrorMessageBox.Show(ex.Message, "Erro", ErrorMessageBox.MessageBoxStatus.Error);
+                GCMessageBox.Show(ex.Message, "Erro", GCMessageBox.MessageBoxStatus.Error);
             }
             
         }
@@ -118,7 +118,7 @@ namespace GestaoDeClientes.UI.Views
             }
             catch (Exception ex)
             {
-                ErrorMessageBox.Show(ex.Message, "Erro", ErrorMessageBox.MessageBoxStatus.Error);
+                GCMessageBox.Show(ex.Message, "Erro", GCMessageBox.MessageBoxStatus.Error);
             }
             
             detalhesClienteView.OnCancelarClicado += DetalhesClienteView_OnCancelarClicado;
@@ -133,10 +133,10 @@ namespace GestaoDeClientes.UI.Views
             Button btnDeletar = sender as Button;
             Cliente clienteParaDeletar = btnDeletar.DataContext as Cliente;
 
-            if (ErrorMessageBox.Show("Deseja realmente deletar o produto " + clienteParaDeletar.Nome + "?", "Atenção", ErrorMessageBox.MessageBoxStatus.Ok))
+            if (GCMessageBox.Show("Deseja realmente deletar o produto " + clienteParaDeletar.Nome + "?", "Atenção", GCMessageBox.MessageBoxStatus.Ok))
             {
                 await DeleteAsync(clienteParaDeletar.Id.ToString());
-                ErrorMessageBox.Show("Produto deletado com sucesso!", ErrorMessageBox.MessageBoxStatus.Ok);
+                GCMessageBox.Show("Produto deletado com sucesso!", GCMessageBox.MessageBoxStatus.Ok);
                 CarregarClientes();
             }
         }

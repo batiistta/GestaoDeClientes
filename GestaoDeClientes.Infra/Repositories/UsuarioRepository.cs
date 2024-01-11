@@ -27,7 +27,8 @@ namespace GestaoDeClientes.Infra.Repositories
                     Senha = usuario.Senha,
                     Nome = usuario.Nome,
                     Email = usuario.Email,
-                    DataCadastro = usuario.DataCadastro
+                    DataCadastro = usuario.DataCadastro,
+                    Ativo = usuario.Ativo
                 });
             }
         }
@@ -59,6 +60,14 @@ namespace GestaoDeClientes.Infra.Repositories
             {
                 connection.Open();
                 return connection.Query<Usuario>(UsuarioSql.GetAll);
+            }
+        }
+        public void Delete(string id)
+        {
+            using (var connection = new SqliteConnection(connString))
+            {
+                connection.Open();
+                connection.Execute(UsuarioSql.Delete, new { Id = id });
             }
         }
     }

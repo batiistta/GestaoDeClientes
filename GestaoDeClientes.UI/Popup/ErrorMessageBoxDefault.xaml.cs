@@ -11,22 +11,22 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using static GestaoDeClientes.UI.Popup.ErrorMessageBox;
+using static GestaoDeClientes.UI.Popup.GCMessageBox;
 
 namespace GestaoDeClientes.UI.Popup
 {
     /// <summary>
-    /// Lógica interna para ErrorMessageBoxDefault.xaml
+    /// Lógica interna para GCMessageBoxDefault.xaml
     /// </summary>
-    public partial class ErrorMessageBoxDefault : Window
+    public partial class GCMessageBoxDefault : Window
     {
-        public ErrorMessageBoxDefault(string mensagem)
+        public GCMessageBoxDefault(string mensagem)
         {
             InitializeComponent();
             txtMensagem.Text = mensagem;
         }
 
-        public ErrorMessageBoxDefault(string titulo, string mensagem)
+        public GCMessageBoxDefault(string titulo, string mensagem)
         {
             InitializeComponent();
 
@@ -34,7 +34,7 @@ namespace GestaoDeClientes.UI.Popup
             txtMensagem.Text = mensagem;
         }
 
-        public ErrorMessageBoxDefault(string mensagem, MessageBoxStatus status)
+        public GCMessageBoxDefault(string mensagem, MessageBoxStatus status)
         {
             InitializeComponent();
 
@@ -43,7 +43,7 @@ namespace GestaoDeClientes.UI.Popup
             UpdateIconColor(status);
         }
 
-        public ErrorMessageBoxDefault(string titulo, string mensagem, MessageBoxStatus status)
+        public GCMessageBoxDefault(string titulo, string mensagem, MessageBoxStatus status)
         {
             InitializeComponent();
 

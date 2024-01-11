@@ -1,4 +1,6 @@
-﻿using GestaoDeClientes.Infra.Repositories;
+﻿using GestaoDeClientes.Domain.Models;
+using GestaoDeClientes.Infra.Repositories;
+using GestaoDeClientes.UI.Popup;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -76,7 +78,24 @@ namespace GestaoDeClientes.UI.Views
 
         private void btnDeletar_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                Button btnDeletar = sender as Button;
 
+                Usuario usuarioParaDeletar = btnDeletar.DataContext as Usuario;
+
+                if (MessageBox.Show("Deseja realmente deletar o produto ?", "Atenção", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                {
+                    UsuarioRepository usuarioRepository = new UsuarioRepository();
+                    usuarioRepository.Delete(usuarioParaDeletar.Id);
+                    MessageBox.Show("Usuário deletado com sucesso!");
+                    CarregarUsuarios();
+                }
+            }
+            catch (Exception ex)
+            {
+               GCMessageBox.Show(ex.Message);
+            }
         }
 
         private void btnAtualizar_Click(object sender, RoutedEventArgs e)

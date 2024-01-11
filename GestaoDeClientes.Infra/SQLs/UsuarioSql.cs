@@ -15,14 +15,16 @@ namespace GestaoDeClientes.Infra.SQLs
                 Senha,
                 Nome,
                 Email,
-                DataCadastro
+                DataCadastro,
+                Ativo
             ) VALUES (
                 @Id,
                 @Login,
                 @Senha,
                 @Nome,
                 @Email,
-                @DataCadastro
+                @DataCadastro,
+                @Ativo
             );";    
 
         public static string Update = @"
@@ -31,10 +33,11 @@ namespace GestaoDeClientes.Infra.SQLs
                 Senha = @Senha,
                 Nome = @Nome,
                 Email = @Email,
-                DataCadastro = @DataCadastro
+                DataCadastro = @DataCadastro,
+                Ativo = @Ativo
             WHERE Id = @Id;";
 
-        public static string Delete = @"Remove from Usuario where Id = @Id";
+        public static string Delete = @"DELETE from Usuario where Id = @Id";
 
         public static string GetById = @"SELECT * FROM Usuario WHERE Id = @Id";
 
