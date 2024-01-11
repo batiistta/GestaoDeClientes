@@ -100,7 +100,15 @@ namespace GestaoDeClientes.UI.Views
 
         private void btnAtualizar_Click(object sender, RoutedEventArgs e)
         {
-
+            try
+            {
+                DetalhesUsuarioView detalhesUsuarioView = new DetalhesUsuarioView();
+                this.Content = detalhesUsuarioView;
+            }
+            catch (Exception ex)
+            {
+                GCMessageBox.Show(ex.Message);
+            }
         }
     }
 }

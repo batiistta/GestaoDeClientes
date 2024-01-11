@@ -122,6 +122,9 @@
     <Compile Include="Views\DetalhesProduto.xaml.cs">
       <DependentUpon>DetalhesProduto.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\DetalhesUsuarioView.xaml.cs">
+      <DependentUpon>DetalhesUsuarioView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
@@ -181,6 +184,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\DetalhesProduto.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DetalhesUsuarioView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
