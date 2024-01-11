@@ -100,13 +100,13 @@ namespace GestaoDeClientes.UI.Views
 
                 await produtoRepository.AddAsync(produto);
 
-                ErrorMessageBox.Show("Cliente cadastrado com sucesso!", "Sucesso", ErrorMessageBox.MessageBoxStatus.Ok);
+                GCMessageBox.Show("Cliente cadastrado com sucesso!", "Sucesso", GCMessageBox.MessageBoxStatus.Ok);
                 OnCancelarClicado?.Invoke(this, EventArgs.Empty);
 
             }
             catch (Exception ex)
             {                
-                ErrorMessageBox.Show(ex.Message, "Erro", ErrorMessageBox.MessageBoxStatus.Error);
+                GCMessageBox.Show(ex.Message, "Erro", GCMessageBox.MessageBoxStatus.Error);
                 OnCancelarClicado?.Invoke(this, EventArgs.Empty);
             }
         }

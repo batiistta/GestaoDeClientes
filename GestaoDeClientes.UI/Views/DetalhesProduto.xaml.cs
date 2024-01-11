@@ -59,12 +59,12 @@ namespace GestaoDeClientes.UI.Views
                 produto.Ativo = true;
 
                 await produtoRepository.UpdateAsync(produto);
-                ErrorMessageBox.Show("Produto atualizado com sucesso!", "Sucesso", ErrorMessageBox.MessageBoxStatus.Ok);
+                GCMessageBox.Show("Produto atualizado com sucesso!", "Sucesso", GCMessageBox.MessageBoxStatus.Ok);
                 OnCancelarClicado?.Invoke(this, EventArgs.Empty);
             }
             catch (Exception ex)
             {                
-                ErrorMessageBox.Show("Erro ao atualizar produto!", "Erro", ErrorMessageBox.MessageBoxStatus.Error);
+                GCMessageBox.Show("Erro ao atualizar produto!", "Erro", GCMessageBox.MessageBoxStatus.Error);
                 OnCancelarClicado?.Invoke(this, EventArgs.Empty);
             }
         }

@@ -46,11 +46,12 @@ namespace GestaoDeClientes.Infra.SQLs
                 Senha VARCHAR(100) NOT NULL,
                 Nome VARCHAR(200),
                 Email VARCHAR(200),
-                DataCadastro DATETIME
+                DataCadastro DATETIME,
+                Ativo BIT
             );
 
-            INSERT OR IGNORE INTO Usuario (Id, Login, Senha, Nome, Email, DataCadastro)
-            VALUES ('1', 'admin', 'admin', 'Administrador', NULL, DATETIME('now'));
+            INSERT OR IGNORE INTO Usuario (Id, Login, Senha, Nome, Email, DataCadastro, Ativo)
+            VALUES ('1', 'admin', 'admin', 'Administrador', NULL, DATETIME('now'), 1);
         
             CREATE TABLE IF NOT EXISTS Agendamento(
                 Id TEXT PRIMARY KEY,
