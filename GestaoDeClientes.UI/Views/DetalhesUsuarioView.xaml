@@ -52,6 +52,28 @@
                         </StackPanel>
 
                         <StackPanel Width="300"  
+                            Margin="0,18,0,0">
+                            <Label Content="Login:" 
+                                FontWeight="Bold" 
+                                Foreground="#FF4D4D4D"/>
+                            <AdornerDecorator>
+                                <TextBox x:Name="txtLogin"                                         
+                                 VerticalAlignment="Center"
+                                 Width="300" 
+                                 Height="32" 
+                                 Background="#FFFBFCFF" 
+                                 Foreground="Black"
+                                 materialDesign:TextFieldAssist.CharacterCounterVisibility="Hidden"
+                                 MaxLength="50" 
+                                 BorderBrush="#89000000" 
+                                 CaretBrush="#FFFF5722" 
+                                 SelectionBrush="#FFFF8A50" 
+                                 BorderThickness="0,0,0,1">
+                                </TextBox>
+                            </AdornerDecorator>
+                        </StackPanel>
+
+                        <StackPanel Width="300"  
                           Margin="0,18,0,0">
 
                             <Label Content="Email:" 
@@ -85,9 +107,9 @@
                            materialDesign:TextFieldAssist.CharacterCounterVisibility="Hidden"
                            MaxLength="100" BorderBrush="#89000000" CaretBrush="#FFFF5722" SelectionBrush="#FFFF8A50" BorderThickness="0,0,0,1"
                       />
-                        </StackPanel>                  
-                       
-                       <StackPanel Width="300"  
+                        </StackPanel>
+
+                        <StackPanel Width="300"  
                           Margin="0,18,0,0">
 
                             <Label Content="Ativo:" 

@@ -137,6 +137,7 @@
                                                             </ListView.RenderTransform>
                                                             <ListView.View>
                                                                 <GridView>
+                                                                    <GridViewColumn Header="Nome" DisplayMemberBinding="{Binding Nome}" Width="200"/>
                                                                     <GridViewColumn Header="Login" DisplayMemberBinding="{Binding Login}" Width="200"/>
                                                                     <GridViewColumn Header="Senha" DisplayMemberBinding="{Binding Senha}" Width="200"/>
                                                                     <GridViewColumn Header="Email" DisplayMemberBinding="{Binding Email}" Width="200"/>

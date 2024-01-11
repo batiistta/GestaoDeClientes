@@ -29,6 +29,8 @@ namespace GestaoDeClientes.UI.Views
         CadastrarProdutoView cadastrarProdutoView = new CadastrarProdutoView();
         ProdutoRepository produtoRepository = new ProdutoRepository();
         List<Produto> produtos = new List<Produto>();
+        public event EventHandler ChildWindowClosed;
+        public event EventHandler OnCancelarClicado;
         #endregion
 
         #region Construtores

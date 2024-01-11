@@ -84,7 +84,7 @@ namespace GestaoDeClientes.UI.Views
 
                 Usuario usuarioParaDeletar = btnDeletar.DataContext as Usuario;
 
-                if (MessageBox.Show("Deseja realmente deletar o produto ?", "Atenção", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                if (MessageBox.Show("Deseja realmente deletar o usuário ?", "Atenção", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 {
                     UsuarioRepository usuarioRepository = new UsuarioRepository();
                     usuarioRepository.Delete(usuarioParaDeletar.Id);
@@ -102,7 +102,11 @@ namespace GestaoDeClientes.UI.Views
         {
             try
             {
-                DetalhesUsuarioView detalhesUsuarioView = new DetalhesUsuarioView();
+                Button btnAtualizar = sender as Button;
+
+                Usuario usuarioParaAtualizar = btnAtualizar.DataContext as Usuario;
+
+                DetalhesUsuarioView detalhesUsuarioView = new DetalhesUsuarioView(usuarioParaAtualizar);
                 this.Content = detalhesUsuarioView;
             }
             catch (Exception ex)

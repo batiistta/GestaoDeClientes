@@ -1,7 +1,5 @@
 ﻿using GestaoDeClientes.Domain.Models;
-using GestaoDeClientes.Infra.Interfaces;
 using GestaoDeClientes.Infra.Repositories;
-using GestaoDeClientes.UI.Popup;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,12 +20,12 @@ namespace GestaoDeClientes.UI.Views
     /// <summary>
     /// Interação lógica para DetalhesProdutoView.xam
     /// </summary>
-    public partial class DetalhesProdutoView : UserControl, IRemoverJanela
+    public partial class DetalhesProdutoView : UserControl
     {
+        private Produto _produto;
+        private ProdutoView _produtoView;
         public event EventHandler ChildWindowClosed;
         public event EventHandler OnCancelarClicado;
-        private string id;
-        ProdutoRepository produtoRepository = new ProdutoRepository();
         public DetalhesProdutoView()
         {
             InitializeComponent();
@@ -36,53 +34,49 @@ namespace GestaoDeClientes.UI.Views
         public DetalhesProdutoView(Produto produto)
         {
             InitializeComponent();
-            this.DataContext = produto;
-            txtNomeProduto.Text = produto.Nome;
-            txtDescricaoProduto.Text = produto.Descricao;
-            txtValorCompraProduto.Text = produto.ValorCompra.ToString();
-            txtValorUnitarioProduto.Text = produto.ValorUnitario.ToString();
-            txtQuantidadeProduto.Text = produto.Quantidade.ToString();            
+
+            _produto = produto;
+
+            txtNomeProduto.Text = _produto.Nome;
+            txtDescricaoProduto.Text = _produto.Descricao;
+            txtValorCompraProduto.Text = _produto.ValorCompra.ToString();
+            txtValorUnitarioProduto.Text = _produto.ValorUnitario.ToString();
+            txtQuantidadeProduto.Text = _produto.Quantidade.ToString();
+
         }
 
-        #region Botões
-        private async void btnAtualizar_Click(object sender, RoutedEventArgs e)
+        private void btnAtualizar_Click(object sender, RoutedEventArgs e)
+        {
+            if (txtNomeProduto.Text.Any())
+            {
+                _produto.Nome = txtNomeProduto.Text;
+            }
+
+            if (produtoAtivo.IsChecked == false)
+            {
+                _produto.Ativo = false;
+            }
+
+            ProdutoRepository produtoRepository = new ProdutoRepository();
+            produtoRepository.UpdateAsync(_produto);
+
+            MessageBox.Show("Produto atualizado com sucesso!", "Sucesso", MessageBoxButton.OK, MessageBoxImage.Information);
+            ProdutoView produtoView = new ProdutoView();
+            this.Content = produtoView;
+
+        }
+
+        private void btnCancelar_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                Produto produto = new Produto();
-                produto.Id = id;
-                produto.Nome = txtNomeProduto.Text;
-                produto.Descricao = txtDescricaoProduto.Text;
-                produto.ValorCompra = Convert.ToDecimal(txtValorCompraProduto.Text);
-                produto.ValorUnitario = Convert.ToDecimal(txtValorUnitarioProduto.Text);
-                produto.Quantidade = Convert.ToInt32(txtQuantidadeProduto.Text);
-                produto.Ativo = true;
-
-                await produtoRepository.UpdateAsync(produto);
-                GCMessageBox.Show("Produto atualizado com sucesso!", "Sucesso", GCMessageBox.MessageBoxStatus.Ok);
-                OnCancelarClicado?.Invoke(this, EventArgs.Empty);
+                ProdutoView produtoView = new ProdutoView();
+                this.Content = produtoView;
             }
             catch (Exception ex)
-            {                
-                GCMessageBox.Show("Erro ao atualizar produto!", "Erro", GCMessageBox.MessageBoxStatus.Error);
-                OnCancelarClicado?.Invoke(this, EventArgs.Empty);
-            }
-        }
-        private void btnCancelar_Click(object sender, RoutedEventArgs e)
-        {
-            OnCancelarClicado?.Invoke(this, EventArgs.Empty);
-        }
-        #endregion
-        #region Métodos
-        public void RemoverJanela()
-        {
-            var parent = this.Parent as Panel;
-            if (parent != null)
             {
-                parent.Children.Remove(this);
+                MessageBox.Show(ex.Message);
             }
         }
-        #endregion
-
     }
 }

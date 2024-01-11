@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GestaoDeClientes.Domain.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,22 @@ namespace GestaoDeClientes.UI.Views
     /// </summary>
     public partial class DetalhesUsuarioView : UserControl
     {
+        public event EventHandler ChildWindowClosed;
+        public event EventHandler OnCancelarClicado;
         public DetalhesUsuarioView()
         {
             InitializeComponent();
+        }
+
+        public DetalhesUsuarioView(Usuario usuario)
+        {
+            InitializeComponent();
+            this.DataContext = usuario;
+            txtNome.Text = usuario.Nome;
+            txtLogin.Text = usuario.Login;
+            txtEmail.Text = usuario.Email;
+            txtSenha.Text = usuario.Senha;
+
         }
 
         private void btnAtualizar_Click(object sender, RoutedEventArgs e)
@@ -32,7 +46,7 @@ namespace GestaoDeClientes.UI.Views
 
         private void btnCancelar_Click(object sender, RoutedEventArgs e)
         {
-
+            OnCancelarClicado?.Invoke(this, EventArgs.Empty);
         }
     }
 }
