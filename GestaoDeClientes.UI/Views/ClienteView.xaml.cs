@@ -103,6 +103,8 @@ namespace GestaoDeClientes.UI.Views
             }
             catch (Exception ex)
             {
+                cadastrarClienteView.OnCancelarClicado += CadastrarClienteView_OnCancelarClicado;
+                gridPrincipal.IsEnabled = false;
                 GCMessageBox.Show(ex.Message, "Erro", GCMessageBox.MessageBoxStatus.Error);
             }
             

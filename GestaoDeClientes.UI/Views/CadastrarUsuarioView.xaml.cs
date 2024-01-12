@@ -23,6 +23,7 @@ namespace GestaoDeClientes.UI.Views
     /// </summary>
     public partial class CadastrarUsuarioView : UserControl
     {
+        public event EventHandler OnCancelarClicado;
         public CadastrarUsuarioView()
         {
             InitializeComponent();
