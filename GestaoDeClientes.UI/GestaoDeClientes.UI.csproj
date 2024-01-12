@@ -104,6 +104,9 @@
     <Compile Include="Views\AgendamentoView.xaml.cs">
       <DependentUpon>AgendamentoView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\CadastrarAgendamentoView.xaml.cs">
+      <DependentUpon>CadastrarAgendamentoView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\CadastrarClienteView.xaml.cs">
       <DependentUpon>CadastrarClienteView.xaml</DependentUpon>
     </Compile>
@@ -160,6 +163,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\AgendamentoView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CadastrarAgendamentoView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

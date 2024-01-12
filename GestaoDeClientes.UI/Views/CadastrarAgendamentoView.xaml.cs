@@ -16,23 +16,13 @@ using System.Windows.Shapes;
 namespace GestaoDeClientes.UI.Views
 {
     /// <summary>
-    /// Interação lógica para AgendamentoView.xam
+    /// Interação lógica para CadastrarAgendamentoView.xam
     /// </summary>
-    public partial class AgendamentoView : UserControl
+    public partial class CadastrarAgendamentoView : UserControl
     {
-        public AgendamentoView()
+        public CadastrarAgendamentoView()
         {
             InitializeComponent();
-        }
-
-        private void btnDeletar_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void btnAtualizar_Click(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

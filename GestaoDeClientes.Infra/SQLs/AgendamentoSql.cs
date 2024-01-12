@@ -13,20 +13,10 @@ namespace GestaoDeClientes.Infra.SQLs
                 Id,
                 IdCliente,
                 DataAgendamento,
-                ValorTotal,
-                ValorCusto,
-                Observacao,
-                Lucro,  
-                Ativo
             ) VALUES (
                 @Id,
                 @IdCliente,
                 @DataAgendamento,
-                @ValorTotal,
-                @ValorCusto,
-                @Observacao,
-                @Lucro,
-                @Ativo
             );";
 
         public static string Update = @"
@@ -34,10 +24,6 @@ namespace GestaoDeClientes.Infra.SQLs
                 IdCliente = @IdCliente,
                 DataAgendamento = @DataAgendamento,
                 ValorTotal = @ValorTotal,
-                ValorCusto = @ValorCusto,
-                Observacao = @Observacao,
-                Lucro = @Lucro,
-                Ativo = @Ativo
             WHERE Id = @Id;";
 
         public static string Delete = @"Remove from Agendamento where Id = @Id";

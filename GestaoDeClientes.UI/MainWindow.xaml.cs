@@ -41,6 +41,7 @@ namespace GestaoDeClientes.UI
             clienteView.Visibility = Visibility.Hidden;
             produtoView.Visibility = Visibility.Hidden;
             usuarioView.Visibility = Visibility.Hidden;
+            agendamentoView.Visibility = Visibility.Hidden;
         }
 
         private void switchSreen(UserControl screen)
@@ -64,6 +65,11 @@ namespace GestaoDeClientes.UI
                     usuarioView.Visibility = Visibility.Visible;
                     return;
                 }
+                if (screen.GetType() == typeof(AgendamentoView))
+                {
+                    agendamentoView.Visibility = Visibility.Visible;
+                    return;
+                }
             }
         }
 
@@ -78,6 +84,10 @@ namespace GestaoDeClientes.UI
         private void btnUsuario_Click(object sender, RoutedEventArgs e)
         {
             switchSreen(usuarioView);
+        }
+        private void btnAgendamento_Click(object sender, RoutedEventArgs e)
+        {
+            switchSreen(agendamentoView);
         }
 
         private void btnSair_Click(object sender, RoutedEventArgs e)

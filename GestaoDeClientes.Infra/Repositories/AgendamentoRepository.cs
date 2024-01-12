@@ -24,12 +24,7 @@ namespace GestaoDeClientes.Infra.Repositories
                 {
                     Id = agendamento.Id,
                     IdCliente = agendamento.IdCliente,
-                    DataAgendamento = agendamento.DataAgendamento,
-                    ValorTotal = agendamento.ValorTotal,
-                    ValorCusto = agendamento.ValorCusto,
-                    Observacao = agendamento.Observacao,
-                    Lucro = agendamento.Lucro,
-                    Ativo = agendamento.Ativo
+                    DataAgendamento = agendamento.DataAgendamento
                 });
 
             }
@@ -95,12 +90,7 @@ namespace GestaoDeClientes.Infra.Repositories
                 {
                     Id = entity.Id,
                     IdCliente = entity.IdCliente,
-                    DataAgendamento = entity.DataAgendamento,
-                    ValorTotal = entity.ValorTotal,
-                    ValorCusto = entity.ValorCusto,
-                    Observacao = entity.Observacao,
-                    Lucro = entity.Lucro,
-                    Ativo = entity.Ativo
+                    DataAgendamento = entity.DataAgendamento
                 });
             }
         }
