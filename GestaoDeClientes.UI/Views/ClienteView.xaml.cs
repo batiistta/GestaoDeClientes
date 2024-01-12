@@ -62,11 +62,13 @@ namespace GestaoDeClientes.UI.Views
         {
             primeiraGrid.Children.Remove(cadastrarClienteView);
             gridPrincipal.IsEnabled = true;
+            CarregarClientes();
         }
         private void DetalhesClienteView_OnCancelarClicado(object sender, EventArgs e)
         {
             primeiraGrid.Children.Remove(detalhesClienteView);
             gridPrincipal.IsEnabled = true;
+            CarregarClientes();
         }
         #region Botões
         private async void btnBuscarClientes_Click(object sender, RoutedEventArgs e)

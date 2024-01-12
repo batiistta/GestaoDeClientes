@@ -59,11 +59,13 @@ namespace GestaoDeClientes.UI.Views
         {
             primeiraGrid.Children.Remove(cadastrarProdutoView);
             gridPrincipal.IsEnabled = true;
+            CarregarProdutos();
         }
         private void DetalhesProdutoView_OnCancelarClicado(object sender, EventArgs e)
         {
             primeiraGrid.Children.Remove(atualizarProdutoView);
             gridPrincipal.IsEnabled = true;
+            CarregarProdutos();
         }
         #region Botões
         private void btnCadastrarProduto_Click(object sender, RoutedEventArgs e)
