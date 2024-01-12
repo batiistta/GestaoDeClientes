@@ -7,13 +7,13 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Height="400" Width="350">
+        Height="600" Width="800">
     <Grid>
         <StackPanel VerticalAlignment="Center">
             <Border Background="#FFFFFF" 
                     CornerRadius="30" 
-                    Width="350" 
-                    Height="400"
+                    Width="400" 
+                    Height="550"
                     >
                 <materialDesign:Card materialDesign:ElevationAssist.Elevation="Dp6">
                     <StackPanel VerticalAlignment="Center">
@@ -166,6 +166,20 @@
                                     </Style>
                                 </DatePicker.Resources>
                             </DatePicker>
+                        </StackPanel>
+
+                        <StackPanel Width="300"  
+                              Margin="0,18,0,0">
+
+                            <Label Content="Ativo:" 
+                              FontWeight="Bold" 
+                              Foreground="#FF4D4D4D"/>
+                            <ToggleButton
+                              x:Name="clienteAtivo"
+                              IsChecked="True"
+                              Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                              ToolTip="MaterialDesignSwitchToggleButton" HorizontalAlignment="Left"/>
+
                         </StackPanel>
 
                         <StackPanel 

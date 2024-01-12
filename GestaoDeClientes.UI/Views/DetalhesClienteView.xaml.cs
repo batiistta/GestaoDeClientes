@@ -28,7 +28,7 @@ namespace GestaoDeClientes.UI.Views
         ClienteRepository clienteRepository = new ClienteRepository();
         public event EventHandler ChildWindowClosed;
         public event EventHandler OnCancelarClicado;
-        private string id;
+        private Cliente _cliente;
         #endregion
 
         #region Construtores
@@ -41,11 +41,8 @@ namespace GestaoDeClientes.UI.Views
         {
             InitializeComponent();
             this.DataContext = cliente;
-            txtNome.Text = cliente.Nome;
-            txtTelefone.Text = cliente.Telefone;
-            txtDataNascimento.Text = cliente.DataNascimento.ToString("dd/MM/yyyy");
-            txtEndereco.Text = cliente.Endereco;    
-            id = cliente.Id;
+            _cliente = cliente;
+            txtDataNascimento.Text = _cliente.DataNascimento.ToString("dd/MM/yyyy");
         }
         #endregion
 
@@ -54,24 +51,23 @@ namespace GestaoDeClientes.UI.Views
         {
             try
             {
-                Cliente cliente = new Cliente();
-                cliente.Id = id;
-                cliente.Nome = txtNome.Text;
-                cliente.Telefone = txtTelefone.Text;
-                cliente.DataNascimento = DateTime.Parse(txtDataNascimento.Text);
-                cliente.DataCadastro = DateTime.Now;
-                cliente.Endereco = txtEndereco.Text;
-
-                await clienteRepository.UpdateAsync(cliente);
+                if (txtNome.Text.Any())
+                {
+                    _cliente.Nome = txtNome.Text;
+                }
+                if (clienteAtivo.IsChecked == false)
+                {
+                    _cliente.Ativo = false;
+                }
+                await clienteRepository.UpdateAsync(_cliente);
                 GCMessageBox.Show("Cliente atualizado com sucesso!", "Sucesso", GCMessageBox.MessageBoxStatus.Ok);
                 OnCancelarClicado?.Invoke(this, EventArgs.Empty);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 OnCancelarClicado?.Invoke(this, EventArgs.Empty);
                 GCMessageBox.Show("Erro ao atualizar cliente!", "Erro", GCMessageBox.MessageBoxStatus.Error);
-            }
-            
+            }            
         }
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
