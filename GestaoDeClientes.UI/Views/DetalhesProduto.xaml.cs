@@ -51,7 +51,7 @@ namespace GestaoDeClientes.UI.Views
         #endregion
 
         #region Eventos
-        private void btnAtualizar_Click(object sender, RoutedEventArgs e)
+        private async void btnAtualizar_Click(object sender, RoutedEventArgs e)
         {
             if (txtNomeProduto.Text.Any())
             {
@@ -64,7 +64,7 @@ namespace GestaoDeClientes.UI.Views
             }
 
             ProdutoRepository produtoRepository = new ProdutoRepository();
-            produtoRepository.UpdateAsync(_produto);
+            await produtoRepository.UpdateAsync(_produto);
 
             MessageBox.Show("Produto atualizado com sucesso!", "Sucesso", MessageBoxButton.OK, MessageBoxImage.Information);
             ProdutoView produtoView = new ProdutoView();

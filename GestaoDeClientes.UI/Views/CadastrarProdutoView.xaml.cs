@@ -63,7 +63,7 @@ namespace GestaoDeClientes.UI.Views
             }
         }
         private void txtValor_TextChanged(object sender, TextChangedEventArgs e)
-        {            
+        {
             TextBox textBox = sender as TextBox;
 
             if (decimal.TryParse(textBox.Text, out decimal value))
@@ -83,6 +83,7 @@ namespace GestaoDeClientes.UI.Views
         #region Botões
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
+            Limpar();
             OnCancelarClicado?.Invoke(this, EventArgs.Empty);
         }
         private async void btnCadastar_Click(object sender, RoutedEventArgs e)
@@ -124,11 +125,14 @@ namespace GestaoDeClientes.UI.Views
         }
         private void Limpar()
         {
+            ResetBindingExpressions(txtNomeProduto, txtDescricaoProduto, txtValorCompraProduto, txtValorUnitarioProduto, txtQuantidadeProduto);
             txtNomeProduto.Text = string.Empty;
             txtDescricaoProduto.Text = string.Empty;
             txtValorCompraProduto.Text = string.Empty;
             txtValorUnitarioProduto.Text = string.Empty;
             txtQuantidadeProduto.Text = string.Empty;
+
+            
         }
         public void RemoverJanela()
         {
@@ -140,8 +144,6 @@ namespace GestaoDeClientes.UI.Views
             bindingExpressions.Add(txtNomeProduto.GetBindingExpression(TextBox.TextProperty));
             bindingExpressions.Add(txtDescricaoProduto.GetBindingExpression(TextBox.TextProperty));
             bindingExpressions.Add(txtQuantidadeProduto.GetBindingExpression(TextBox.TextProperty));
-            bindingExpressions.Add(txtValorCompraProduto.GetBindingExpression(TextBox.TextProperty));
-            bindingExpressions.Add(txtValorUnitarioProduto.GetBindingExpression(TextBox.TextProperty));
             bool algumErro = bindingExpressions.Any(x =>
             {
                 x?.UpdateSource();
@@ -150,6 +152,17 @@ namespace GestaoDeClientes.UI.Views
             btnCadastrar.IsEnabled = !algumErro;
             bindingExpressions.Clear();
         }
+
+        private void ResetBindingExpressions(params TextBox[] textBoxes)
+        {
+            foreach (var textBox in textBoxes)
+            {
+                BindingExpression bindingExpression = textBox.GetBindingExpression(TextBox.TextProperty);
+
+                bindingExpression?.UpdateTarget();
+            }
+        }
+
         #endregion
     }
 }

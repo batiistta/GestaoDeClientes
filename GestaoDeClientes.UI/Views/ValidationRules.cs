@@ -50,4 +50,23 @@ namespace GestaoDeClientes.UI.Views
             return ValidationResult.ValidResult;
         }        
     }
+
+    public class ValorValidationRule : ValidationRule
+    {
+        public override ValidationResult Validate(object value, CultureInfo cultureInfo)
+        {
+            if (value is string strValue)
+            {
+                if (decimal.TryParse(strValue, out decimal valor))
+                {
+                    if (valor <= 0)
+                        return new ValidationResult(false, "O valor deve ser maior que zero.");
+                    else
+                        return ValidationResult.ValidResult;
+                }
+            }
+
+            return ValidationResult.ValidResult;
+        }
+    }
 }

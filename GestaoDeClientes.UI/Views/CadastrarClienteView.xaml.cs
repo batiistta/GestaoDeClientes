@@ -27,7 +27,6 @@ namespace GestaoDeClientes.UI.Views
         ClienteRepository clienteRepository = new ClienteRepository();
         public event EventHandler ChildWindowClosed;        
         public event EventHandler OnCancelarClicado;
-        private string dataNascimento;
         List<BindingExpression> bindingExpressions = new List<BindingExpression>();
         #endregion
 
@@ -129,6 +128,7 @@ namespace GestaoDeClientes.UI.Views
         }
         private void Limpar()
         {
+            ResetBindingExpressions(txtNome, txtTelefone, txtEndereco);
             txtNome.Text = string.Empty;
             txtTelefone.Text = string.Empty;
             txtEndereco.Text = string.Empty;
@@ -177,6 +177,16 @@ namespace GestaoDeClientes.UI.Views
            });
            btnCadastrar.IsEnabled = !algumErro;
            bindingExpressions.Clear();
+        }
+
+        private void ResetBindingExpressions(params TextBox[] textBoxes)
+        {
+            foreach (var textBox in textBoxes)
+            {
+                BindingExpression bindingExpression = textBox.GetBindingExpression(TextBox.TextProperty);
+
+                bindingExpression?.UpdateTarget();
+            }
         }
         #endregion
     }
