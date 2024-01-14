@@ -89,10 +89,10 @@ namespace GestaoDeClientes.UI.Views
 
                 Usuario usuarioParaDeletar = btnDeletar.DataContext as Usuario;
 
-                if (GCMessageBox.Show("Deseja realmente deletar o produto " + usuarioParaDeletar.Nome + "?", "Atenção", GCMessageBox.MessageBoxStatus.Ok))
+                if (GCMessageBox.Confirm("Deseja realmente deletar o usuario " + usuarioParaDeletar.Nome + "?", "Atenção", GCMessageBox.MessageBoxStatus.Ok))
                 {
                     usuarioRepository.Delete(usuarioParaDeletar.Id);
-                    GCMessageBox.Show("Produto deletado com sucesso!", GCMessageBox.MessageBoxStatus.Ok);
+                    GCMessageBox.Show("Usuário deletado com sucesso!", GCMessageBox.MessageBoxStatus.Ok);
                     CarregarUsuarios();
                 }
             }

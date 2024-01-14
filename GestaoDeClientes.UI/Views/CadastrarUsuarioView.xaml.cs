@@ -49,7 +49,7 @@ namespace GestaoDeClientes.UI.Views
                 usuario.Senha = txtSenha.Text;
                 usuario.Email = txtEmail.Text;
                 usuario.DataCadastro = DateTime.Now;
-                //usuario.Ativo = true;
+                usuario.Ativo = true;
 
                 try
                 {

@@ -41,7 +41,7 @@ namespace GestaoDeClientes.UI.Views
             txtLogin.Text = usuario.Login;
             txtEmail.Text = usuario.Email;
             txtSenha.Text = usuario.Senha;
-
+            usuarioAtivo.IsChecked = usuario.Ativo;
         }
 
         private void btnAtualizar_Click(object sender, RoutedEventArgs e)
@@ -66,7 +66,11 @@ namespace GestaoDeClientes.UI.Views
                 _usuario.Senha = txtSenha.Text;
             }
 
-            if (!usuarioAtivo.IsEnabled)
+            if (usuarioAtivo.IsChecked == true)
+            {
+                _usuario.Ativo = true;
+            }
+            else
             {
                 _usuario.Ativo = false;
             }
