@@ -13,7 +13,7 @@ xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
             <Border Background="#FFFFFF" 
              CornerRadius="30" 
              Width="400" 
-             Height="300"
+             Height="380"
              >
                 <materialDesign:Card materialDesign:ElevationAssist.Elevation="Dp8">
                     <StackPanel VerticalAlignment="Center">
@@ -26,47 +26,15 @@ xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
                                 FontSize="20"                                       
                                 FontFamily="verdana" Foreground="Black"
                      />
-                        </StackPanel>
 
-                        <StackPanel Width="300"  
-                         Margin="0,18,0,0">
-
-                            <Label Content="Cliente:" 
-                                 FontWeight="Bold" 
-                                 Foreground="#FF4D4D4D"/>
-                            <AdornerDecorator>
-                                <TextBox 
-                                x:Name="txtNomeCliente" 
-                                VerticalAlignment="Center"
-                                Width="300" 
-                                Height="32" 
-                                Background="#FFFBFCFF" 
-                                Foreground="Black"
-                                materialDesign:TextFieldAssist.CharacterCounterVisibility="Hidden"
-                                MaxLength="50" 
-                                BorderBrush="#89000000" 
-                                CaretBrush="#FFFF5722" 
-                                SelectionBrush="#FFFF8A50" 
-                                BorderThickness="0,0,0,1">
-                                    <TextBox.Text>
-                                        <Binding Path="DataContext.Nome" RelativeSource="{RelativeSource AncestorType={x:Type UserControl}}" UpdateSourceTrigger="PropertyChanged">
-                                            <Binding.ValidationRules>
-                                                <local:MinLengthValidationRule MinLength="3"/>
-                                            </Binding.ValidationRules>
-                                        </Binding>
-                                    </TextBox.Text>
-                                </TextBox>
-                            </AdornerDecorator>
-                        </StackPanel>
-
-                        <StackPanel Width="300" Margin="0,18,0,0">
-                            <Label 
-                     Content="Data de nascimento:" 
+                            <StackPanel Width="300" Margin="0,18,0,0">
+                                <Label 
+                     Content="Data do Agendamento:" 
                      FontWeight="Bold" 
                      Foreground="#FF4D4D4D" 
                              />
-                            <DatePicker 
-                                 x:Name="txtDataNascimento" 
+                                <DatePicker 
+                                 x:Name="txtDataAgendamento" 
                                  VerticalAlignment="Center" 
                                  Width="300" 
                                  Height="32" 
@@ -75,22 +43,63 @@ xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
                                  BorderBrush="#89000000" 
                                  BorderThickness="0,0,0,1"
                                  DisplayDateStart="01/01/2000">
-                                <DatePicker.Resources>
-                                    <Style TargetType="DatePickerTextBox">
-                                        <Setter Property="Control.Template">
-                                            <Setter.Value>
-                                                <ControlTemplate>
-                                                    <TextBox 
+                                    <DatePicker.Resources>
+                                        <Style TargetType="DatePickerTextBox">
+                                            <Setter Property="Control.Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate>
+                                                        <TextBox 
                                  x:Name="Date_TextBox"
                                  Text="{Binding Path=SelectedDate, StringFormat={}{0:dd/MM/yyyy}, TargetNullValue=''}">
-                                                    </TextBox>
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Style>
-                                </DatePicker.Resources>
-                            </DatePicker>
+                                                        </TextBox>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </DatePicker.Resources>
+                                </DatePicker>
+                            </StackPanel>
                         </StackPanel>
+
+                        <StackPanel Width="300" Margin="0,18,0,0">
+                            <Label Content="Cliente:" FontWeight="Bold" Foreground="#FF4D4D4D" />
+                            <AdornerDecorator>
+                                <ComboBox
+                                    x:Name="cmbClientes"
+                                    VerticalAlignment="Center"
+                                    Width="300"
+                                    Height="32"
+                                    Background="#FFFBFCFF"
+                                    Foreground="Black"
+                                    BorderBrush="#89000000"
+                                    BorderThickness="0,0,0,1"
+                                    DisplayMemberPath="Nome" SelectedValuePath="Id">
+                                    <ComboBox.ItemsSource>
+                                        <Binding Path="DataContext.Clientes" RelativeSource="{RelativeSource AncestorType={x:Type UserControl}}" />
+                                    </ComboBox.ItemsSource>
+                                </ComboBox>
+                            </AdornerDecorator>
+                        </StackPanel>
+
+                        <StackPanel Width="300" Margin="0,18,0,0">
+                            <Label Content="Produto:" FontWeight="Bold" Foreground="#FF4D4D4D" />
+                            <AdornerDecorator>
+                                <ComboBox
+                                    x:Name="cmbProdutos"
+                                    VerticalAlignment="Center"
+                                    Width="300"
+                                    Height="32"
+                                    Background="#FFFBFCFF"
+                                    Foreground="Black"
+                                    BorderBrush="#89000000"
+                                    BorderThickness="0,0,0,1"
+                                    DisplayMemberPath="Nome" SelectedValuePath="Id">
+                                    <ComboBox.ItemsSource>
+                                        <Binding Path="DataContext.Clientes" RelativeSource="{RelativeSource AncestorType={x:Type UserControl}}" />
+                                    </ComboBox.ItemsSource>
+                                </ComboBox>
+                            </AdornerDecorator>
+                        </StackPanel>                     
 
 
                         <StackPanel 

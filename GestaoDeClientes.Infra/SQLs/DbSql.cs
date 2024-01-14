@@ -30,12 +30,13 @@ namespace GestaoDeClientes.Infra.SQLs
             );
             
             CREATE TABLE IF NOT EXISTS Agendamento(
-                Id TEXT PRIMARY KEY,
-                DataAgendamento DATETIME NOT NULL ,
-                ClienteId TEXT,
-                FOREIGN KEY (ClienteId) REFERENCES Cliente(Id)
-
-            );
+            Id TEXT PRIMARY KEY,
+            DataAgendamento DATETIME NOT NULL,
+            IdCliente TEXT,
+            IdProduto TEXT,
+            FOREIGN KEY (IdCliente) REFERENCES Cliente(Id),
+            FOREIGN KEY (IdProduto) REFERENCES Produto(Id)
+        );
             
             CREATE TABLE IF NOT EXISTS Usuario(
                 Id TEXT PRIMARY KEY,

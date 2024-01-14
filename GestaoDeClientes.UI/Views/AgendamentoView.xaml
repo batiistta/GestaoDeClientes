@@ -8,8 +8,8 @@
              xmlns:materialdesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" 
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
+             d:DesignHeight="450" d:DesignWidth="800" IsVisibleChanged="UserControl_IsVisibleChanged">
+    <Grid x:Name="primeiraGrid">
         <xctk:BusyIndicator Grid.Row="1" 
                  Margin="8,0,8,0"  
                  Name="busySalvarCarteirasIndicator"
@@ -96,7 +96,7 @@
                                              materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
                                              materialDesign:ButtonProgressAssist.Value="-1"
                                              ToolTip="Cadastrar Agendamento" 
-                                             Cursor="Hand"
+                                             Cursor="Hand" Click="btnCadastrarAgendamento_Click"
                                      />
 
                                                 <Button Margin="20,0,0,0"
@@ -123,7 +123,7 @@
                                                         <Grid.RowDefinitions>
                                                             <RowDefinition Height="*"></RowDefinition>
                                                         </Grid.RowDefinitions>
-                                                        <ListView x:Name="listViewUsuarios"
+                                                        <ListView x:Name="listViewAgendamentos"
                                                        ItemsSource="{Binding Usuarios}"
                                                        SelectionMode="Single">
                                                             <ListView.RenderTransform>
