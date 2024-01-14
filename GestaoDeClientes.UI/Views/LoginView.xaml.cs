@@ -25,6 +25,9 @@ namespace GestaoDeClientes.UI.Views
     public partial class LoginView : Window
     {
         public bool isAutenticado { get; set; }
+        public bool isUsuarioAtivo { get; set; }
+
+        UsuarioRepository usuarioRepository = new UsuarioRepository();
         public LoginView()
         {
             InitializeComponent();
@@ -48,15 +51,15 @@ namespace GestaoDeClientes.UI.Views
                     return;
                 }
 
-                busySalvarCarteirasIndicator.IsBusy = true;
-                UsuarioRepository usuarioRepository = new UsuarioRepository();
+                busySalvarCarteirasIndicator.IsBusy = true;          
 
-                this.isAutenticado = usuarioRepository.ValidarUsuario(userName, password);
+                this.isAutenticado = ValidarUsuario(userName, password);
+                this.isUsuarioAtivo = VerificarUsuarioAtivo(userName);
 
-                if (!this.isAutenticado)
+                if (!this.isAutenticado || !this.isUsuarioAtivo)
                 {
                     busySalvarCarteirasIndicator.IsBusy = false;
-                    GCMessageBox.Show("Usuário ou senha inválidos!", "Error", GCMessageBox.MessageBoxStatus.Error);
+                    GCMessageBox.Show("Erro ao realizar login!", "Error", GCMessageBox.MessageBoxStatus.Error);
                     txtUserName.Text = string.Empty;
                     pbPassword.Password = string.Empty;
                     txtUserName.Focus();
@@ -76,9 +79,16 @@ namespace GestaoDeClientes.UI.Views
                 pbPassword.Password = string.Empty;
                 txtUserName.Focus();
             }
+        }
 
+        private bool ValidarUsuario(string nome, string password)
+        {
+            return usuarioRepository.ValidarUsuario(nome, password);
+        }
 
-
+        private bool VerificarUsuarioAtivo(string username)
+        {
+            return usuarioRepository.isAtivo(username);
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)

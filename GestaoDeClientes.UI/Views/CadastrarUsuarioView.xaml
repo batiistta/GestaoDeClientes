@@ -7,8 +7,8 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="800">
-    <Grid>
+             d:DesignHeight="600" d:DesignWidth="800" IsVisibleChanged="UserControl_IsVisibleChanged">
+    <Grid x:Name="primeiraGrid">
         <StackPanel VerticalAlignment="Center">
             <Border Background="#FFFFFF" 
                 CornerRadius="30" 
@@ -138,7 +138,7 @@
                                     Foreground="White"
                                     Background="#FFFF5722"
                                     BorderBrush="#FFFF5722"
-                                    FontWeight="Medium"
+                                    FontWeight="Medium" Click="btnCancelar_Click"
                             />
                         </StackPanel>
                     </StackPanel>

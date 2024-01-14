@@ -45,6 +45,18 @@ namespace GestaoDeClientes.Infra.Repositories
             }
         }
 
+        public bool isAtivo(string login)
+        {
+            using (var connection = new SqliteConnection(connString))
+            {
+                connection.Open();
+                string query = "SELECT COUNT(*) FROM Usuario WHERE Login = @Login AND Ativo = 1;";
+                var count = connection.ExecuteScalar<int>(query, new { Login = login });
+
+                return count > 0;
+            }
+        }
+
         public Usuario GetByUsername(string username)
         {
             using (var connection = new SqliteConnection(connString))
@@ -68,6 +80,24 @@ namespace GestaoDeClientes.Infra.Repositories
             {
                 connection.Open();
                 connection.Execute(UsuarioSql.Delete, new { Id = id });
+            }
+        }
+
+        public void Update(Usuario usuario)
+        {
+            using (var connection = new SqliteConnection(connString))
+            {
+                connection.Open();
+                connection.Execute(UsuarioSql.Update, new
+                {
+                    Id = usuario.Id,
+                    Login = usuario.Login,
+                    Senha = usuario.Senha,
+                    Nome = usuario.Nome,
+                    Email = usuario.Email,
+                    DataCadastro = usuario.DataCadastro,
+                    Ativo = usuario.Ativo
+                });
             }
         }
     }
