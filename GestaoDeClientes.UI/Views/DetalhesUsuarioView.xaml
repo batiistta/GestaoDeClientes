@@ -116,7 +116,7 @@
                           FontWeight="Bold" 
                           Foreground="#FF4D4D4D"/>
                             <ToggleButton
-                          x:Name="produtoAtivo"
+                          x:Name="usuarioAtivo"
                           IsChecked="True"
                           Style="{StaticResource MaterialDesignSwitchToggleButton}"
                           ToolTip="MaterialDesignSwitchToggleButton" HorizontalAlignment="Left"/>

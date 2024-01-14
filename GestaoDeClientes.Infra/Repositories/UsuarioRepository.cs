@@ -70,5 +70,23 @@ namespace GestaoDeClientes.Infra.Repositories
                 connection.Execute(UsuarioSql.Delete, new { Id = id });
             }
         }
+
+        public void Update(Usuario usuario)
+        {
+            using (var connection = new SqliteConnection(connString))
+            {
+                connection.Open();
+                connection.Execute(UsuarioSql.Update, new
+                {
+                    Id = usuario.Id,
+                    Login = usuario.Login,
+                    Senha = usuario.Senha,
+                    Nome = usuario.Nome,
+                    Email = usuario.Email,
+                    DataCadastro = usuario.DataCadastro,
+                    Ativo = usuario.Ativo
+                });
+            }
+        }
     }
 }

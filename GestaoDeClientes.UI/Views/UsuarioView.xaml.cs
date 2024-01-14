@@ -1,4 +1,5 @@
 ﻿using GestaoDeClientes.Domain.Models;
+using GestaoDeClientes.Infra.Interfaces;
 using GestaoDeClientes.Infra.Repositories;
 using GestaoDeClientes.UI.Popup;
 using System;
@@ -23,23 +24,112 @@ namespace GestaoDeClientes.UI.Views
     /// </summary>
     public partial class UsuarioView : UserControl
     {
+        public event EventHandler OnCancelarClicado;
+        CadastrarUsuarioView cadastrarUsuarioView = new CadastrarUsuarioView();
+        DetalhesUsuarioView detalhesUsuarioView = new DetalhesUsuarioView();
+        UsuarioRepository usuarioRepository = new UsuarioRepository();
+
         public UsuarioView()
         {
             InitializeComponent();
         }
 
+        #region Eventos
         private void UserControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (!this.IsVisible)
             {
-                if (!(this.Content is UsuarioView))
+                RemoverJanelasFilhas();
+            }
+        }
+        private void listViewUsuarios_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (this.IsVisible)
+            {
+                CarregarUsuarios();
+            }
+        }
+        private void CadastrarUsuarioView_OnCancelarClicado(object sender, EventArgs e)
+        {
+            primeiraGrid.Children.Remove(cadastrarUsuarioView);
+            gridPrincipal.IsEnabled = true;
+            CarregarUsuarios();
+        }
+        private void DetalhesUsuarioView_OnCancelarClicado(object sender, EventArgs e)
+        {
+            primeiraGrid.Children.Remove(detalhesUsuarioView);
+            gridPrincipal.IsEnabled = true;
+            CarregarUsuarios();
+        }
+        #endregion
+
+        #region Botões
+        private void btnCadastrarUsuario_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                primeiraGrid.Children.Add(cadastrarUsuarioView);
+                cadastrarUsuarioView.OnCancelarClicado += CadastrarUsuarioView_OnCancelarClicado;
+                gridPrincipal.IsEnabled = false;
+            }
+            catch (Exception ex)
+            {
+                cadastrarUsuarioView.OnCancelarClicado += CadastrarUsuarioView_OnCancelarClicado;
+                gridPrincipal.IsEnabled = false;
+                GCMessageBox.Show(ex.Message, "Erro", GCMessageBox.MessageBoxStatus.Error);
+            }
+
+        }
+
+        private void btnDeletar_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Button btnDeletar = sender as Button;
+
+                Usuario usuarioParaDeletar = btnDeletar.DataContext as Usuario;
+
+                if (GCMessageBox.Show("Deseja realmente deletar o produto " + usuarioParaDeletar.Nome + "?", "Atenção", GCMessageBox.MessageBoxStatus.Ok))
                 {
-                    UsuarioView usuarioView = new UsuarioView();
-                    this.Content = usuarioView;
+                    usuarioRepository.Delete(usuarioParaDeletar.Id);
+                    GCMessageBox.Show("Produto deletado com sucesso!", GCMessageBox.MessageBoxStatus.Ok);
+                    CarregarUsuarios();
                 }
+            }
+            catch (Exception ex)
+            {
+                GCMessageBox.Show(ex.Message);
             }
         }
 
+        private void btnAtualizar_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Button btnAtualizar = sender as Button;
+
+                Usuario usuarioParaAtualizar = btnAtualizar.DataContext as Usuario;
+
+                detalhesUsuarioView = new DetalhesUsuarioView(usuarioParaAtualizar);
+                primeiraGrid.Children.Add(detalhesUsuarioView);
+                detalhesUsuarioView.OnCancelarClicado += DetalhesUsuarioView_OnCancelarClicado;
+                gridPrincipal.IsEnabled = false;
+            }
+            catch (Exception ex)
+            {
+                GCMessageBox.Show(ex.Message);
+            }
+
+            detalhesUsuarioView.OnCancelarClicado += DetalhesUsuarioView_OnCancelarClicado;
+        }
+        private async void btnCancelar_Click(object sender, RoutedEventArgs e)
+        {
+            listViewUsuarios.ItemsSource = null;
+            this.Visibility = Visibility.Hidden;
+        }
+        #endregion
+
+        #region Métodos
         private void CarregarUsuarios()
         {
             try
@@ -54,65 +144,15 @@ namespace GestaoDeClientes.UI.Views
             }
         }
 
-        private void btnCadastrarUsuario_Click(object sender, RoutedEventArgs e)
+        private void RemoverJanelasFilhas()
         {
-            try
+            foreach (var child in primeiraGrid.Children.OfType<IRemoverJanela>().ToList())
             {
-                CadastrarUsuarioView cadastrarUsuarioView = new CadastrarUsuarioView();
-                this.Content = cadastrarUsuarioView;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
+                child.RemoverJanela();
             }
 
+            gridPrincipal.IsEnabled = true;
         }
-
-        private void listViewUsuarios_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            if (this.IsVisible)
-            {
-                CarregarUsuarios();
-            }
-        }
-
-        private void btnDeletar_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                Button btnDeletar = sender as Button;
-
-                Usuario usuarioParaDeletar = btnDeletar.DataContext as Usuario;
-
-                if (MessageBox.Show("Deseja realmente deletar o usuário ?", "Atenção", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-                {
-                    UsuarioRepository usuarioRepository = new UsuarioRepository();
-                    usuarioRepository.Delete(usuarioParaDeletar.Id);
-                    MessageBox.Show("Usuário deletado com sucesso!");
-                    CarregarUsuarios();
-                }
-            }
-            catch (Exception ex)
-            {
-               GCMessageBox.Show(ex.Message);
-            }
-        }
-
-        private void btnAtualizar_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                Button btnAtualizar = sender as Button;
-
-                Usuario usuarioParaAtualizar = btnAtualizar.DataContext as Usuario;
-
-                DetalhesUsuarioView detalhesUsuarioView = new DetalhesUsuarioView(usuarioParaAtualizar);
-                this.Content = detalhesUsuarioView;
-            }
-            catch (Exception ex)
-            {
-                GCMessageBox.Show(ex.Message);
-            }
-        }
+        #endregion
     }
 }
