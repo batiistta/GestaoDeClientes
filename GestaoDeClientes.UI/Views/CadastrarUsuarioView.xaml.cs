@@ -27,6 +27,7 @@ namespace GestaoDeClientes.UI.Views
         public CadastrarUsuarioView()
         {
             InitializeComponent();
+            this.DataContext = new Usuario();
         }
 
         private async void btnCadastrarUsuario_Click(object sender, RoutedEventArgs e)
@@ -63,6 +64,38 @@ namespace GestaoDeClientes.UI.Views
                     GCMessageBox.Show(ex.Message);
                 }
             }
+
+        }
+
+        private void btnCancelar_Click(object sender, RoutedEventArgs e)
+        {
+            Limpar();
+            OnCancelarClicado?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void Limpar()
+        {
+            ResetBindingExpressions(txtNome, txtLogin, txtSenha, txtEmail);
+            txtNome.Text = string.Empty;
+            txtLogin.Text = string.Empty;
+            txtSenha.Text = string.Empty;
+            txtEmail.Text = string.Empty;
+        }
+
+        private void ResetBindingExpressions(params TextBox[] textBoxes)
+        {
+            foreach (var textBox in textBoxes)
+            {
+                BindingExpression bindingExpression = textBox.GetBindingExpression(TextBox.TextProperty);
+
+                bindingExpression?.UpdateTarget();
+            }
+        }
+
+        private void UserControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            txtLogin.Focus();
+            Limpar();
 
         }
     }

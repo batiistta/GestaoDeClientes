@@ -35,7 +35,7 @@ namespace GestaoDeClientes.UI.Views
 
         #region Construtores
         public CadastrarProdutoView()
-        {
+        {                       
             InitializeComponent();
             this.DataContext = new Produto();
         }
