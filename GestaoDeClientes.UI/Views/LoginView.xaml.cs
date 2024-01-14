@@ -25,6 +25,7 @@ namespace GestaoDeClientes.UI.Views
     public partial class LoginView : Window
     {
         public bool isAutenticado { get; set; }
+        public bool isUsuarioAtivo { get; set; }
         public LoginView()
         {
             InitializeComponent();
@@ -49,7 +50,7 @@ namespace GestaoDeClientes.UI.Views
                 }
 
                 busySalvarCarteirasIndicator.IsBusy = true;
-                UsuarioRepository usuarioRepository = new UsuarioRepository();
+                UsuarioRepository usuarioRepository = new UsuarioRepository();                
 
                 this.isAutenticado = usuarioRepository.ValidarUsuario(userName, password);
 
@@ -57,6 +58,18 @@ namespace GestaoDeClientes.UI.Views
                 {
                     busySalvarCarteirasIndicator.IsBusy = false;
                     GCMessageBox.Show("Usuário ou senha inválidos!", "Error", GCMessageBox.MessageBoxStatus.Error);
+                    txtUserName.Text = string.Empty;
+                    pbPassword.Password = string.Empty;
+                    txtUserName.Focus();
+                    return;
+                }
+
+                this.isUsuarioAtivo = usuarioRepository.isAtivo(userName);
+
+                if (!this.isUsuarioAtivo)
+                {
+                    busySalvarCarteirasIndicator.IsBusy = false;
+                    GCMessageBox.Show("Usuário inativo!", "Error", GCMessageBox.MessageBoxStatus.Error);
                     txtUserName.Text = string.Empty;
                     pbPassword.Password = string.Empty;
                     txtUserName.Focus();
@@ -76,9 +89,6 @@ namespace GestaoDeClientes.UI.Views
                 pbPassword.Password = string.Empty;
                 txtUserName.Focus();
             }
-
-
-
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
