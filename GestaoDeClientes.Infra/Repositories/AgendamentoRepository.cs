@@ -8,12 +8,14 @@ using Dapper;
 using GestaoDeClientes.Infra.SQLs;
 using Microsoft.Data.Sqlite;
 using GestaoDeClientes.Infra.Interfaces;
+using GestaoDeClientes.Domain;
 
 namespace GestaoDeClientes.Infra.Repositories
 {
     public class AgendamentoRepository : IRepository<Agendamento>
     {
         string connString = string.Format("Data Source={0}", Util.Util.GetDbFilePath());
+
       
         public async Task AddAsync(Agendamento entity)
         {
@@ -26,7 +28,9 @@ namespace GestaoDeClientes.Infra.Repositories
                     Id = entity.Id,
                     IdCliente = entity.IdCliente,
                     IdProduto = entity.IdProduto,
-                    DataAgendamento = entity.DataAgendamento
+                    DataAgendamento = entity.DataAgendamento,
+                    NomeCliente = entity.NomeCliente,
+                    NomeProduto = entity.NomeProduto
                 });
             }
         }
@@ -38,7 +42,12 @@ namespace GestaoDeClientes.Infra.Repositories
 
         public Task<IEnumerable<Agendamento>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            using (var connection = new SqliteConnection(connString))
+            {
+                SQLitePCL.Batteries.Init();
+                connection.Open();
+                return Task.FromResult(connection.Query<Agendamento>(AgendamentoSql.GetAll));
+            }
         }
 
         public Task<Agendamento> GetByIdAsync(Guid id)

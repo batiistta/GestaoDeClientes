@@ -10,9 +10,9 @@ namespace GestaoDeClientes.Domain.Models
     {
         public string Id { get; set; }
         public DateTime DataAgendamento { get; set; }
-        public string IdCliente { get; set; }
-        public Cliente Cliente { get; set; }
+        public string IdCliente { get; set; }   
+        public string NomeCliente { get; set; }
         public string IdProduto { get; set; }
-        public Produto Produto { get; set; }
+        public string NomeProduto { get; set; }
     }
 }

@@ -72,6 +72,10 @@ namespace GestaoDeClientes.UI.Views
             {
                 RemoverJanelasFilhas();
             }
+            if (this.IsVisible)
+            {
+                CarregarAgendamentos();
+            }
         }
 
         private void listViewAgendamentos_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)

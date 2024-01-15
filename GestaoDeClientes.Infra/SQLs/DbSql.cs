@@ -34,6 +34,8 @@ namespace GestaoDeClientes.Infra.SQLs
             DataAgendamento DATETIME NOT NULL,
             IdCliente TEXT,
             IdProduto TEXT,
+            NomeCliente TEXT,
+            NomeProduto TEXT,
             FOREIGN KEY (IdCliente) REFERENCES Cliente(Id),
             FOREIGN KEY (IdProduto) REFERENCES Produto(Id)
         );

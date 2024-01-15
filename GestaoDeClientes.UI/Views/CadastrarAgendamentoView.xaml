@@ -7,7 +7,7 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
 xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d" 
-             d:DesignHeight="550" d:DesignWidth="800">
+             d:DesignHeight="550" d:DesignWidth="800" IsVisibleChanged="UserControl_IsVisibleChanged">
     <Grid x:Name="primeiraGrid">
         <StackPanel VerticalAlignment="Center">
             <Border Background="#FFFFFF" 

@@ -54,7 +54,10 @@ namespace GestaoDeClientes.UI.Views
                 Agendamento agendamento = new Agendamento();
                 agendamento.IdCliente = (cmbClientes.SelectedItem as Cliente).Id;
                 agendamento.IdProduto = (cmbProdutos.SelectedItem as Produto).Id;
+                agendamento.NomeCliente = (cmbClientes.SelectedItem as Cliente).Nome;
+                agendamento.NomeProduto = (cmbProdutos.SelectedItem as Produto).Nome;
                 agendamento.DataAgendamento = txtDataAgendamento.DisplayDate;
+
 
                 await agendamentoRepository.AddAsync(agendamento);
                 MessageBox.Show("Agendamento cadastrado com sucesso!", "Sucesso", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -70,6 +73,15 @@ namespace GestaoDeClientes.UI.Views
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
             OnCancelarClicado?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void UserControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (this.IsVisible)
+            {
+                CarregarClientes();
+                CarregarProdutos();
+            }
         }
     }
 }

@@ -14,12 +14,17 @@ namespace GestaoDeClientes.Infra.SQLs
                 IdCliente,
                 IdProduto,
                 DataAgendamento,
+                NomeCliente,
+                NomeProduto
             ) VALUES (
                 @Id,
                 @IdCliente,
                 @IdProduto,
-                @DataAgendamento
+                @DataAgendamento,
+                @NomeCliente,
+                @NomeProduto
             );";
+
 
 
         public static string Delete = @"Remove from Agendamento where Id = @Id";
