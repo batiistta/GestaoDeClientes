@@ -30,15 +30,15 @@ namespace GestaoDeClientes.Infra.SQLs
             );
             
             CREATE TABLE IF NOT EXISTS Agendamento(
-                Id TEXT PRIMARY KEY,
-                IdCliente TEXT NOT NULL,
-                DataAgendamento DATETIME NOT NULL ,
-                ValorTotal DECIMAL(10,2) NOT NULL ,
-                ValorCusto DECIMAL(10,2) NOT NULL ,
-                Observacao VARCHAR(200) ,   
-                Lucro DECIMAL(10, 2) NOT NULL,
-                Ativo BIT 
-            );
+            Id TEXT PRIMARY KEY,
+            DataAgendamento DATETIME NOT NULL,
+            IdCliente TEXT,
+            IdProduto TEXT,
+            NomeCliente TEXT,
+            NomeProduto TEXT,
+            FOREIGN KEY (IdCliente) REFERENCES Cliente(Id),
+            FOREIGN KEY (IdProduto) REFERENCES Produto(Id)
+        );
             
             CREATE TABLE IF NOT EXISTS Usuario(
                 Id TEXT PRIMARY KEY,
@@ -52,16 +52,6 @@ namespace GestaoDeClientes.Infra.SQLs
 
             INSERT OR IGNORE INTO Usuario (Id, Login, Senha, Nome, Email, DataCadastro, Ativo)
             VALUES ('1', 'admin', 'admin', 'Administrador', NULL, DATETIME('now'), 1);
-        
-            CREATE TABLE IF NOT EXISTS Agendamento(
-                Id TEXT PRIMARY KEY,
-                IdCliente TEXT NOT NULL,
-                DataAgendamento DATETIME NOT NULL ,
-                ValorTotal DECIMAL(10,2) NOT NULL ,
-                ValorCusto DECIMAL(10,2) NOT NULL ,
-                Observacao VARCHAR(200) ,   
-                Lucro DECIMAL(10, 2) NOT NULL,
-                Ativo BIT 
         );"
         ;       
 

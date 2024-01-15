@@ -8,101 +8,61 @@ using Dapper;
 using GestaoDeClientes.Infra.SQLs;
 using Microsoft.Data.Sqlite;
 using GestaoDeClientes.Infra.Interfaces;
+using GestaoDeClientes.Domain;
 
 namespace GestaoDeClientes.Infra.Repositories
 {
     public class AgendamentoRepository : IRepository<Agendamento>
     {
-        private string dbPath = Util.Util.GetDbFilePath();
-        public async Task AddAsync(Agendamento agendamento)
+        string connString = string.Format("Data Source={0}", Util.Util.GetDbFilePath());
+
+      
+        public async Task AddAsync(Agendamento entity)
         {
-            using (var connection = new SqliteConnection("Data Source" + dbPath))
+            using (var connection = new SqliteConnection(connString))
             {
                 SQLitePCL.Batteries.Init();
                 connection.Open();
                 connection.Execute(AgendamentoSql.Insert, new
                 {
-                    Id = agendamento.Id,
-                    IdCliente = agendamento.IdCliente,
-                    DataAgendamento = agendamento.DataAgendamento,
-                    ValorTotal = agendamento.ValorTotal,
-                    ValorCusto = agendamento.ValorCusto,
-                    Observacao = agendamento.Observacao,
-                    Lucro = agendamento.Lucro,
-                    Ativo = agendamento.Ativo
-                });
-
-            }
-        }
-
-        public async Task DeleteAsync(string id)
-        {
-            using (var connection = new SqliteConnection("Data Source" + dbPath))
-            {
-                SQLitePCL.Batteries.Init();
-                connection.Open();
-                connection.Execute(AgendamentoSql.Delete, new
-                {
-                    Id = id
-                });
-
-            }
-        }
-
-        public async Task<IEnumerable<Agendamento>> GetAllAsync()
-        {
-            using (var connection = new SqliteConnection("Data Source" + dbPath))
-            {
-                SQLitePCL.Batteries.Init();
-                connection.Open();
-                return connection.Query<Agendamento>(AgendamentoSql.GetAll);
-            }
-        }
-
-        public async Task<Agendamento> GetByIdAsync(Guid id)
-        {
-            using (var connection = new SqliteConnection("Data Source" + dbPath))
-            {
-                SQLitePCL.Batteries.Init();
-                connection.Open();
-                return connection.QueryFirstOrDefault<Agendamento>(AgendamentoSql.GetById, new
-                {
-                    Id = id
-                });
-            }
-        }
-
-        public async Task<Agendamento> GetByNomeAsync(string nome)
-        {
-            using (var connection = new SqliteConnection("Data Source" + dbPath))
-            {
-                SQLitePCL.Batteries.Init();
-                connection.Open();
-                return connection.QueryFirstOrDefault<Agendamento>(AgendamentoSql.GetByNome, new
-                {
-                    Nome = nome
-                });
-            }
-        }
-
-        public async Task UpdateAsync(Agendamento entity)
-        {
-            using (var connection = new SqliteConnection("Data Source" + dbPath))
-            {
-                SQLitePCL.Batteries.Init();
-                connection.Open();
-                connection.Execute(AgendamentoSql.Update, new
-                {
                     Id = entity.Id,
                     IdCliente = entity.IdCliente,
+                    IdProduto = entity.IdProduto,
                     DataAgendamento = entity.DataAgendamento,
-                    ValorTotal = entity.ValorTotal,
-                    ValorCusto = entity.ValorCusto,
-                    Observacao = entity.Observacao,
-                    Lucro = entity.Lucro,
-                    Ativo = entity.Ativo
+                    NomeCliente = entity.NomeCliente,
+                    NomeProduto = entity.NomeProduto
                 });
             }
+        }
+
+        public Task DeleteAsync(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<Agendamento>> GetAllAsync()
+        {
+            using (var connection = new SqliteConnection(connString))
+            {
+                SQLitePCL.Batteries.Init();
+                connection.Open();
+                return Task.FromResult(connection.Query<Agendamento>(AgendamentoSql.GetAll));
+            }
+        }
+
+        public Task<Agendamento> GetByIdAsync(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Agendamento> GetByNomeAsync(string nome)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateAsync(Agendamento entity)
+        {
+            throw new NotImplementedException();
         }
     }
 }

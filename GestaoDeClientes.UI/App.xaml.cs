@@ -17,7 +17,7 @@ namespace GestaoDeClientes.UI
     public partial class App : Application
     {
         protected override void OnStartup(StartupEventArgs e)
-        {
+            {
             StartupRepository startupRepository = new StartupRepository();
             startupRepository.VerifyDatabase();
 
