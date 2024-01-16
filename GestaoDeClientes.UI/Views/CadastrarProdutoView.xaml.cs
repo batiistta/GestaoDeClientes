@@ -101,7 +101,7 @@ namespace GestaoDeClientes.UI.Views
 
                 await produtoRepository.AddAsync(produto);
 
-                GCMessageBox.Show("Cliente cadastrado com sucesso!", "Sucesso", GCMessageBox.MessageBoxStatus.Ok);
+                GCMessageBox.Show("Produto cadastrado com sucesso!", "Sucesso", GCMessageBox.MessageBoxStatus.Ok);
                 OnCancelarClicado?.Invoke(this, EventArgs.Empty);
 
             }

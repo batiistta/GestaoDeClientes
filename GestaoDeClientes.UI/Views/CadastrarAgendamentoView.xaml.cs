@@ -31,6 +31,7 @@ namespace GestaoDeClientes.UI.Views
         public CadastrarAgendamentoView()
         {
             InitializeComponent();
+            this.DataContext = new Agendamento();
             CarregarClientes();
             CarregarProdutos();
         }
@@ -52,6 +53,7 @@ namespace GestaoDeClientes.UI.Views
             try
             {
                 Agendamento agendamento = new Agendamento();
+                agendamento.Id = Guid.NewGuid().ToString();
                 agendamento.IdCliente = (cmbClientes.SelectedItem as Cliente).Id;
                 agendamento.IdProduto = (cmbProdutos.SelectedItem as Produto).Id;
                 agendamento.NomeCliente = (cmbClientes.SelectedItem as Cliente).Nome;
@@ -62,6 +64,7 @@ namespace GestaoDeClientes.UI.Views
                 await agendamentoRepository.AddAsync(agendamento);
                 MessageBox.Show("Agendamento cadastrado com sucesso!", "Sucesso", MessageBoxButton.OK, MessageBoxImage.Information);
                 OnCancelarClicado?.Invoke(this, EventArgs.Empty);
+
             }
             catch (Exception ex)
             {
