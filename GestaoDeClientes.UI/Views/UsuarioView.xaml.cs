@@ -81,7 +81,7 @@ namespace GestaoDeClientes.UI.Views
 
         }
 
-        private void btnDeletar_Click(object sender, RoutedEventArgs e)
+        private async void btnDeletar_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -91,7 +91,7 @@ namespace GestaoDeClientes.UI.Views
 
                 if (GCMessageBox.Confirm("Deseja realmente deletar o usuario " + usuarioParaDeletar.Nome + "?", "Atenção", GCMessageBox.MessageBoxStatus.Ok))
                 {
-                    usuarioRepository.Delete(usuarioParaDeletar.Id);
+                    await usuarioRepository.DeleteAsync(usuarioParaDeletar.Id);
                     GCMessageBox.Show("Usuário deletado com sucesso!", GCMessageBox.MessageBoxStatus.Ok);
                     CarregarUsuarios();
                 }
@@ -130,12 +130,12 @@ namespace GestaoDeClientes.UI.Views
         #endregion
 
         #region Métodos
-        private void CarregarUsuarios()
+        private async void CarregarUsuarios()
         {
             try
             {
                 UsuarioRepository usuarioRepository = new UsuarioRepository();
-                var usuarios = usuarioRepository.GetAll();
+                var usuarios = await usuarioRepository.GetAllAsync();
                 listViewUsuarios.ItemsSource = usuarios;
             }
             catch (Exception ex)

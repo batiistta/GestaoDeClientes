@@ -1,4 +1,5 @@
 ﻿using GestaoDeClientes.Domain.Models;
+using GestaoDeClientes.Infra.Interfaces;
 using GestaoDeClientes.Infra.Repositories;
 using GestaoDeClientes.UI.Popup;
 using System;
@@ -21,7 +22,7 @@ namespace GestaoDeClientes.UI.Views
     /// <summary>
     /// Interação lógica para DetalhesUsuarioView.xam
     /// </summary>
-    public partial class DetalhesUsuarioView : UserControl
+    public partial class DetalhesUsuarioView : UserControl, IRemoverJanela
     {
         public event EventHandler OnCancelarClicado;
         public Usuario _usuario;
@@ -38,6 +39,11 @@ namespace GestaoDeClientes.UI.Views
             this.DataContext = usuario;
             _usuario = usuario;            
         }
+        private void UserControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            txtLogin.Focus();
+            btnAtualizar.IsEnabled = false;
+        }
         private async void btnAtualizar_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -49,7 +55,7 @@ namespace GestaoDeClientes.UI.Views
             catch (Exception ex)
             {
                 OnCancelarClicado?.Invoke(this, EventArgs.Empty);
-                GCMessageBox.Show("Erro ao atualizar cliente!", "Erro", GCMessageBox.MessageBoxStatus.Error);
+                GCMessageBox.Show("Erro ao atualizar usuário!", "Erro", GCMessageBox.MessageBoxStatus.Error);
             }
         }
         private void btnCancelar_Click(object sender, RoutedEventArgs e)
@@ -112,6 +118,19 @@ namespace GestaoDeClientes.UI.Views
 
                 bindingExpression?.UpdateTarget();
             }
+        }
+        private void Limpar()
+        {
+            ResetBindingExpressions(txtNome, txtLogin, txtSenha, txtEmail);
+            txtNome.Text = string.Empty;
+            txtLogin.Text = string.Empty;
+            txtSenha.Text = string.Empty;
+            txtEmail.Text = string.Empty;
+        }
+
+        public void RemoverJanela()
+        {
+            OnCancelarClicado?.Invoke(this, EventArgs.Empty);
         }
     }
 }

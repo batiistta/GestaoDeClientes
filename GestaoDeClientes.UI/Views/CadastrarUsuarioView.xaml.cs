@@ -60,39 +60,13 @@ namespace GestaoDeClientes.UI.Views
         {
             Limpar();
             OnCancelarClicado?.Invoke(this, EventArgs.Empty);
-        }
-        private void Limpar()
-        {
-            ResetBindingExpressions(txtNome, txtLogin, txtSenha, txtEmail);
-            txtNome.Text = string.Empty;
-            txtLogin.Text = string.Empty;
-            txtSenha.Text = string.Empty;
-            txtEmail.Text = string.Empty;
-        }
+        }        
         private void UserControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             txtLogin.Focus();
             Limpar();
             btnCadastrar.IsEnabled = false;
         }        
-        private bool IsTextOnly(string input)
-        {
-            return System.Text.RegularExpressions.Regex.IsMatch(input, @"^[a-zA-Z]+$");
-        }
-        private void VerificarErrosEBloquearBotao()
-        {
-            bindingExpressions.Add(txtLogin.GetBindingExpression(TextBox.TextProperty));
-            bindingExpressions.Add(txtNome.GetBindingExpression(TextBox.TextProperty));
-            bindingExpressions.Add(txtEmail.GetBindingExpression(TextBox.TextProperty));
-            bindingExpressions.Add(txtSenha.GetBindingExpression(TextBox.TextProperty));
-            bool algumErro = bindingExpressions.Any(x =>
-            {
-                x?.UpdateSource();
-                return x?.HasError == true;
-            });
-            btnCadastrar.IsEnabled = !algumErro;
-            bindingExpressions.Clear();
-        }
         private void ResetBindingExpressions(params TextBox[] textBoxes)
         {
             foreach (var textBox in textBoxes)
@@ -131,6 +105,32 @@ namespace GestaoDeClientes.UI.Views
         private void txtNome_TextChanged(object sender, TextChangedEventArgs e)
         {
             VerificarErrosEBloquearBotao();
+        }
+        private bool IsTextOnly(string input)
+        {
+            return System.Text.RegularExpressions.Regex.IsMatch(input, @"^[a-zA-Z]+$");
+        }
+        private void VerificarErrosEBloquearBotao()
+        {
+            bindingExpressions.Add(txtLogin.GetBindingExpression(TextBox.TextProperty));
+            bindingExpressions.Add(txtNome.GetBindingExpression(TextBox.TextProperty));
+            bindingExpressions.Add(txtEmail.GetBindingExpression(TextBox.TextProperty));
+            bindingExpressions.Add(txtSenha.GetBindingExpression(TextBox.TextProperty));
+            bool algumErro = bindingExpressions.Any(x =>
+            {
+                x?.UpdateSource();
+                return x?.HasError == true;
+            });
+            btnCadastrar.IsEnabled = !algumErro;
+            bindingExpressions.Clear();
+        }
+        private void Limpar()
+        {
+            ResetBindingExpressions(txtNome, txtLogin, txtSenha, txtEmail);
+            txtNome.Text = string.Empty;
+            txtLogin.Text = string.Empty;
+            txtSenha.Text = string.Empty;
+            txtEmail.Text = string.Empty;
         }
     }
 }

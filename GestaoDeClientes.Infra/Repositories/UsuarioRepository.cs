@@ -71,6 +71,16 @@ namespace GestaoDeClientes.Infra.Repositories
             }
         }
 
+        public Usuario GetByNome(string username)
+        {
+            using (var connection = new SqliteConnection(connString))
+            {
+                connection.Open();
+                return connection.Query<Usuario>(UsuarioSql.GetByLogin, new { Login = username }).FirstOrDefault();
+            }
+
+        }
+
         public Task<Usuario> GetByIdAsync(Guid id)
         {
             using (var connection = new SqliteConnection(connString))

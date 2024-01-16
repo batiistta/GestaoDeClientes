@@ -33,7 +33,7 @@ namespace GestaoDeClientes.UI.Views
             InitializeComponent();
         }
 
-        private async void btnLogin_Click(object sender, RoutedEventArgs e)
+        private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
             var userName = txtUserName.Text;
             var password = pbPassword.Password;
@@ -66,7 +66,7 @@ namespace GestaoDeClientes.UI.Views
                     return;
                 }
 
-                Global.Instance.UsuarioAutenticado = usuarioRepository.GetByUsername(userName);
+                Global.Instance.UsuarioAutenticado = usuarioRepository.GetByNome(userName);
 
                 busySalvarCarteirasIndicator.IsBusy = false;
                 this.Hide();

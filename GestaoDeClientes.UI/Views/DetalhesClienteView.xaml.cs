@@ -35,6 +35,7 @@ namespace GestaoDeClientes.UI.Views
         public DetalhesClienteView()
         {
             InitializeComponent();
+            this.DataContext = _cliente;
         }
 
         public DetalhesClienteView(Cliente cliente)
