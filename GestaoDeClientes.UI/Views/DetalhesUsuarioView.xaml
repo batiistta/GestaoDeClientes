@@ -7,13 +7,13 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="600" d:DesignWidth="800">
     <Grid>
         <StackPanel VerticalAlignment="Center">
             <Border Background="#FFFFFF" 
           CornerRadius="30" 
           Width="400" 
-          Height="500"
+          Height="550"
           >
                 <materialDesign:Card materialDesign:ElevationAssist.Elevation="Dp8">
                     <StackPanel VerticalAlignment="Center">
@@ -35,7 +35,9 @@
                               FontWeight="Bold" 
                               Foreground="#FF4D4D4D"/>
                             <AdornerDecorator>
-                                <TextBox x:Name="txtNome"                                         
+                                <TextBox 
+                                    x:Name="txtNome"     
+                                    TextChanged="txtNome_TextChanged"
                                VerticalAlignment="Center"
                                Width="300" 
                                Height="32" 
@@ -47,6 +49,13 @@
                                CaretBrush="#FFFF5722" 
                                SelectionBrush="#FFFF8A50" 
                                BorderThickness="0,0,0,1">
+                                    <TextBox.Text>
+                                        <Binding Path="DataContext.Login" RelativeSource="{RelativeSource AncestorType={x:Type UserControl}}" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <local:MinLengthValidationRule MinLength="3"/>
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
                                 </TextBox>
                             </AdornerDecorator>
                         </StackPanel>
@@ -57,7 +66,9 @@
                                 FontWeight="Bold" 
                                 Foreground="#FF4D4D4D"/>
                             <AdornerDecorator>
-                                <TextBox x:Name="txtLogin"                                         
+                                <TextBox 
+                                    x:Name="txtLogin"  
+                                    TextChanged="txtLogin_TextChanged"
                                  VerticalAlignment="Center"
                                  Width="300" 
                                  Height="32" 
@@ -69,6 +80,13 @@
                                  CaretBrush="#FFFF5722" 
                                  SelectionBrush="#FFFF8A50" 
                                  BorderThickness="0,0,0,1">
+                                    <TextBox.Text>
+                                        <Binding Path="DataContext.Login" RelativeSource="{RelativeSource AncestorType={x:Type UserControl}}" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <local:MinLengthValidationRule MinLength="3"/>
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
                                 </TextBox>
                             </AdornerDecorator>
                         </StackPanel>
@@ -79,7 +97,9 @@
                             <Label Content="Email:" 
                           FontWeight="Bold" 
                           Foreground="#FF4D4D4D"/>
-                            <TextBox x:Name="txtEmail"
+                            <TextBox 
+                                x:Name="txtEmail"
+                                TextChanged="txtEmail_TextChanged"
                            VerticalAlignment="Center" 
                            Width="300" 
                            Height="32" 
@@ -88,8 +108,15 @@
                            materialDesign:TextFieldAssist.CharacterCounterVisibility="Hidden"
                            MaxLength="20"                                      
                            BorderBrush="#89000000"
-                           CaretBrush="#FFFF5722" SelectionBrush="#FFFF8A50" BorderThickness="0,0,0,1"
-                      />
+                           CaretBrush="#FFFF5722" SelectionBrush="#FFFF8A50" BorderThickness="0,0,0,1">
+                                <TextBox.Text>
+                                    <Binding Path="DataContext.Email" RelativeSource="{RelativeSource AncestorType={x:Type UserControl}}" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <local:MinLengthValidationRule MinLength="3"/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>                            
+                            </TextBox>
                         </StackPanel>
 
                         <StackPanel Width="300"  
@@ -98,15 +125,25 @@
                             <Label Content="Senha:" 
                           FontWeight="Bold" 
                           Foreground="#FF4D4D4D"/>
-                            <TextBox x:Name="txtSenha"
+                            <TextBox 
+                                x:Name="txtSenha"
+                                TextChanged="txtSenha_TextChanged"
                            VerticalAlignment="Center" 
                            Width="300" 
                            Height="32" 
                            Background="#FFFBFCFF" 
                            Foreground="Black"
                            materialDesign:TextFieldAssist.CharacterCounterVisibility="Hidden"
-                           MaxLength="100" BorderBrush="#89000000" CaretBrush="#FFFF5722" SelectionBrush="#FFFF8A50" BorderThickness="0,0,0,1"
-                      />
+                           MaxLength="100" BorderBrush="#89000000" CaretBrush="#FFFF5722" SelectionBrush="#FFFF8A50" BorderThickness="0,0,0,1">
+                                <TextBox.Text>
+                                    <Binding Path="DataContext.Senha" RelativeSource="{RelativeSource AncestorType={x:Type UserControl}}" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <local:MinLengthValidationRule MinLength="3"/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            
+                            </TextBox>
                         </StackPanel>
 
                         <StackPanel Width="300"  
@@ -117,9 +154,10 @@
                           Foreground="#FF4D4D4D"/>
                             <ToggleButton
                           x:Name="usuarioAtivo"
-                          IsChecked="True"
+                          IsChecked="{Binding Path=DataContext.Ativo, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Mode=TwoWay}"
                           Style="{StaticResource MaterialDesignSwitchToggleButton}"
-                          ToolTip="MaterialDesignSwitchToggleButton" HorizontalAlignment="Left"/>
+                          ToolTip="MaterialDesignSwitchToggleButton" HorizontalAlignment="Left">                                
+                            </ToggleButton>
 
                         </StackPanel>
 

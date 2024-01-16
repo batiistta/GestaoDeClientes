@@ -23,10 +23,10 @@ namespace GestaoDeClientes.UI.Views
     /// </summary>
     public partial class DetalhesUsuarioView : UserControl
     {
-        public event EventHandler ChildWindowClosed;
         public event EventHandler OnCancelarClicado;
         public Usuario _usuario;
         UsuarioRepository usuarioRepository = new UsuarioRepository();
+        List<BindingExpression> bindingExpressions = new List<BindingExpression>();
         public DetalhesUsuarioView()
         {
             InitializeComponent();
@@ -35,61 +35,83 @@ namespace GestaoDeClientes.UI.Views
         public DetalhesUsuarioView(Usuario usuario)
         {
             InitializeComponent();
-            _usuario = usuario;
             this.DataContext = usuario;
-            txtNome.Text = usuario.Nome;
-            txtLogin.Text = usuario.Login;
-            txtEmail.Text = usuario.Email;
-            txtSenha.Text = usuario.Senha;
-            usuarioAtivo.IsChecked = usuario.Ativo;
+            _usuario = usuario;            
         }
-
-        private void btnAtualizar_Click(object sender, RoutedEventArgs e)
+        private async void btnAtualizar_Click(object sender, RoutedEventArgs e)
         {
-            if (txtLogin.Text.Any())
-            {
-                _usuario.Login = txtLogin.Text;
-            }
-
-            if (txtNome.Text.Any())
-            {
-                _usuario.Nome = txtNome.Text;
-            }
-
-            if (txtEmail.Text.Any())
-            {
-                _usuario.Email = txtEmail.Text;
-            }
-
-            if (txtSenha.Text.Any())
-            {
-                _usuario.Senha = txtSenha.Text;
-            }
-
-            if (usuarioAtivo.IsChecked == true)
-            {
-                _usuario.Ativo = true;
-            }
-            else
-            {
-                _usuario.Ativo = false;
-            }
-
             try
             {
-                usuarioRepository.Update(_usuario);
+                await usuarioRepository.UpdateAsync(_usuario);
                 GCMessageBox.Show("Usuário atualizado com sucesso!", "Sucesso", GCMessageBox.MessageBoxStatus.Ok);
                 OnCancelarClicado?.Invoke(this, EventArgs.Empty);
             }
             catch (Exception ex)
             {
-                GCMessageBox.Show(ex.Message);
+                OnCancelarClicado?.Invoke(this, EventArgs.Empty);
+                GCMessageBox.Show("Erro ao atualizar cliente!", "Erro", GCMessageBox.MessageBoxStatus.Error);
             }
         }
-
         private void btnCancelar_Click(object sender, RoutedEventArgs e)
         {
             OnCancelarClicado?.Invoke(this, EventArgs.Empty);
+        }       
+        private void txtLogin_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (!IsTextOnly(e.Text))
+            {
+                e.Handled = true;
+            }
+        }
+        private void txtNome_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (!IsTextOnly(e.Text))
+            {
+                e.Handled = true;
+            }
+        }
+        private void txtSenha_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            VerificarErrosEBloquearBotao();
+        }
+        private void txtEmail_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            VerificarErrosEBloquearBotao();
+        }
+        private void txtLogin_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            VerificarErrosEBloquearBotao();
+        }
+        private void txtNome_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            VerificarErrosEBloquearBotao();
+        }
+        private bool IsTextOnly(string input)
+        {
+            return System.Text.RegularExpressions.Regex.IsMatch(input, @"^[a-zA-Z]+$");
+        }
+        private void VerificarErrosEBloquearBotao()
+        {
+            bindingExpressions.Add(txtLogin.GetBindingExpression(TextBox.TextProperty));
+            bindingExpressions.Add(txtNome.GetBindingExpression(TextBox.TextProperty));
+            bindingExpressions.Add(txtEmail.GetBindingExpression(TextBox.TextProperty));
+            bindingExpressions.Add(txtSenha.GetBindingExpression(TextBox.TextProperty));
+            bool algumErro = bindingExpressions.Any(x =>
+            {
+                x?.UpdateSource();
+                return x?.HasError == true;
+            });
+            btnAtualizar.IsEnabled = !algumErro;
+            bindingExpressions.Clear();
+        }
+        private void ResetBindingExpressions(params TextBox[] textBoxes)
+        {
+            foreach (var textBox in textBoxes)
+            {
+                BindingExpression bindingExpression = textBox.GetBindingExpression(TextBox.TextProperty);
+
+                bindingExpression?.UpdateTarget();
+            }
         }
     }
 }

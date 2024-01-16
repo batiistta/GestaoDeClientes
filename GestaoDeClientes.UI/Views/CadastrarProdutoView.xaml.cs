@@ -70,7 +70,6 @@ namespace GestaoDeClientes.UI.Views
             {
                 textBox.Text = string.Format(CultureInfo.GetCultureInfo("pt-BR"), "{0:N2}", value);
             }
-            VerificarErrosEBloquearBotao();
         }
         private void txtDescricaoProduto_TextChanged(object sender, TextChangedEventArgs e)
         {

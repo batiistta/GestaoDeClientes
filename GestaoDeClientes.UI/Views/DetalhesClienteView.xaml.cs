@@ -42,7 +42,6 @@ namespace GestaoDeClientes.UI.Views
             InitializeComponent();
             this.DataContext = cliente;
             _cliente = cliente;
-            txtDataNascimento.Text = _cliente.DataNascimento.ToString("dd/MM/yyyy");
         }
         #endregion
 
@@ -51,14 +50,6 @@ namespace GestaoDeClientes.UI.Views
         {
             try
             {
-                if (txtNome.Text.Any())
-                {
-                    _cliente.Nome = txtNome.Text;
-                }
-                if (clienteAtivo.IsChecked == false)
-                {
-                    _cliente.Ativo = false;
-                }
                 await clienteRepository.UpdateAsync(_cliente);
                 GCMessageBox.Show("Cliente atualizado com sucesso!", "Sucesso", GCMessageBox.MessageBoxStatus.Ok);
                 OnCancelarClicado?.Invoke(this, EventArgs.Empty);

@@ -69,4 +69,20 @@ namespace GestaoDeClientes.UI.Views
             return ValidationResult.ValidResult;
         }
     }
+
+    public class EmailValidationRule: ValidationRule
+    {
+        public override ValidationResult Validate(object value, CultureInfo cultureInfo)
+        {
+            if (value is string strValue)
+            {
+                if (strValue.Contains("@") && strValue.Contains("."))
+                    return ValidationResult.ValidResult;
+                else
+                    return new ValidationResult(false, "O e-mail deve ser válido.");
+            }
+
+            return ValidationResult.ValidResult;
+        }
+    }
 }

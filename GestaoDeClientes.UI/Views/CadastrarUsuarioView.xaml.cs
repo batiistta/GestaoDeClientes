@@ -24,6 +24,9 @@ namespace GestaoDeClientes.UI.Views
     public partial class CadastrarUsuarioView : UserControl
     {
         public event EventHandler OnCancelarClicado;
+        UsuarioRepository usuarioRepository = new UsuarioRepository();
+        List<BindingExpression> bindingExpressions = new List<BindingExpression>();
+
         public CadastrarUsuarioView()
         {
             InitializeComponent();
@@ -32,15 +35,7 @@ namespace GestaoDeClientes.UI.Views
 
         private async void btnCadastrarUsuario_Click(object sender, RoutedEventArgs e)
         {
-            if (!txtNome.Text.Any() || !txtLogin.Text.Any() ||
-                !txtSenha.Text.Any() || !txtEmail.Text.Any())
-            {
-                GCMessageBox.Show("Por favor, preencha todos os campos!", "Atenção", GCMessageBox.MessageBoxStatus.Error);
-                return;
-            }
-
-
-            else
+            try
             {
                 Usuario usuario = new Usuario();
                 usuario.Id = Guid.NewGuid().ToString();
@@ -51,28 +46,21 @@ namespace GestaoDeClientes.UI.Views
                 usuario.DataCadastro = DateTime.Now;
                 usuario.Ativo = true;
 
-                try
-                {
-                    UsuarioRepository usuarioRepository = new UsuarioRepository();
-                    await usuarioRepository.AddAsync(usuario);
-                    GCMessageBox.Show("Usuário cadastrado com sucesso!", "Sucesso", GCMessageBox.MessageBoxStatus.Ok);
-                    UsuarioView usuarioView = new UsuarioView();
-                    this.Content = usuarioView;
-                }
-                catch (Exception ex)
-                {
-                    GCMessageBox.Show(ex.Message);
-                }
+                await usuarioRepository.AddAsync(usuario);
+                GCMessageBox.Show("Usuário cadastrado com sucesso!", "Sucesso", GCMessageBox.MessageBoxStatus.Ok);
+                OnCancelarClicado?.Invoke(this, EventArgs.Empty);
             }
-
+            catch (Exception ex)
+            {
+                GCMessageBox.Show(ex.Message, "Erro", GCMessageBox.MessageBoxStatus.Error);
+                OnCancelarClicado?.Invoke(this, EventArgs.Empty);
+            }
         }
-
         private void btnCancelar_Click(object sender, RoutedEventArgs e)
         {
             Limpar();
             OnCancelarClicado?.Invoke(this, EventArgs.Empty);
         }
-
         private void Limpar()
         {
             ResetBindingExpressions(txtNome, txtLogin, txtSenha, txtEmail);
@@ -81,7 +69,30 @@ namespace GestaoDeClientes.UI.Views
             txtSenha.Text = string.Empty;
             txtEmail.Text = string.Empty;
         }
-
+        private void UserControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            txtLogin.Focus();
+            Limpar();
+            btnCadastrar.IsEnabled = false;
+        }        
+        private bool IsTextOnly(string input)
+        {
+            return System.Text.RegularExpressions.Regex.IsMatch(input, @"^[a-zA-Z]+$");
+        }
+        private void VerificarErrosEBloquearBotao()
+        {
+            bindingExpressions.Add(txtLogin.GetBindingExpression(TextBox.TextProperty));
+            bindingExpressions.Add(txtNome.GetBindingExpression(TextBox.TextProperty));
+            bindingExpressions.Add(txtEmail.GetBindingExpression(TextBox.TextProperty));
+            bindingExpressions.Add(txtSenha.GetBindingExpression(TextBox.TextProperty));
+            bool algumErro = bindingExpressions.Any(x =>
+            {
+                x?.UpdateSource();
+                return x?.HasError == true;
+            });
+            btnCadastrar.IsEnabled = !algumErro;
+            bindingExpressions.Clear();
+        }
         private void ResetBindingExpressions(params TextBox[] textBoxes)
         {
             foreach (var textBox in textBoxes)
@@ -91,12 +102,35 @@ namespace GestaoDeClientes.UI.Views
                 bindingExpression?.UpdateTarget();
             }
         }
-
-        private void UserControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        private void txtLogin_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            txtLogin.Focus();
-            Limpar();
-
+            if (!IsTextOnly(e.Text))
+            {
+                e.Handled = true;
+            }
+        }
+        private void txtNome_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (!IsTextOnly(e.Text))
+            {
+                e.Handled = true;
+            }
+        }
+        private void txtSenha_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            VerificarErrosEBloquearBotao();
+        }
+        private void txtEmail_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            VerificarErrosEBloquearBotao();
+        }
+        private void txtLogin_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            VerificarErrosEBloquearBotao();
+        }
+        private void txtNome_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            VerificarErrosEBloquearBotao();
         }
     }
 }
