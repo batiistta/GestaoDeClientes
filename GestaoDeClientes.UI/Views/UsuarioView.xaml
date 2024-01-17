@@ -98,23 +98,58 @@
                                                     materialDesign:ButtonProgressAssist.Value="-1"
                                                     ToolTip="Cadastrar Usuario" 
                                                     Cursor="Hand" Click="btnCadastrarUsuario_Click"
-                                            />
+                                                />
 
-                                                <Button Margin="20,0,0,0"
-                                                    x:Name="btnBuscarUsuario"
-                                                    Content="Buscar Usuario"
-                                                    FontFamily="verdana"    
-                                                    Foreground="#ffffff"
-                                                    Width="200"
-                                                    IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
-                                                    Style="{StaticResource MaterialDesignRaisedButton}"
-                                                    materialDesign:ButtonProgressAssist.IsIndeterminate="False"
-                                                    materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
-                                                    materialDesign:ButtonProgressAssist.Value="-1"
-                                                    ToolTip="Buscar Usuario" 
-                                                    Cursor="Hand" 
-                                            />
+                                                <StackPanel 
+                                                    Orientation="Horizontal" 
+                                                    Margin="10,0,0,0">
+                                                    <TextBox 
+                                                        x:Name="txtSearch" 
+                                                        Margin="0,10,0,0"
+                                                        Width="150"                                                             
+                                                        VerticalAlignment="Center"                                                             
+                                                        materialDesign:HintAssist.Hint="Buscar Clientes"                                                             
+                                                        Text="{Binding DataContext.SearchText, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}, UpdateSourceTrigger=PropertyChanged}" 
+                                                    />
 
+                                                    <Button 
+                                                        Content="Buscar"
+                                                        Margin="10,0,0,0"
+                                                        Width="100"
+                                                        Foreground="#ffffff"
+                                                        IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                                        Style="{StaticResource MaterialDesignRaisedButton}"
+                                                        ToolTip="Buscar Usuários" 
+                                                        Cursor="Hand" 
+                                                        Click="btnBuscarUsuarios_Click" 
+                                                    />
+                                                </StackPanel>
+
+
+
+                                            </StackPanel>
+
+                                            <StackPanel 
+                                                Margin="0,0,10,0" 
+                                                Orientation="Horizontal" 
+                                                HorizontalAlignment="Right" 
+                                                Grid.Column="2" 
+                                                Grid.Row="0" >
+                                                <Button
+                                                    x:Name="btnCancelar"                                                        
+                                                    Content="Cancelar"                                                        
+                                                    FontFamily="verdana"                                                        
+                                                    Foreground="#ffffff"                                                        
+                                                    Width="100"                                                        
+                                                    IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"                                                        
+                                                    Style="{StaticResource MaterialDesignRaisedButton}"                                                        
+                                                    materialDesign:ButtonProgressAssist.IsIndeterminate="False"                                                       
+                                                    materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"                                                        
+                                                    materialDesign:ButtonProgressAssist.Value="-1"                                                       
+                                                    ToolTip="Botão de cancelar"                                                         
+                                                    Cursor="Hand"                                                        
+                                                    Click="btnCancelar_Click"
+                                                />
                                             </StackPanel>
 
 
@@ -125,7 +160,7 @@
                                                             <RowDefinition Height="*"></RowDefinition>
                                                         </Grid.RowDefinitions>
                                                         <ListView x:Name="listViewUsuarios"
-                                                              ItemsSource="{Binding Usuarios}"
+                                                              ItemsSource="{Binding CarregarClientes}"
                                                               SelectionMode="Single" IsVisibleChanged="listViewUsuarios_IsVisibleChanged">
                                                             <ListView.RenderTransform>
                                                                 <TransformGroup>

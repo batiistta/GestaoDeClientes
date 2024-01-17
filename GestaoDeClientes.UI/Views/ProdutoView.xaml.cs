@@ -1,6 +1,8 @@
-﻿using GestaoDeClientes.Domain.Models;
+﻿using GestaoDeClientes.Domain;
+using GestaoDeClientes.Domain.Models;
 using GestaoDeClientes.Infra.Interfaces;
 using GestaoDeClientes.Infra.Repositories;
+using GestaoDeClientes.UI.Popup;
 using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
@@ -81,6 +83,23 @@ namespace GestaoDeClientes.UI.Views
                 MessageBox.Show(ex.Message);
             }
         }
+        private async void btnBuscarProdutos_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(txtSearch.Text))
+                {
+                    listProdutos.ItemsSource = await GetAllAsync();
+                    return;
+                }
+                produtos = (await GetAllAsync()).ToList();
+                listProdutos.ItemsSource = produtos.Where(c => c.Nome.ToLower().Contains(txtSearch.Text.ToLower()));
+            }
+            catch (Exception ex)
+            {
+                GCMessageBox.Show(ex.Message, "Erro", GCMessageBox.MessageBoxStatus.Error);
+            }
+        }
         private async void btnDeletar_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -122,6 +141,11 @@ namespace GestaoDeClientes.UI.Views
                 MessageBox.Show(ex.Message);
             }
         }
+        private void btnCancelar_Click(object sender, RoutedEventArgs e)
+        {
+            listProdutos.ItemsSource = null;
+            this.Visibility = Visibility.Hidden;
+        }
         #endregion
         #endregion
 
@@ -147,7 +171,19 @@ namespace GestaoDeClientes.UI.Views
                 MessageBox.Show(ex.Message);
             }
         }
-        #endregion
 
+        private async Task<IEnumerable<Produto>> GetAllAsync()
+        {
+            try
+            {
+                return await produtoRepository.GetAllAsync();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        #endregion
+        
     }
 }

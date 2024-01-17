@@ -70,16 +70,24 @@ namespace GestaoDeClientes.UI.Views
             gridPrincipal.IsEnabled = true;
             CarregarClientes();
         }
+        #endregion
+
         #region Botões
         private async void btnBuscarClientes_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                await GetAllAsync();
+                if (string.IsNullOrEmpty(txtSearch.Text))
+                {
+                    listClientes.ItemsSource = await GetAllAsync();
+                    return;
+                }
+                clientes = (await GetAllAsync()).ToList();
+                listClientes.ItemsSource = clientes.Where(c => c.Nome.ToLower().Contains(txtSearch.Text.ToLower()));
             }
             catch (Exception ex)
             {
-                GCMessageBox.Show(ex.Message,"Erro", GCMessageBox.MessageBoxStatus.Error);
+                GCMessageBox.Show(ex.Message, "Erro", GCMessageBox.MessageBoxStatus.Error);
             }
         }
         private async void btnBuscarClientePorNome_Click(object sender, RoutedEventArgs e)
@@ -99,7 +107,7 @@ namespace GestaoDeClientes.UI.Views
             {
                 primeiraGrid.Children.Add(cadastrarClienteView);
                 cadastrarClienteView.OnCancelarClicado += CadastrarClienteView_OnCancelarClicado;
-                gridPrincipal.IsEnabled = false;       
+                gridPrincipal.IsEnabled = false;
             }
             catch (Exception ex)
             {
@@ -107,7 +115,7 @@ namespace GestaoDeClientes.UI.Views
                 gridPrincipal.IsEnabled = false;
                 GCMessageBox.Show(ex.Message, "Erro", GCMessageBox.MessageBoxStatus.Error);
             }
-            
+
         }
         private async void btnAtualizar_Click(object sender, RoutedEventArgs e)
         {
@@ -124,10 +132,10 @@ namespace GestaoDeClientes.UI.Views
             {
                 GCMessageBox.Show(ex.Message, "Erro", GCMessageBox.MessageBoxStatus.Error);
             }
-            
+
             detalhesClienteView.OnCancelarClicado += DetalhesClienteView_OnCancelarClicado;
         }
-        private async void btnCancelar_Click(object sender, RoutedEventArgs e)
+        private void btnCancelar_Click(object sender, RoutedEventArgs e)
         {
             listClientes.ItemsSource = null;
             this.Visibility = Visibility.Hidden;
@@ -144,7 +152,6 @@ namespace GestaoDeClientes.UI.Views
                 CarregarClientes();
             }
         }
-        #endregion
         #endregion
 
         #region Métodos
