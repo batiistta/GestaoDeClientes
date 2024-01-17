@@ -92,37 +92,52 @@
                             <Grid>
                                 <materialDesign:PackIcon Kind="AccountCircleOutline" Width="20" Height="20" VerticalAlignment="Center" Foreground="White"/>
                                 <Button  Command="{Binding HomePageCommand}" FontSize="16" Content="Clientes" Background="Transparent"
-                                         BorderBrush="Transparent" Foreground="#FFF" Margin="10" Height="50" Click="btnCliente_Click"/>
+                                         BorderBrush="Transparent" Foreground="#FFF" HorizontalAlignment="Left" Margin="30,0,0,0" Height="50" Click="btnCliente_Click"/>
                             </Grid>
 
                             <Grid>
                                 <materialDesign:PackIcon Kind="ShoppingOutline" Width="20" Height="20" VerticalAlignment="Center" Foreground="White"/>
                                 <Button  Command="{Binding HomePageCommand}" FontSize="16" Content="Produtos" Background="Transparent"
-                                        BorderBrush="Transparent" Foreground="#FFF" Margin="10" Height="50" Click="btnProduto_Click"/>
+                                        BorderBrush="Transparent" Foreground="#FFF" HorizontalAlignment="Left" Margin="30,0,0,0" Height="50" Click="btnProduto_Click"/>
                             </Grid>
 
                             <Grid>
                                 <materialDesign:PackIcon Kind="CalendarArrowLeft" Width="20" Height="20" VerticalAlignment="Center" Foreground="White"/>
                                 <Button  Command="{Binding HomePageCommand}" FontSize="16" Content="Agendamentos" Background="Transparent"
-                                        BorderBrush="Transparent" Foreground="#FFF" Margin="10" Height="50" Click="btnAgendamento_Click"/>
+                                        BorderBrush="Transparent" Foreground="#FFF" HorizontalAlignment="Left" Margin="30,0,0,0" Height="50" Click="btnAgendamento_Click"/>
                             </Grid>
 
                             <Grid>
                                 <materialDesign:PackIcon Kind="User" Width="20" Height="20" VerticalAlignment="Center" Foreground="White"/>
                                 <Button  Command="{Binding HomePageCommand}" FontSize="16" Content="Usuários" Background="Transparent"
-                                BorderBrush="Transparent" Foreground="#FFF" Margin="10" Height="50" Click="btnUsuario_Click"/>
+                                BorderBrush="Transparent" Foreground="#FFF" HorizontalAlignment="Left" Margin="30,0,0,0" Height="50" Click="btnUsuario_Click"/>
                             </Grid>
 
                         </StackPanel>
 
-                        <Grid Grid.Row="1" Margin="10">
-
-                            <StackPanel  Grid.Row="0"  HorizontalAlignment="Center"  VerticalAlignment="Center" Orientation="Horizontal">
-                                <materialDesign:PackIcon Kind="ExitToApp" Name="iconDownload" Width="20" Foreground="#FFF"  Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                <Button x:Name="btnNo" Width="60" FontSize="16" Content="Sair" Background="Transparent"  BorderBrush="Transparent" Foreground="#FFF" Margin="-10,0" Click="btnSair_Click"/>
+                            <StackPanel  
+                                Grid.Row="1"  
+                                VerticalAlignment="Center" 
+                                Orientation="Horizontal"
+                                Margin="18">
+                                <materialDesign:PackIcon 
+                                    Kind="ExitToApp" 
+                                    Name="iconExit" 
+                                    Width="20" 
+                                    Foreground="#FFF"  
+                                    Height="20" 
+                                    VerticalAlignment="Center"/>
+                                <Button 
+                                    x:Name="btnNo"
+                                    FontSize="16" 
+                                    Content="Sair" 
+                                    Background="Transparent"  
+                                    BorderBrush="Transparent" 
+                                    Foreground="#FFF" 
+                                    HorizontalAlignment="Left"
+                                    Margin="10,0,0,0" 
+                                    Click="btnSair_Click"/>
                             </StackPanel>
-
-                        </Grid>
                     </Grid>
 
                 </ScrollViewer>
