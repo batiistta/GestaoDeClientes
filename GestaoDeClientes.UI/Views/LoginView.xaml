@@ -44,7 +44,7 @@
             </xctk:BusyIndicator.ProgressBarStyle>
             <Grid>
                 <Grid.Background>
-                    <ImageBrush ImageSource="../Resources/Images/florpequena.jpg"/>
+                    <ImageBrush ImageSource="../Resources/Images/escritorio.jpeg"/>
                 </Grid.Background>
 
                 <Grid.ColumnDefinitions>
@@ -68,11 +68,7 @@
                             Height="300" >  
 
                         <materialDesign:Card materialDesign:ElevationAssist.Elevation="Dp8">
-                            <StackPanel VerticalAlignment="Center">
-                                <Image Source="../Resources/Images/florpequena.jpg" 
-                                               Width="230" 
-                                               Height="40"
-                                />
+                            <StackPanel VerticalAlignment="Center">                                
 
                                 <StackPanel Width="230"  
                                             Margin="0,18,0,0">
@@ -122,16 +118,24 @@
                                             Height="34" 
                                             Width="115" 
                                             Margin="2,0,2,0" 
-                                            FontSize="15" Background="#FFFF5722" FontWeight="Medium" BorderBrush="#FFFF5722" Click="btnLogin_Click"
+                                            FontSize="15" 
+                                            Background="#4CAF50" 
+                                            FontWeight="Medium" 
+                                            BorderBrush="#4CAF50" 
+                                            Click="btnLogin_Click"
                                     />
 
                                     <Button 
-                                            Content="Sair" 
-                                            Height="34" 
-                                            Width="115"  
-                                            Margin="2,0,2,0" 
-                                            FontSize="14" 
-                                            Foreground="White" Background="#FFFF5722" BorderBrush="#FFFF5722" FontWeight="Medium" Click="btnCancel_Click"
+                                        Content="Sair" 
+                                        Height="34" 
+                                        Width="115"  
+                                        Margin="2,0,2,0" 
+                                        FontSize="14" 
+                                        Foreground="White" 
+                                        Background="#607D8B" 
+                                        BorderBrush="#607D8B" 
+                                        FontWeight="Medium" 
+                                        Click="btnCancel_Click"
                                     />
                                 </StackPanel>
 

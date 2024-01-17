@@ -15,16 +15,18 @@ xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              Width="400" 
              Height="380"
              >
-                <materialDesign:Card materialDesign:ElevationAssist.Elevation="Dp8">
+                <materialDesign:Card materialDesign:ElevationAssist.Elevation="Dp8" Background="#F4F4F4">
                     <StackPanel VerticalAlignment="Center">
 
                         <StackPanel Width="auto"
                              Height="auto">
-                            <TextBlock HorizontalAlignment="Center"
+                            <TextBlock 
+                                HorizontalAlignment="Center"
                                 Text="Cadastro de Agendamento"
                                 FontWeight="Bold"
                                 FontSize="20"                                       
-                                FontFamily="verdana" Foreground="Black"
+                                FontFamily="verdana" 
+                                Foreground="#333333"
                      />
 
                             <StackPanel Width="300" Margin="0,18,0,0">
@@ -103,37 +105,37 @@ xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
 
 
                         <StackPanel 
-                        Orientation="Horizontal" 
-                        VerticalAlignment="Center" 
-                        HorizontalAlignment="Center" 
-                        Margin="0,20,0,0">
+                            Orientation="Horizontal" 
+                            VerticalAlignment="Center" 
+                            HorizontalAlignment="Center" 
+                            Margin="0,20,0,0">
                             <Button 
-                            Foreground="White"
-                            Content="Casdastrar" 
-                            Name="btnCadastrar"
-                            Height="34" 
-                            Width="140" 
-                            Margin="2,20,2,0" 
-                            FontSize="15" 
-                            Background="#FFFF5722"
-                            FontWeight="Medium" 
-                            BorderBrush="#FFFF5722" 
-                            Click="btnCadastar_Click"
-                        />
+                                Foreground="White"
+                                Content="Casdastrar" 
+                                Name="btnCadastrar"
+                                Height="34" 
+                                Width="140" 
+                                Margin="2,20,2,0" 
+                                FontSize="15" 
+                                Background="#4CAF50"
+                                FontWeight="Medium" 
+                                BorderBrush="#4CAF50" 
+                                Click="btnCadastar_Click"
+                            />
 
                             <Button 
-                            Content="Cancelar" 
-                            Name="btnCancelar"
-                            Height="34" 
-                            Width="140"  
-                            Margin="20,20,2,0" 
-                            FontSize="15" 
-                            Foreground="White"
-                            Background="#FFFF5722"
-                            BorderBrush="#FFFF5722"
-                            FontWeight="Medium"
-                            Click="btnCancel_Click"
-                         />
+                                Content="Cancelar" 
+                                Name="btnCancelar"
+                                Height="34" 
+                                Width="140"  
+                                Margin="20,20,2,0" 
+                                FontSize="15" 
+                                Foreground="White"
+                                Background="#607D8B"
+                                BorderBrush="#607D8B"
+                                FontWeight="Medium"
+                                Click="btnCancel_Click"
+                            />
                         </StackPanel>
                     </StackPanel>
                 </materialDesign:Card>

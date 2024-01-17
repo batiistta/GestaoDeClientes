@@ -15,7 +15,7 @@
                 Width="400" 
                 Height="500"
                 >
-                <materialDesign:Card materialDesign:ElevationAssist.Elevation="Dp6">
+                <materialDesign:Card materialDesign:ElevationAssist.Elevation="Dp6" Background="#F4F4F4">
                     <StackPanel VerticalAlignment="Center">
 
                         <StackPanel Width="auto"
@@ -25,11 +25,13 @@
                                                  HorizontalAlignment="Center"
                                                  Kind="AccountCircleOutline"
                         />-->
-                            <TextBlock HorizontalAlignment="Center"
-                                   Text="Cadastro de Usuário"
-                                   FontWeight="DemiBold"
-                                   FontSize="20"                                       
-                                   FontFamily="verdana" Foreground="Black"
+                            <TextBlock 
+                                HorizontalAlignment="Center"
+                                Text="Cadastro de Usuário"
+                                FontWeight="DemiBold"
+                                FontSize="20"                                       
+                                FontFamily="verdana" 
+                                Foreground="#333333"
                         />
                         </StackPanel>
 
@@ -170,28 +172,32 @@
                                         HorizontalAlignment="Center" 
                                         Margin="0,20,0,0">
 
-                            <Button Foreground="White"
-                                    Content="Casdastrar" 
-                                    Name="btnCadastrar"
-                                    Height="34" 
-                                    Width="140" 
-                                    Margin="2,20,2,0" 
-                                    FontSize="15" 
-                                    Background="#FFFF5722"
-                                    FontWeight="Medium" 
-                                    BorderBrush="#FFFF5722" Click="btnCadastrarUsuario_Click" 
+                            <Button 
+                                Foreground="White"
+                                Content="Casdastrar" 
+                                Name="btnCadastrar"
+                                Height="34" 
+                                Width="140" 
+                                Margin="2,20,2,0" 
+                                FontSize="15" 
+                                Background="#4CAF50"
+                                FontWeight="Medium" 
+                                BorderBrush="#4CAF50" 
+                                Click="btnCadastrarUsuario_Click" 
                             />
 
-                            <Button Content="Cancelar" 
-                                    Name="btnCancelar"
-                                    Height="34" 
-                                    Width="140"  
-                                    Margin="20,20,2,0" 
-                                    FontSize="15" 
-                                    Foreground="White"
-                                    Background="#FFFF5722"
-                                    BorderBrush="#FFFF5722"
-                                    FontWeight="Medium" Click="btnCancelar_Click"
+                            <Button 
+                                Content="Cancelar" 
+                                Name="btnCancelar"
+                                Height="34" 
+                                Width="140"  
+                                Margin="20,20,2,0" 
+                                FontSize="15" 
+                                Foreground="White"
+                                Background="#607D8B"
+                                BorderBrush="#607D8B"
+                                FontWeight="Medium" 
+                                Click="btnCancelar_Click"
                             />
                         </StackPanel>
                     </StackPanel>

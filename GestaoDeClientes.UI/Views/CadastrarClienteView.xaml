@@ -10,21 +10,25 @@
         Height="600" Width="800" IsVisibleChanged="UserControl_IsVisibleChanged">
     <Grid x:Name="primeiraGrid">        
             <StackPanel VerticalAlignment="Center">
-                <Border Background="#FFFFFF" 
+                <Border 
+                    Background="#FFFFFF" 
                     CornerRadius="30" 
                     Width="400" 
                     Height="550"
                     >
-                    <materialDesign:Card materialDesign:ElevationAssist.Elevation="Dp6">
+                <materialDesign:Card materialDesign:ElevationAssist.Elevation="Dp6" Background="#F4F4F4">
                         <StackPanel x:Name="stackPanelGrids" VerticalAlignment="Center">
 
-                            <StackPanel Width="auto"
-                                        Height="auto">
-                                <TextBlock HorizontalAlignment="Center"
-                                           Text="Cadastrar cliente"
-                                           FontWeight="Bold"
-                                           FontSize="20"                                       
-                                           FontFamily="verdana" Foreground="Black"
+                            <StackPanel 
+                                Width="auto"
+                                Height="auto">
+                                <TextBlock 
+                                    HorizontalAlignment="Center"
+                                    Text="Cadastrar cliente"
+                                    FontWeight="Bold"
+                                    FontSize="20"                                       
+                                    FontFamily="verdana"
+                                    Foreground="#333333 "
                                 />
                             </StackPanel>
 
@@ -196,9 +200,9 @@
                                     Width="140" 
                                     Margin="2,20,2,0" 
                                     FontSize="15" 
-                                    Background="#FFFF5722"
+                                    Background="#4CAF50 "
                                     FontWeight="Medium" 
-                                    BorderBrush="#FFFF5722" 
+                                    BorderBrush="#4CAF50 " 
                                     Click="btnCadastar_Click"
                                 />
 
@@ -210,8 +214,8 @@
                                     Margin="20,20,2,0" 
                                     FontSize="15" 
                                     Foreground="White"
-                                    Background="#FFFF5722"
-                                    BorderBrush="#FFFF5722"
+                                    Background="#607D8B"
+                                    BorderBrush="#607D8B"
                                     FontWeight="Medium"
                                     Click="btnCancel_Click"
                                 />

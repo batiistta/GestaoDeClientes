@@ -15,17 +15,19 @@
           Width="400" 
           Height="550"
           >
-                <materialDesign:Card materialDesign:ElevationAssist.Elevation="Dp8">
+                <materialDesign:Card materialDesign:ElevationAssist.Elevation="Dp8" Background="#F4F4F4">
                     <StackPanel VerticalAlignment="Center">
 
                         <StackPanel Width="auto"
                           Height="auto">
-                            <TextBlock HorizontalAlignment="Center"
-                             Text="Editar Usuário"
-                             FontWeight="Bold"
-                             FontSize="20"                                       
-                             FontFamily="verdana" Foreground="Black"
-                  />
+                            <TextBlock 
+                                HorizontalAlignment="Center"
+                                Text="Editar Usuário"
+                                FontWeight="Bold"
+                                FontSize="20"                                       
+                                FontFamily="verdana" 
+                                Foreground="#333333"
+                            />
                         </StackPanel>
 
                         <StackPanel Width="300"  
@@ -173,9 +175,9 @@
                               Width="140" 
                               Margin="2,20,2,0" 
                               FontSize="15" 
-                              Background="#FFFF5722"
+                              Background="#4CAF50"
                               FontWeight="Medium" 
-                              BorderBrush="#FFFF5722" 
+                              BorderBrush="#4CAF50" 
                               Click="btnAtualizar_Click"
                       />
 
@@ -186,8 +188,8 @@
                               Margin="20,20,2,0" 
                               FontSize="15" 
                               Foreground="White"
-                              Background="#FFFF5722"
-                              BorderBrush="#FFFF5722"
+                              Background="#607D8B"
+                              BorderBrush="#607D8B"
                               FontWeight="Medium"
                               Click="btnCancelar_Click" 
                       />

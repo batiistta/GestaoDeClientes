@@ -66,9 +66,10 @@
                                     materialDesign:NavigationRailAssist.ShowSelectionBackground="True"
                                     Style="{StaticResource MaterialDesignNavigationRailTabControl}"
                                     TabStripPlacement="Top">
-                                    <TabItem>
+                                    <TabItem Width="180" Padding="10">
                                         <TabItem.Header>
                                             <StackPanel 
+                                                Orientation="Horizontal"
                                                 Width="auto"
                                                 Height="auto">
                                                 <materialDesign:PackIcon 
@@ -78,9 +79,11 @@
                                                     Kind="AccountCircleOutline"
                                                 />
                                                 <TextBlock 
-                                                    HorizontalAlignment="Center"
+                                                    HorizontalAlignment="Left"
                                                     Text="Clientes" 
                                                     FontFamily="verdana" 
+                                                    Width="150"
+                                                    Margin="5,2,0,0"
                                                     Foreground="{DynamicResource AccentColorBrush}"
                                                 />
                                             </StackPanel>
@@ -106,10 +109,9 @@
                                                     Foreground="#ffffff"                                                        
                                                     Width="200"                                                        
                                                     IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"                                                        
-                                                    Style="{StaticResource MaterialDesignRaisedButton}"                                                        
-                                                    materialDesign:ButtonProgressAssist.IsIndeterminate="False"                                                        
-                                                    materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"                                                        
-                                                    materialDesign:ButtonProgressAssist.Value="-1"                                                        
+                                                    Style="{StaticResource MaterialDesignRaisedButton}"    
+                                                    Background="#4CAF50"
+                                                    BorderBrush="#4CAF50"
                                                     ToolTip="Cadastrar Clientes"                                                         
                                                     Cursor="Hand"                                                        
                                                     Click="btnCadastrar_Click"
@@ -117,7 +119,7 @@
                                                 
                                                 <StackPanel 
                                                     Orientation="Horizontal" 
-                                                    Margin="10,0,0,0">
+                                                    Margin="30,0,0,0">
                                                     <TextBox 
                                                         x:Name="txtSearch" 
                                                         Margin="0,10,0,0"
@@ -132,6 +134,9 @@
                                                         Margin="10,0,0,0"
                                                         Width="100"
                                                         Foreground="#ffffff"
+                                                        FontFamily="verdana" 
+                                                        Background="#4CAF50"
+                                                        BorderBrush="#4CAF50"
                                                         IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
                                                         Style="{StaticResource MaterialDesignRaisedButton}"
                                                         ToolTip="Buscar Clientes" 
@@ -151,13 +156,12 @@
                                                     x:Name="btnCancelar"                                                        
                                                     Content="Cancelar"                                                        
                                                     FontFamily="verdana"                                                        
-                                                    Foreground="#ffffff"                                                        
+                                                    Foreground="White" 
+                                                    Background="#FF607D8B"
+                                                    BorderBrush="#607D8B"
                                                     Width="100"                                                        
                                                     IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"                                                        
-                                                    Style="{StaticResource MaterialDesignRaisedButton}"                                                        
-                                                    materialDesign:ButtonProgressAssist.IsIndeterminate="False"                                                       
-                                                    materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"                                                        
-                                                    materialDesign:ButtonProgressAssist.Value="-1"                                                       
+                                                    Style="{StaticResource MaterialDesignRaisedButton}"                                          
                                                     ToolTip="Botão de cancelar"                                                         
                                                     Cursor="Hand"                                                        
                                                     Click="btnCancelar_Click"
