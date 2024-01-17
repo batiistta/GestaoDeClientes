@@ -192,7 +192,7 @@
                             />
                             <ToggleButton
                                 x:Name="produtoAtivo"
-                                IsChecked="True"
+                                IsChecked="{Binding Path=DataContext.Ativo, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Mode=TwoWay}"
                                 Style="{StaticResource MaterialDesignSwitchToggleButton}"
                                 ToolTip="MaterialDesignSwitchToggleButton" 
                                 HorizontalAlignment="Left"

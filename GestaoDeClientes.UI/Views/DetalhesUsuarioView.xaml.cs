@@ -24,10 +24,14 @@ namespace GestaoDeClientes.UI.Views
     /// </summary>
     public partial class DetalhesUsuarioView : UserControl, IRemoverJanela
     {
+        #region Propriedades
         public event EventHandler OnCancelarClicado;
         public Usuario _usuario;
         UsuarioRepository usuarioRepository = new UsuarioRepository();
         List<BindingExpression> bindingExpressions = new List<BindingExpression>();
+        #endregion
+
+        #region Construtores
         public DetalhesUsuarioView()
         {
             InitializeComponent();
@@ -39,11 +43,35 @@ namespace GestaoDeClientes.UI.Views
             this.DataContext = usuario;
             _usuario = usuario;            
         }
+        #endregion
+
+        #region Eventos
         private void UserControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             txtLogin.Focus();
             btnAtualizar.IsEnabled = false;
         }
+        private void txtLogin_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (!IsTextOnly(e.Text))
+            {
+                e.Handled = true;
+            }
+        }
+        private void txtNome_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (!IsTextOnly(e.Text))
+            {
+                e.Handled = true;
+            }
+        }
+        private void txtText_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            VerificarErrosEBloquearBotao();
+        }
+        #endregion
+
+        #region Botões
         private async void btnAtualizar_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -62,36 +90,9 @@ namespace GestaoDeClientes.UI.Views
         {
             OnCancelarClicado?.Invoke(this, EventArgs.Empty);
         }       
-        private void txtLogin_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            if (!IsTextOnly(e.Text))
-            {
-                e.Handled = true;
-            }
-        }
-        private void txtNome_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            if (!IsTextOnly(e.Text))
-            {
-                e.Handled = true;
-            }
-        }
-        private void txtSenha_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            VerificarErrosEBloquearBotao();
-        }
-        private void txtEmail_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            VerificarErrosEBloquearBotao();
-        }
-        private void txtLogin_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            VerificarErrosEBloquearBotao();
-        }
-        private void txtNome_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            VerificarErrosEBloquearBotao();
-        }
+        #endregion
+
+        #region Métodos
         private bool IsTextOnly(string input)
         {
             return System.Text.RegularExpressions.Regex.IsMatch(input, @"^[a-zA-Z]+$");
@@ -132,5 +133,6 @@ namespace GestaoDeClientes.UI.Views
         {
             OnCancelarClicado?.Invoke(this, EventArgs.Empty);
         }
+        #endregion
     }
 }

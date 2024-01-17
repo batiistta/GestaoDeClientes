@@ -163,6 +163,24 @@
                                 </DatePicker.Resources>
                             </DatePicker>
                         </StackPanel>
+                            
+                        <StackPanel 
+                            Width="300"  
+                            Margin="0,18,0,0">
+
+                            <Label 
+                                Content="Ativo:" 
+                                FontWeight="Bold" 
+                                Foreground="#FF4D4D4D"
+                            />
+                            <ToggleButton
+                                x:Name="produtoAtivo"
+                                IsChecked="{Binding Path=DataContext.Ativo, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Mode=TwoWay}"
+                                Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                                ToolTip="MaterialDesignSwitchToggleButton" 
+                                HorizontalAlignment="Left"
+                            />
+                        </StackPanel>
 
                         <StackPanel 
                                 Orientation="Horizontal" 

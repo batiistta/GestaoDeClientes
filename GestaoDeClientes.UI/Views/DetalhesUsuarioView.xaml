@@ -37,7 +37,7 @@
                             <AdornerDecorator>
                                 <TextBox 
                                     x:Name="txtNome"     
-                                    TextChanged="txtNome_TextChanged"
+                                    TextChanged="txtText_TextChanged"
                                VerticalAlignment="Center"
                                Width="300" 
                                Height="32" 
@@ -68,7 +68,7 @@
                             <AdornerDecorator>
                                 <TextBox 
                                     x:Name="txtLogin"  
-                                    TextChanged="txtLogin_TextChanged"
+                                    TextChanged="txtText_TextChanged"
                                  VerticalAlignment="Center"
                                  Width="300" 
                                  Height="32" 
@@ -99,7 +99,7 @@
                           Foreground="#FF4D4D4D"/>
                             <TextBox 
                                 x:Name="txtEmail"
-                                TextChanged="txtEmail_TextChanged"
+                                TextChanged="txtText_TextChanged"
                            VerticalAlignment="Center" 
                            Width="300" 
                            Height="32" 
@@ -127,7 +127,7 @@
                           Foreground="#FF4D4D4D"/>
                             <TextBox 
                                 x:Name="txtSenha"
-                                TextChanged="txtSenha_TextChanged"
+                                TextChanged="txtText_TextChanged"
                            VerticalAlignment="Center" 
                            Width="300" 
                            Height="32" 

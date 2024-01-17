@@ -26,16 +26,15 @@ namespace GestaoDeClientes.UI.Views
     {
         #region Propriedades
         ClienteRepository clienteRepository = new ClienteRepository();
-        public event EventHandler ChildWindowClosed;
         public event EventHandler OnCancelarClicado;
         private Cliente _cliente;
+        List<BindingExpression> bindingExpressions = new List<BindingExpression>();
         #endregion
 
         #region Construtores
         public DetalhesClienteView()
         {
             InitializeComponent();
-            this.DataContext = _cliente;
         }
 
         public DetalhesClienteView(Cliente cliente)
@@ -70,16 +69,7 @@ namespace GestaoDeClientes.UI.Views
         #region Eventos
         private void txtNome_TextChanged(object sender, TextChangedEventArgs e)
         {
-            BindingExpression bindingExpression = txtNome.GetBindingExpression(TextBox.TextProperty);
-            bindingExpression.UpdateSource();
-            if (bindingExpression?.HasError == true)
-            {
-                btnAtualizar.IsEnabled = false;
-            }
-            else
-            {
-                btnAtualizar.IsEnabled = true;
-            }
+            VerificarErrosEBloquearBotao();
         }
         private void txtTelefone_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -106,6 +96,7 @@ namespace GestaoDeClientes.UI.Views
                 textBox.Text = formatted.ToString();
                 textBox.CaretIndex = textBox.Text.Length;
             }
+            VerificarErrosEBloquearBotao();
         }
         private void txtNome_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
@@ -143,6 +134,19 @@ namespace GestaoDeClientes.UI.Views
         public void RemoverJanela()
         {
             OnCancelarClicado?.Invoke(this, EventArgs.Empty);
+        }
+        private void VerificarErrosEBloquearBotao()
+        {
+            bindingExpressions.Add(txtEndereco.GetBindingExpression(TextBox.TextProperty));
+            bindingExpressions.Add(txtNome.GetBindingExpression(TextBox.TextProperty));
+            bindingExpressions.Add(txtTelefone.GetBindingExpression(TextBox.TextProperty));
+            bool algumErro = bindingExpressions.Any(x =>
+            {
+                x?.UpdateSource();
+                return x?.HasError == true;
+            });
+            btnAtualizar.IsEnabled = !algumErro;
+            bindingExpressions.Clear();
         }
         #endregion
 
