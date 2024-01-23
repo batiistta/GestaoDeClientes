@@ -22,8 +22,4 @@ A aplicação oferece os seguintes recursos:
 Agradecemos a todos os contribuidores que ajudaram a tornar este projeto possível! ✨
 - @btito98 (https://github.com/btito98)
 
-
-Contribuições são bem-vindas! Se encontrar algum bug, tiver sugestões ou quiser adicionar um novo recurso, sinta-se à vontade para abrir uma nova issue ou enviar um pull request.
-- @btito98 (https://github.com/btito98)
-
 Se você também deseja contribuir, por favor, veja as [diretrizes de contribuição](CONTRIBUTING.md).
