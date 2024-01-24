@@ -38,6 +38,7 @@ namespace GestaoDeClientes.UI.Views
         {
             primeiraGrid.Children.Remove(cadastrarAgendamentoView);
             gridPrincipal.IsEnabled = true;
+            CarregarAgendamentos();
         }
 
         private void btnCadastrarAgendamento_Click(object sender, RoutedEventArgs e)
@@ -58,7 +59,22 @@ namespace GestaoDeClientes.UI.Views
         }
         private void btnDeletar_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                Button btnDeletar = sender as Button;
 
+                Agendamento agendamentoParaDeletar = btnDeletar.DataContext as Agendamento;
+
+                if (MessageBox.Show("Deseja realmente excluir o agendamento?", "Excluir", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                {
+                    agendamentoRepository.DeleteAsync(agendamentoParaDeletar.Id);
+                    CarregarAgendamentos();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void btnAtualizar_Click(object sender, RoutedEventArgs e)
@@ -82,7 +98,7 @@ namespace GestaoDeClientes.UI.Views
         {
             if (this.IsVisible)
             {
-                CarregarAgendamentos();
+                CarregarAgendamentos(); 
             }
         }
 

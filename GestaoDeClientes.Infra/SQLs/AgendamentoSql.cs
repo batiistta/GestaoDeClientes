@@ -27,7 +27,7 @@ namespace GestaoDeClientes.Infra.SQLs
 
 
 
-        public static string Delete = @"Remove from Agendamento where Id = @Id";
+        public static string Delete = @"DELETE FROM Agendamento WHERE Id = @Id";
 
         public static string GetById = @"SELECT * FROM Agendamento WHERE Id = @Id";
 

@@ -16,7 +16,7 @@ namespace GestaoDeClientes.Infra.Repositories
     {
         string connString = string.Format("Data Source={0}", Util.Util.GetDbFilePath());
 
-      
+
         public async Task AddAsync(Agendamento entity)
         {
             using (var connection = new SqliteConnection(connString))
@@ -35,9 +35,22 @@ namespace GestaoDeClientes.Infra.Repositories
             }
         }
 
-        public Task DeleteAsync(string id)
+        public async Task DeleteAsync(string id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (var connection = new SqliteConnection(connString))
+                {
+                    SQLitePCL.Batteries.Init();
+                    connection.Open();
+                    connection.Execute(AgendamentoSql.Delete, new { Id = id });
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
         }
 
         public Task<IEnumerable<Agendamento>> GetAllAsync()

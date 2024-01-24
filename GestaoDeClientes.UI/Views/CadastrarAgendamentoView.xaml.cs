@@ -1,6 +1,7 @@
 ﻿using GestaoDeClientes.Domain;
 using GestaoDeClientes.Domain.Models;
 using GestaoDeClientes.Infra.Repositories;
+using GestaoDeClientes.UI.Popup;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,6 +32,7 @@ namespace GestaoDeClientes.UI.Views
         public CadastrarAgendamentoView()
         {
             InitializeComponent();
+            this.DataContext = new Agendamento();
             CarregarClientes();
             CarregarProdutos();
         }
@@ -52,20 +54,31 @@ namespace GestaoDeClientes.UI.Views
             try
             {
                 Agendamento agendamento = new Agendamento();
-                agendamento.IdCliente = (cmbClientes.SelectedItem as Cliente).Id;
-                agendamento.IdProduto = (cmbProdutos.SelectedItem as Produto).Id;
-                agendamento.NomeCliente = (cmbClientes.SelectedItem as Cliente).Nome;
-                agendamento.NomeProduto = (cmbProdutos.SelectedItem as Produto).Nome;
+                agendamento.Id = Guid.NewGuid().ToString();
                 agendamento.DataAgendamento = txtDataAgendamento.DisplayDate;
+                agendamento.IdCliente = (cmbClientes.SelectedItem as Cliente).Id;
+                agendamento.NomeCliente = (cmbClientes.SelectedItem as Cliente).Nome;
 
+                if (cmbProdutos.SelectedItem != null)
+                {
+                    agendamento.NomeProduto = (cmbProdutos.SelectedItem as Produto).Nome;
+                    agendamento.IdProduto = (cmbProdutos.SelectedItem as Produto).Id;
+                }
+                else
+                {
+                    agendamento.NomeProduto = null;
+                    agendamento.IdProduto = null;
+                }
 
                 await agendamentoRepository.AddAsync(agendamento);
-                MessageBox.Show("Agendamento cadastrado com sucesso!", "Sucesso", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                GCMessageBox.Show("Agendamento cadastrado com sucesso!", "Sucesso", GCMessageBox.MessageBoxStatus.Ok);
                 OnCancelarClicado?.Invoke(this, EventArgs.Empty);
+
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
+                GCMessageBox.Show(ex.Message, "Erro", GCMessageBox.MessageBoxStatus.Error);
             }
 
         }
