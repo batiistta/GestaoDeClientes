@@ -1,4 +1,5 @@
 ﻿using GestaoDeClientes.Domain.Models;
+using GestaoDeClientes.Infra.Interfaces;
 using GestaoDeClientes.Infra.Repositories;
 using System;
 using System.Collections.Generic;
@@ -20,13 +21,14 @@ namespace GestaoDeClientes.UI.Views
     /// <summary>
     /// Interação lógica para DetalhesProdutoView.xam
     /// </summary>
-    public partial class DetalhesProdutoView : UserControl
+    public partial class DetalhesProdutoView : UserControl, IRemoverJanela
     {
         #region Propriedades
-        private Produto _produto;
-        private ProdutoView _produtoView;
-        public event EventHandler ChildWindowClosed;
         public event EventHandler OnCancelarClicado;
+        ProdutoRepository produtoRepository = new ProdutoRepository();
+        List<BindingExpression> bindingExpressions = new List<BindingExpression>();
+        private Produto _produto;
+
         #endregion
 
         #region Construtores
@@ -38,19 +40,25 @@ namespace GestaoDeClientes.UI.Views
         public DetalhesProdutoView(Produto produto)
         {
             InitializeComponent();
-
+            this.DataContext = produto;
             _produto = produto;
-
-            txtNomeProduto.Text = _produto.Nome;
-            txtDescricaoProduto.Text = _produto.Descricao;
-            txtValorCompraProduto.Text = _produto.ValorCompra.ToString();
-            txtValorUnitarioProduto.Text = _produto.ValorUnitario.ToString();
-            txtQuantidadeProduto.Text = _produto.Quantidade.ToString();
-
         }
         #endregion
 
         #region Eventos
+        private void UserControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            txtNomeProduto.Focus();
+            btnAtualizar.IsEnabled = false;
+        }
+
+        private void txtText_textChanged(object sender, TextChangedEventArgs e)
+        {
+            VerificarErrosEBloquearBotao();
+        }
+        #endregion
+
+        #region Botões
         private async void btnAtualizar_Click(object sender, RoutedEventArgs e)
         {
             if (txtNomeProduto.Text.Any())
@@ -61,9 +69,7 @@ namespace GestaoDeClientes.UI.Views
             if (produtoAtivo.IsChecked == false)
             {
                 _produto.Ativo = false;
-            }
-
-            ProdutoRepository produtoRepository = new ProdutoRepository();
+            }                        
             await produtoRepository.UpdateAsync(_produto);
 
             MessageBox.Show("Produto atualizado com sucesso!", "Sucesso", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -90,6 +96,28 @@ namespace GestaoDeClientes.UI.Views
         public void RemoverJanela()
         {
             OnCancelarClicado?.Invoke(this, EventArgs.Empty);
+        }
+        private void VerificarErrosEBloquearBotao()
+        {
+            bindingExpressions.Add(txtNomeProduto.GetBindingExpression(TextBox.TextProperty));
+            bindingExpressions.Add(txtDescricaoProduto.GetBindingExpression(TextBox.TextProperty));
+            bindingExpressions.Add(txtQuantidadeProduto.GetBindingExpression(TextBox.TextProperty));
+            bool algumErro = bindingExpressions.Any(x =>
+            {
+                x?.UpdateSource();
+                return x?.HasError == true;
+            });
+            btnAtualizar.IsEnabled = !algumErro;
+            bindingExpressions.Clear();
+        }
+        private void ResetBindingExpressions(params TextBox[] textBoxes)
+        {
+            foreach (var textBox in textBoxes)
+            {
+                BindingExpression bindingExpression = textBox.GetBindingExpression(TextBox.TextProperty);
+
+                bindingExpression?.UpdateTarget();
+            }
         }
         #endregion
     }

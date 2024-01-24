@@ -7,164 +7,235 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="800">
+             d:DesignHeight="600" d:DesignWidth="800" IsVisibleChanged="UserControl_IsVisibleChanged">
     <Grid>
         <StackPanel VerticalAlignment="Center">
-            <Border Background="#FFFFFF" 
-              CornerRadius="30" 
-              Width="400" 
-              Height="550"
-              >
-                <materialDesign:Card materialDesign:ElevationAssist.Elevation="Dp8">
-                    <StackPanel VerticalAlignment="Center">
+            <Border 
+                Background="#FFFFFF" 
+                CornerRadius="30" 
+                Width="400" 
+                Height="550">
 
-                        <StackPanel Width="auto"
-                              Height="auto">
-                            <TextBlock HorizontalAlignment="Center"
-                                 Text="Editar Produto"
-                                 FontWeight="Bold"
-                                 FontSize="20"                                       
-                                 FontFamily="verdana" Foreground="Black"
-                      />
+                <materialDesign:Card materialDesign:ElevationAssist.Elevation="Dp8" Background="#F4F4F4">
+                    <StackPanel VerticalAlignment="Center">                        
+                        <StackPanel 
+                            Width="auto"
+                            Height="auto">
+                            <TextBlock 
+                                HorizontalAlignment="Center"
+                                Text="Editar Produto"
+                                FontWeight="Bold"
+                                FontSize="20"                                       
+                                FontFamily="verdana" 
+                                Foreground="#333333"
+                            />
                         </StackPanel>
 
-                        <StackPanel Width="300"  
-                          Margin="0,18,0,0">
+                        <StackPanel 
+                            Width="300"  
+                            Margin="0,18,0,0">
 
-                            <Label Content="Nome:" 
-                                  FontWeight="Bold" 
-                                  Foreground="#FF4D4D4D"/>
+                            <Label 
+                                Content="Nome:" 
+                                FontWeight="Bold" 
+                                Foreground="#FF4D4D4D"
+                            />
                             <AdornerDecorator>
-                                <TextBox x:Name="txtNomeProduto"                                         
-                                   VerticalAlignment="Center"
-                                   Width="300" 
-                                   Height="32" 
-                                   Background="#FFFBFCFF" 
-                                   Foreground="Black"
-                                   materialDesign:TextFieldAssist.CharacterCounterVisibility="Hidden"
-                                   MaxLength="50" 
-                                   BorderBrush="#89000000" 
-                                   CaretBrush="#FFFF5722" 
-                                   SelectionBrush="#FFFF8A50" 
-                                   BorderThickness="0,0,0,1">
+                                <TextBox 
+                                    x:Name="txtNomeProduto"    
+                                    TextChanged="txtText_textChanged"
+                                    VerticalAlignment="Center"
+                                    Width="300" 
+                                    Height="32" 
+                                    Background="#FFFBFCFF" 
+                                    Foreground="Black"
+                                    materialDesign:TextFieldAssist.CharacterCounterVisibility="Hidden"
+                                    MaxLength="50" 
+                                    BorderBrush="#89000000" 
+                                    CaretBrush="#FFFF5722" 
+                                    SelectionBrush="#FFFF8A50" 
+                                    BorderThickness="0,0,0,1">
+                                    <TextBox.Text>
+                                        <Binding Path="DataContext.Nome" RelativeSource="{RelativeSource AncestorType={x:Type UserControl}}" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <local:MinLengthValidationRule MinLength="3"/>
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
                                 </TextBox>
                             </AdornerDecorator>
                         </StackPanel>
 
-                        <StackPanel Width="300"  
-                              Margin="0,18,0,0">
+                        <StackPanel 
+                            Width="300"  
+                            Margin="0,18,0,0">
 
-                            <Label Content="Descrição:" 
-                              FontWeight="Bold" 
-                              Foreground="#FF4D4D4D"/>
-                            <TextBox x:Name="txtDescricaoProduto"
-                               VerticalAlignment="Center" 
-                               Width="300" 
-                               Height="32" 
-                               Background="#FFFBFCFF" 
-                               Foreground="Black"
-                               materialDesign:TextFieldAssist.CharacterCounterVisibility="Hidden"
-                               MaxLength="20"                                      
-                               BorderBrush="#89000000"
-                               CaretBrush="#FFFF5722" SelectionBrush="#FFFF8A50" BorderThickness="0,0,0,1"
-                          />
+                            <Label 
+                                Content="Descrição:" 
+                                FontWeight="Bold" 
+                                Foreground="#FF4D4D4D"
+                            />
+                            <TextBox 
+                                x:Name="txtDescricaoProduto"
+                                VerticalAlignment="Center" 
+                                Width="300" 
+                                Height="32" 
+                                Background="#FFFBFCFF" 
+                                Foreground="Black"
+                                materialDesign:TextFieldAssist.CharacterCounterVisibility="Hidden"
+                                MaxLength="20"                                      
+                                BorderBrush="#89000000"
+                                CaretBrush="#FFFF5722" 
+                                SelectionBrush="#FFFF8A50" 
+                                BorderThickness="0,0,0,1">
+                                <TextBox.Text>
+                                    <Binding Path="DataContext.Descricao" RelativeSource="{RelativeSource AncestorType={x:Type UserControl}}" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <local:MinLengthValidationRule MinLength="5" />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
                         </StackPanel>
 
-                        <StackPanel Width="300"  
-                              Margin="0,18,0,0">
+                        <StackPanel 
+                            Width="300"  
+                            Margin="0,18,0,0">
 
-                            <Label Content="Valor da Compra:" 
-                              FontWeight="Bold" 
-                              Foreground="#FF4D4D4D"/>
-                            <TextBox x:Name="txtValorCompraProduto"
-                               VerticalAlignment="Center" 
-                               Width="300" 
-                               Height="32" 
-                               Background="#FFFBFCFF" 
-                               Foreground="Black"
-                               materialDesign:TextFieldAssist.CharacterCounterVisibility="Hidden"
-                               MaxLength="100" BorderBrush="#89000000" CaretBrush="#FFFF5722" SelectionBrush="#FFFF8A50" BorderThickness="0,0,0,1"
-                          />
+                            <Label 
+                                Content="Valor da Compra:" 
+                                FontWeight="Bold" 
+                                Foreground="#FF4D4D4D"
+                            />
+                            <TextBox 
+                                x:Name="txtValorCompraProduto"
+                                VerticalAlignment="Center" 
+                                Width="300" 
+                                Height="32" 
+                                Background="#FFFBFCFF" 
+                                Foreground="Black"
+                                materialDesign:TextFieldAssist.CharacterCounterVisibility="Hidden"
+                                MaxLength="100" 
+                                BorderBrush="#89000000" 
+                                CaretBrush="#FFFF5722" 
+                                SelectionBrush="#FFFF8A50" 
+                                BorderThickness="0,0,0,1">
+                                <TextBox.Text>
+                                    <Binding Path="DataContext.ValorCompra">
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
                         </StackPanel>
 
-                        <StackPanel Width="300"  
-                              Margin="0,18,0,0">
+                        <StackPanel 
+                            Width="300"  
+                            Margin="0,18,0,0">
 
-                            <Label Content="Valor Unitário:" 
-                              FontWeight="Bold" 
-                              Foreground="#FF4D4D4D"/>
-                            <TextBox x:Name="txtValorUnitarioProduto"
-                               VerticalAlignment="Center" 
-                               Width="300" 
-                               Height="32" 
-                               Background="#FFFBFCFF" 
-                               Foreground="Black"
-                               materialDesign:TextFieldAssist.CharacterCounterVisibility="Hidden"
-                               MaxLength="100" BorderBrush="#89000000" CaretBrush="#FFFF5722" SelectionBrush="#FFFF8A50" BorderThickness="0,0,0,1"
-                          />
+                            <Label 
+                                Content="Valor Unitário:" 
+                                FontWeight="Bold" 
+                                Foreground="#FF4D4D4D"/>
+                            <TextBox
+                                x:Name="txtValorUnitarioProduto"
+                                VerticalAlignment="Center" 
+                                Width="300" 
+                                Height="32" 
+                                Background="#FFFBFCFF" 
+                                Foreground="Black"
+                                materialDesign:TextFieldAssist.CharacterCounterVisibility="Hidden"
+                                MaxLength="100" 
+                                BorderBrush="#89000000" 
+                                CaretBrush="#FFFF5722" 
+                                SelectionBrush="#FFFF8A50" 
+                                BorderThickness="0,0,0,1">
+                                <TextBox.Text>
+                                    <Binding Path="DataContext.ValorUnitario">
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
                         </StackPanel>
 
-                        <StackPanel Width="300"  
-                              Margin="0,18,0,0">
+                        <StackPanel 
+                            Width="300"  
+                            Margin="0,18,0,0">
 
-                            <Label Content="Quantidade:" 
-                              FontWeight="Bold" 
-                              Foreground="#FF4D4D4D"/>
-                            <TextBox x:Name="txtQuantidadeProduto"
-                               VerticalAlignment="Center" 
-                               Width="300" 
-                               Height="32" 
-                               Background="#FFFBFCFF" 
-                               Foreground="Black"
-                               materialDesign:TextFieldAssist.CharacterCounterVisibility="Hidden"
-                               MaxLength="100" BorderBrush="#89000000" CaretBrush="#FFFF5722" SelectionBrush="#FFFF8A50" BorderThickness="0,0,0,1"
-                          />
+                            <Label 
+                                Content="Quantidade:" 
+                                FontWeight="Bold" 
+                                Foreground="#FF4D4D4D"/>
+                            <TextBox 
+                                x:Name="txtQuantidadeProduto"
+                                VerticalAlignment="Center" 
+                                Width="300" 
+                                Height="32" 
+                                Background="#FFFBFCFF" 
+                                Foreground="Black"
+                                materialDesign:TextFieldAssist.CharacterCounterVisibility="Hidden"
+                                MaxLength="100" 
+                                BorderBrush="#89000000" 
+                                CaretBrush="#FFFF5722" 
+                                SelectionBrush="#FFFF8A50" 
+                                BorderThickness="0,0,0,1">
+                                <TextBox.Text>
+                                    <Binding Path="DataContext.Quantidade" RelativeSource="{RelativeSource AncestorType={x:Type UserControl}}" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <local:MinLengthValidationRule MinLength="1" />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
                         </StackPanel>
 
-                        <StackPanel Width="300"  
-                              Margin="0,18,0,0">
+                        <StackPanel 
+                            Width="300"  
+                            Margin="0,18,0,0">
                             
-                            <Label Content="Ativo:" 
-                              FontWeight="Bold" 
-                              Foreground="#FF4D4D4D"/>
+                            <Label 
+                                Content="Ativo:" 
+                                FontWeight="Bold" 
+                                Foreground="#FF4D4D4D"
+                            />
                             <ToggleButton
-                              x:Name="produtoAtivo"
-                              IsChecked="True"
-                              Style="{StaticResource MaterialDesignSwitchToggleButton}"
-                              ToolTip="MaterialDesignSwitchToggleButton" HorizontalAlignment="Left"/>
-                           
+                                x:Name="produtoAtivo"
+                                IsChecked="{Binding Path=DataContext.Ativo, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Mode=TwoWay}"
+                                Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                                ToolTip="MaterialDesignSwitchToggleButton" 
+                                HorizontalAlignment="Left"
+                            />
                         </StackPanel>
 
-                        <StackPanel Orientation="Horizontal" 
-                                      VerticalAlignment="Center" 
-                                      HorizontalAlignment="Center" 
-                                      Margin="0,20,0,0">
+                        <StackPanel 
+                            Orientation="Horizontal" 
+                            VerticalAlignment="Center" 
+                            HorizontalAlignment="Center" 
+                            Margin="0,20,0,0">
+                            <Button 
+                                Foreground="White"
+                                Content="Atualizar" 
+                                Name="btnAtualizar"
+                                Height="34" 
+                                Width="140" 
+                                Margin="2,20,2,0" 
+                                FontSize="15" 
+                                Background="#4CAF50"
+                                FontWeight="Medium" 
+                                BorderBrush="#4CAF50" 
+                                Click="btnAtualizar_Click"
+                            />
 
-                            <Button Foreground="White"
-                                  Content="Atualizar" 
-                                  Name="btnAtualizar"
-                                  Height="34" 
-                                  Width="140" 
-                                  Margin="2,20,2,0" 
-                                  FontSize="15" 
-                                  Background="#FFFF5722"
-                                  FontWeight="Medium" 
-                                  BorderBrush="#FFFF5722" 
-                                  Click="btnAtualizar_Click"
-                          />
-
-                            <Button Content="Cancelar" 
-                                  Name="btnCancelar"
-                                  Height="34" 
-                                  Width="140"  
-                                  Margin="20,20,2,0" 
-                                  FontSize="15" 
-                                  Foreground="White"
-                                  Background="#FFFF5722"
-                                  BorderBrush="#FFFF5722"
-                                  FontWeight="Medium"
-                                  Click="btnCancelar_Click" 
-                          />
+                            <Button 
+                                Content="Cancelar" 
+                                Name="btnCancelar"
+                                Height="34" 
+                                Width="140"  
+                                Margin="20,20,2,0" 
+                                FontSize="15" 
+                                Foreground="White"
+                                Background="#607D8B"
+                                BorderBrush="#607D8B"
+                                FontWeight="Medium"
+                                Click="btnCancelar_Click" 
+                            />
                         </StackPanel>
                     </StackPanel>
                 </materialDesign:Card>

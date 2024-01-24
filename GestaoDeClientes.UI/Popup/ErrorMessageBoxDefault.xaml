@@ -23,34 +23,34 @@
                 <StackPanel Orientation="Horizontal" >
                     <StackPanel.Background>
                         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                            <GradientStop Color="#FFFF5722" Offset="1"/>
-                            <GradientStop Color="#FFFFA68A" Offset="0"/>
+                            <GradientStop Color="#4CAF50" Offset="1"/>
+                            <GradientStop Color="#81C784" Offset="0"/>
                         </LinearGradientBrush>
                     </StackPanel.Background>
-                    <materialDesign:PackIcon x:Name="IcoStatus" Kind="WarningCircle" Width="25" Foreground="#FFF" FontWeight="Bold" Height="25" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                    <TextBlock      x:Name="txtTitulo"
+                    <materialDesign:PackIcon x:Name="IcoStatus" Kind="WarningCircle" Width="25" Foreground="#FFFFFF" FontWeight="Bold" Height="25" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                    <TextBlock x:Name="txtTitulo"
                                 Margin="5,0"
                                 VerticalAlignment="Center"
                                 Text="Aviso"
-                                FontSize="15" Foreground="#FFF" FontWeight="Bold"/>
+                                FontSize="15" Foreground="#FFFFFF" FontWeight="Bold"/>
                 </StackPanel>
-                <Border x:Name="BorderContentTop"  Grid.Row="1" BorderThickness="0 1 0 0" BorderBrush="White" Padding="8">
+                <Border x:Name="BorderContentTop"  Grid.Row="1" BorderThickness="0 1 0 0" BorderBrush="#4CAF50" Padding="8">
                     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                         <StackPanel Orientation="Vertical" Width="400">
                             <TextBlock x:Name="txtMensagem" Text="Aviso" Foreground="DarkSlateGray" TextWrapping="Wrap" FontSize="17"/>
                         </StackPanel>
                     </ScrollViewer>
                 </Border>
-                <Border x:Name="btnYesNoExhibition" Visibility="Collapsed" Grid.Row="2" BorderThickness="0 1 0 0" BorderBrush="Transparent" Cursor="">
+                <Border x:Name="btnYesNoExhibition" Visibility="Collapsed" Grid.Row="2" BorderThickness="0 1 0 0" BorderBrush="#4CAF50" Cursor="">
                     <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,3" Cursor="">
-                        <Button x:Name="btnNo" Content="Não" Background="Gray" Width="90" BorderBrush="Gray" Foreground="#FFF" Margin="5,0" Click="btnNo_Click"/>
-                        <Button x:Name="btnYes" Content="Sim" Width="115" Foreground="#FFF" Margin="5,0" Click="btnYes_Click"/>
+                        <Button x:Name="btnNo" Content="Não" Background="#607D8B" Width="90" BorderBrush="#607D8B" Foreground="#FFFFFF" Margin="5,0" Click="btnNo_Click"/>
+                        <Button x:Name="btnYes" Content="Sim" Background="#4CAF50" BorderBrush="#4CAF50" Width="115" Foreground="#FFFFFF" Margin="5,0" Click="btnYes_Click"/>
                     </StackPanel>
                 </Border>
 
                 <Border x:Name="btnConfirmExhibition" Visibility="Collapsed" Grid.Row="2" BorderThickness="0 1 0 0" BorderBrush="Transparent">
                     <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,3">
-                        <Button x:Name="btnConfirm" Content="Confirmar" Width="115" Foreground="#FFF" Margin="5,0" Click="btnYes_Click"/>
+                        <Button x:Name="btnConfirm" Content="Confirmar" Width="115" Background="#4CAF50" BorderBrush="#4CAF50" Foreground="#FFF" Margin="5,0" Click="btnYes_Click"/>
                     </StackPanel>
                 </Border>
             </Grid>

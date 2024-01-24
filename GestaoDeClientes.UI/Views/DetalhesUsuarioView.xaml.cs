@@ -1,4 +1,5 @@
 ﻿using GestaoDeClientes.Domain.Models;
+using GestaoDeClientes.Infra.Interfaces;
 using GestaoDeClientes.Infra.Repositories;
 using GestaoDeClientes.UI.Popup;
 using System;
@@ -21,12 +22,16 @@ namespace GestaoDeClientes.UI.Views
     /// <summary>
     /// Interação lógica para DetalhesUsuarioView.xam
     /// </summary>
-    public partial class DetalhesUsuarioView : UserControl
+    public partial class DetalhesUsuarioView : UserControl, IRemoverJanela
     {
-        public event EventHandler ChildWindowClosed;
+        #region Propriedades
         public event EventHandler OnCancelarClicado;
         public Usuario _usuario;
         UsuarioRepository usuarioRepository = new UsuarioRepository();
+        List<BindingExpression> bindingExpressions = new List<BindingExpression>();
+        #endregion
+
+        #region Construtores
         public DetalhesUsuarioView()
         {
             InitializeComponent();
@@ -35,61 +40,99 @@ namespace GestaoDeClientes.UI.Views
         public DetalhesUsuarioView(Usuario usuario)
         {
             InitializeComponent();
-            _usuario = usuario;
             this.DataContext = usuario;
-            txtNome.Text = usuario.Nome;
-            txtLogin.Text = usuario.Login;
-            txtEmail.Text = usuario.Email;
-            txtSenha.Text = usuario.Senha;
-            usuarioAtivo.IsChecked = usuario.Ativo;
+            _usuario = usuario;            
         }
+        #endregion
 
-        private void btnAtualizar_Click(object sender, RoutedEventArgs e)
+        #region Eventos
+        private void UserControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            if (txtLogin.Text.Any())
+            txtLogin.Focus();
+            btnAtualizar.IsEnabled = false;
+        }
+        private void txtLogin_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (!IsTextOnly(e.Text))
             {
-                _usuario.Login = txtLogin.Text;
+                e.Handled = true;
             }
+        }
+        private void txtNome_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (!IsTextOnly(e.Text))
+            {
+                e.Handled = true;
+            }
+        }
+        private void txtText_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            VerificarErrosEBloquearBotao();
+        }
+        #endregion
 
-            if (txtNome.Text.Any())
-            {
-                _usuario.Nome = txtNome.Text;
-            }
-
-            if (txtEmail.Text.Any())
-            {
-                _usuario.Email = txtEmail.Text;
-            }
-
-            if (txtSenha.Text.Any())
-            {
-                _usuario.Senha = txtSenha.Text;
-            }
-
-            if (usuarioAtivo.IsChecked == true)
-            {
-                _usuario.Ativo = true;
-            }
-            else
-            {
-                _usuario.Ativo = false;
-            }
-
+        #region Botões
+        private async void btnAtualizar_Click(object sender, RoutedEventArgs e)
+        {
             try
             {
-                usuarioRepository.Update(_usuario);
+                await usuarioRepository.UpdateAsync(_usuario);
                 GCMessageBox.Show("Usuário atualizado com sucesso!", "Sucesso", GCMessageBox.MessageBoxStatus.Ok);
                 OnCancelarClicado?.Invoke(this, EventArgs.Empty);
             }
             catch (Exception ex)
             {
-                GCMessageBox.Show(ex.Message);
+                OnCancelarClicado?.Invoke(this, EventArgs.Empty);
+                GCMessageBox.Show("Erro ao atualizar usuário!", "Erro", GCMessageBox.MessageBoxStatus.Error);
             }
         }
-
         private void btnCancelar_Click(object sender, RoutedEventArgs e)
         {
             OnCancelarClicado?.Invoke(this, EventArgs.Empty);
+        }       
+        #endregion
+
+        #region Métodos
+        private bool IsTextOnly(string input)
+        {
+            return System.Text.RegularExpressions.Regex.IsMatch(input, @"^[a-zA-Z]+$");
         }
+        private void VerificarErrosEBloquearBotao()
+        {
+            bindingExpressions.Add(txtLogin.GetBindingExpression(TextBox.TextProperty));
+            bindingExpressions.Add(txtNome.GetBindingExpression(TextBox.TextProperty));
+            bindingExpressions.Add(txtEmail.GetBindingExpression(TextBox.TextProperty));
+            bindingExpressions.Add(txtSenha.GetBindingExpression(TextBox.TextProperty));
+            bool algumErro = bindingExpressions.Any(x =>
+            {
+                x?.UpdateSource();
+                return x?.HasError == true;
+            });
+            btnAtualizar.IsEnabled = !algumErro;
+            bindingExpressions.Clear();
+        }
+        private void ResetBindingExpressions(params TextBox[] textBoxes)
+        {
+            foreach (var textBox in textBoxes)
+            {
+                BindingExpression bindingExpression = textBox.GetBindingExpression(TextBox.TextProperty);
+
+                bindingExpression?.UpdateTarget();
+            }
+        }
+        private void Limpar()
+        {
+            ResetBindingExpressions(txtNome, txtLogin, txtSenha, txtEmail);
+            txtNome.Text = string.Empty;
+            txtLogin.Text = string.Empty;
+            txtSenha.Text = string.Empty;
+            txtEmail.Text = string.Empty;
+        }
+
+        public void RemoverJanela()
+        {
+            OnCancelarClicado?.Invoke(this, EventArgs.Empty);
+        }
+        #endregion
     }
 }

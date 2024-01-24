@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using GestaoDeClientes.Domain.Models;
+using GestaoDeClientes.Infra.Interfaces;
 using GestaoDeClientes.Infra.SQLs;
 using Microsoft.Data.Sqlite;
 using System;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace GestaoDeClientes.Infra.Repositories
 {
-    public class UsuarioRepository
+    public class UsuarioRepository : IRepository<Usuario>
     {
         string connString = string.Format("Data Source={0}", Util.Util.GetDbFilePath());
 
@@ -57,33 +58,62 @@ namespace GestaoDeClientes.Infra.Repositories
             }
         }
 
-        public Usuario GetByUsername(string username)
+        public Task<Usuario> GetByNomeAsync(string username)
+        {
+            using (var connection = new SqliteConnection(connString))
+            {
+                SQLitePCL.Batteries.Init();
+                connection.Open();
+                return connection.QueryFirstOrDefaultAsync<Usuario>(UsuarioSql.GetByNome, new
+                {
+                    Nome = username
+                });
+            }
+        }
+
+        public Usuario GetByNome(string username)
         {
             using (var connection = new SqliteConnection(connString))
             {
                 connection.Open();
                 return connection.Query<Usuario>(UsuarioSql.GetByLogin, new { Login = username }).FirstOrDefault();
             }
+
         }
 
-        public IEnumerable<Usuario> GetAll()
+        public Task<Usuario> GetByIdAsync(Guid id)
         {
             using (var connection = new SqliteConnection(connString))
             {
+                SQLitePCL.Batteries.Init();
+                connection.Open();
+                return connection.QueryFirstOrDefaultAsync<Usuario>(UsuarioSql.GetById, new
+                {
+                    Id = id
+                });
+            }
+        }
+
+        public async Task<IEnumerable<Usuario>> GetAllAsync()
+        {
+            using (var connection = new SqliteConnection(connString))
+            {
+                SQLitePCL.Batteries.Init();
                 connection.Open();
                 return connection.Query<Usuario>(UsuarioSql.GetAll);
             }
         }
-        public void Delete(string id)
+        public async Task DeleteAsync(string id)
         {
             using (var connection = new SqliteConnection(connString))
             {
+                SQLitePCL.Batteries.Init();
                 connection.Open();
                 connection.Execute(UsuarioSql.Delete, new { Id = id });
             }
         }
 
-        public void Update(Usuario usuario)
+        public async Task UpdateAsync(Usuario usuario)
         {
             using (var connection = new SqliteConnection(connString))
             {

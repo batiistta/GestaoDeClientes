@@ -1,4 +1,5 @@
-﻿using GestaoDeClientes.Domain.Models;
+﻿using GestaoDeClientes.Domain;
+using GestaoDeClientes.Domain.Models;
 using GestaoDeClientes.Infra.Interfaces;
 using GestaoDeClientes.Infra.Repositories;
 using GestaoDeClientes.UI.Popup;
@@ -24,15 +25,20 @@ namespace GestaoDeClientes.UI.Views
     /// </summary>
     public partial class UsuarioView : UserControl
     {
+        #region Propriedades
         public event EventHandler OnCancelarClicado;
         CadastrarUsuarioView cadastrarUsuarioView = new CadastrarUsuarioView();
         DetalhesUsuarioView detalhesUsuarioView = new DetalhesUsuarioView();
         UsuarioRepository usuarioRepository = new UsuarioRepository();
+        List<Usuario> usuarios = new List<Usuario>();
+        #endregion
 
+        #region Construtores
         public UsuarioView()
         {
             InitializeComponent();
         }
+        #endregion
 
         #region Eventos
         private void UserControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -80,8 +86,7 @@ namespace GestaoDeClientes.UI.Views
             }
 
         }
-
-        private void btnDeletar_Click(object sender, RoutedEventArgs e)
+        private async void btnDeletar_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -91,7 +96,7 @@ namespace GestaoDeClientes.UI.Views
 
                 if (GCMessageBox.Confirm("Deseja realmente deletar o usuario " + usuarioParaDeletar.Nome + "?", "Atenção", GCMessageBox.MessageBoxStatus.Ok))
                 {
-                    usuarioRepository.Delete(usuarioParaDeletar.Id);
+                    await usuarioRepository.DeleteAsync(usuarioParaDeletar.Id);
                     GCMessageBox.Show("Usuário deletado com sucesso!", GCMessageBox.MessageBoxStatus.Ok);
                     CarregarUsuarios();
                 }
@@ -122,7 +127,24 @@ namespace GestaoDeClientes.UI.Views
 
             detalhesUsuarioView.OnCancelarClicado += DetalhesUsuarioView_OnCancelarClicado;
         }
-        private async void btnCancelar_Click(object sender, RoutedEventArgs e)
+        private async void btnBuscarUsuarios_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(txtSearch.Text))
+                {
+                    listViewUsuarios.ItemsSource = await GetAllAsync();
+                    return;
+                }
+                usuarios = (await GetAllAsync()).ToList();
+                listViewUsuarios.ItemsSource = usuarios.Where(c => c.Nome.ToLower().Contains(txtSearch.Text.ToLower()));
+            }
+            catch (Exception ex)
+            {
+                GCMessageBox.Show(ex.Message, "Erro", GCMessageBox.MessageBoxStatus.Error);
+            }
+        }
+        private void btnCancelar_Click(object sender, RoutedEventArgs e)
         {
             listViewUsuarios.ItemsSource = null;
             this.Visibility = Visibility.Hidden;
@@ -130,12 +152,11 @@ namespace GestaoDeClientes.UI.Views
         #endregion
 
         #region Métodos
-        private void CarregarUsuarios()
+        private async void CarregarUsuarios()
         {
             try
             {
-                UsuarioRepository usuarioRepository = new UsuarioRepository();
-                var usuarios = usuarioRepository.GetAll();
+                var usuarios = await usuarioRepository.GetAllAsync();
                 listViewUsuarios.ItemsSource = usuarios;
             }
             catch (Exception ex)
@@ -152,6 +173,18 @@ namespace GestaoDeClientes.UI.Views
             }
 
             gridPrincipal.IsEnabled = true;
+        }
+
+        private async Task<IEnumerable<Usuario>> GetAllAsync()
+        {
+            try
+            {
+                return await usuarioRepository.GetAllAsync();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
         #endregion
     }

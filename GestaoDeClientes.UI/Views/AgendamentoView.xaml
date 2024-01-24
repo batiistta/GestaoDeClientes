@@ -17,19 +17,21 @@
             <xctk:BusyIndicator.BusyContentTemplate>
                 <DataTemplate>
                     <StackPanel Margin="5">
-                        <materialDesign:Card UniformCornerRadius="28" 
-                 Padding="4"
-                 Grid.Row="5" 
-                 Grid.Column="0"
-                 VerticalAlignment="Center" 
-                 HorizontalAlignment="Center" 
-                 Margin="2">
-                            <ProgressBar Height="50" 
-                     Width="50" 
-                     Style="{StaticResource MaterialDesignCircularProgressBar}" 
-                     Value="80"
-                     IsIndeterminate="True"                         
-                 />
+                        <materialDesign:Card 
+                            UniformCornerRadius="28" 
+                            Padding="4"
+                            Grid.Row="5" 
+                            Grid.Column="0"
+                            VerticalAlignment="Center" 
+                            HorizontalAlignment="Center" 
+                            Margin="2">
+                            <ProgressBar 
+                                Height="50" 
+                                Width="50" 
+                                Style="{StaticResource MaterialDesignCircularProgressBar}" 
+                                Value="80"
+                                IsIndeterminate="True"                         
+                            />
                         </materialDesign:Card>
                     </StackPanel>
                 </DataTemplate>
@@ -56,21 +58,31 @@
                     <Grid Grid.Column="0" Grid.Row="0" Margin="15">
                         <Border BorderThickness="1" CornerRadius="10">
                             <materialDesign:Card>
-                                <TabControl materialDesign:ColorZoneAssist.Mode="SecondaryLight"
-                                 materialDesign:NavigationRailAssist.SelectionCornerRadius="50 10 10 10"
-                                 materialDesign:NavigationRailAssist.ShowSelectionBackground="True"
-                                 Style="{StaticResource MaterialDesignNavigationRailTabControl}"
-                                 TabStripPlacement="Top">
-                                    <TabItem Width="100">
+                                <TabControl 
+                                    materialDesign:ColorZoneAssist.Mode="SecondaryLight"
+                                    materialDesign:NavigationRailAssist.ShowSelectionBackground="True"
+                                    Style="{StaticResource MaterialDesignNavigationRailTabControl}"
+                                    TabStripPlacement="Top">
+                                    <TabItem Width="180" Padding="10">
                                         <TabItem.Header>
-                                            <StackPanel Width="auto"
-                                             Height="auto">
-                                                <materialDesign:PackIcon Width="240"
-                                      Height="24"
-                                      HorizontalAlignment="Center"
-                                      Kind="Schedule" />
-                                                <TextBlock HorizontalAlignment="Center"
-                                         Text="Agendamentos" FontFamily="verdana" Foreground="{DynamicResource AccentColorBrush}" Width="50"/>
+                                            <StackPanel 
+                                                Orientation="Horizontal"
+                                                Width="auto"
+                                                Height="auto">
+                                                <materialDesign:PackIcon 
+                                                    Width="24"
+                                                    Height="24"
+                                                    VerticalAlignment="Center"
+                                                    Kind="Schedule" 
+                                                />
+                                                <TextBlock 
+                                                    HorizontalAlignment="Left"
+                                                    Text="Agendamentos" 
+                                                    FontFamily="verdana" 
+                                                    Foreground="{DynamicResource AccentColorBrush}" 
+                                                    Width="150"
+                                                    Margin="5,2,0,0"
+                                                />
                                             </StackPanel>
                                         </TabItem.Header>
                                         <Grid>
@@ -83,49 +95,61 @@
                                                 <ColumnDefinition Width="290*"/>
                                                 <ColumnDefinition Width="75*"></ColumnDefinition>
                                             </Grid.ColumnDefinitions>
-                                            <StackPanel Margin="8,8,8,8" Orientation="Horizontal" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" >
-                                                <Button Margin="0,0,0,0"
-                                             x:Name="btnCadastrarAgendamento"
-                                             Content="Cadastrar Agendamento"
-                                             FontFamily="verdana"
-                                             Foreground="#ffffff"
-                                             Width="220"
-                                             IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
-                                             Style="{StaticResource MaterialDesignRaisedButton}"
-                                             materialDesign:ButtonProgressAssist.IsIndeterminate="False"
-                                             materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
-                                             materialDesign:ButtonProgressAssist.Value="-1"
-                                             ToolTip="Cadastrar Agendamento" 
-                                             Cursor="Hand" Click="btnCadastrarAgendamento_Click"
-                                     />
+                                            <StackPanel 
+                                                Margin="8,8,8,8" 
+                                                Orientation="Horizontal" 
+                                                Grid.Column="0" 
+                                                Grid.Row="0"
+                                                Grid.ColumnSpan="2" >
+                                                <Button 
+                                                    Margin="0,0,0,0"
+                                                    x:Name="btnCadastrarAgendamento"
+                                                    Content="Cadastrar Agendamento"
+                                                    FontFamily="verdana"
+                                                    Foreground="#ffffff"
+                                                    Background="#4CAF50"          
+                                                    BorderBrush="#4CAF50"
+                                                    Width="220"
+                                                    IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                                    Style="{StaticResource MaterialDesignRaisedButton}"
+                                                    ToolTip="Cadastrar Agendamento" 
+                                                    Cursor="Hand" Click="btnCadastrarAgendamento_Click"
+                                                />
 
-                                                <Button Margin="20,0,0,0"
-                                             x:Name="btnBuscarAgendamento"
-                                             Content="Buscar Agendamento"
-                                             FontFamily="verdana"    
-                                             Foreground="#ffffff"
-                                             Width="200"
-                                             IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
-                                             Style="{StaticResource MaterialDesignRaisedButton}"
-                                             materialDesign:ButtonProgressAssist.IsIndeterminate="False"
-                                             materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
-                                             materialDesign:ButtonProgressAssist.Value="-1"
-                                             ToolTip="Buscar Agendamento" 
-                                             Cursor="Hand" 
-                                     />
-
+                                                <Button 
+                                                    Margin="20,0,0,0"
+                                                    x:Name="btnBuscarAgendamento"
+                                                    Content="Buscar Agendamento"
+                                                    FontFamily="verdana"    
+                                                    Foreground="#ffffff"
+                                                    Width="200"
+                                                    IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                                    Style="{StaticResource MaterialDesignRaisedButton}"
+                                                    materialDesign:ButtonProgressAssist.IsIndeterminate="False"
+                                                    materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
+                                                    materialDesign:ButtonProgressAssist.Value="-1"
+                                                    ToolTip="Buscar Agendamento" 
+                                                    Cursor="Hand" 
+                                                />
                                             </StackPanel>
 
 
-                                            <Border Margin="8,0,8,0" Grid.Row="1" Grid.ColumnSpan="3" BorderThickness="0 1 0 0" BorderBrush="{DynamicResource MaterialDesignDivider}" Padding="8">
+                                            <Border 
+                                                Margin="8,0,8,0" 
+                                                Grid.Row="1" 
+                                                Grid.ColumnSpan="3" 
+                                                BorderThickness="0 1 0 0" 
+                                                BorderBrush="{DynamicResource MaterialDesignDivider}" 
+                                                Padding="8">
                                                 <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
                                                     <Grid>
                                                         <Grid.RowDefinitions>
                                                             <RowDefinition Height="*"></RowDefinition>
                                                         </Grid.RowDefinitions>
-                                                        <ListView x:Name="listViewAgendamentos"
-                                                       ItemsSource="{Binding Usuarios}"
-                                                       SelectionMode="Single">
+                                                        <ListView 
+                                                            x:Name="listViewAgendamentos"
+                                                            ItemsSource="{Binding Usuarios}"
+                                                            SelectionMode="Single">
                                                             <ListView.RenderTransform>
                                                                 <TransformGroup>
                                                                     <ScaleTransform/>
@@ -144,11 +168,11 @@
                                                                             <DataTemplate>
                                                                                 <StackPanel Orientation="Horizontal">
                                                                                     <Button Click="btnDeletar_Click">
-                                                                                        <materialDesign:PackIcon Kind="Delete" Width="15" Height="15"/>
+                                                                                        <materialDesign:PackIcon Kind="Delete"  Width="15" Height="15"/>
                                                                                     </Button>
                                                                                     <TextBlock Width="5"/>
                                                                                     <Button Click="btnAtualizar_Click">
-                                                                                        <materialDesign:PackIcon Kind="Pencil" Width="15" Height="15"/>
+                                                                                        <materialDesign:PackIcon Kind="Pencil"  Width="15" Height="15"/>
                                                                                     </Button>
                                                                                 </StackPanel>
                                                                             </DataTemplate>
@@ -166,8 +190,6 @@
                             </materialDesign:Card>
                         </Border>
                     </Grid>
-                </Grid>
-                <Grid Grid.Row="1" Grid.Column="1">
                 </Grid>
             </Grid>
         </xctk:BusyIndicator>
