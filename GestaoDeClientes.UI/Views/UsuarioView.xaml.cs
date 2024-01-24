@@ -94,7 +94,7 @@ namespace GestaoDeClientes.UI.Views
 
                 Usuario usuarioParaDeletar = btnDeletar.DataContext as Usuario;
 
-                bool confirmacao = GCMessageBox.Show("Deseja realmente deletar este usuário?", "Confirmação", GCMessageBox.MessageBoxStatus.Warning);
+                bool confirmacao = GCMessageBox.Confirm("Deseja realmente deletar este usuário?", "Deletar", GCMessageBox.MessageBoxStatus.Warning);
 
                 if (confirmacao)
                 {
