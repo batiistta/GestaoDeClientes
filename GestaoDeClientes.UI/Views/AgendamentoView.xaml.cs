@@ -1,6 +1,7 @@
 ﻿using GestaoDeClientes.Domain.Models;
 using GestaoDeClientes.Infra.Interfaces;
 using GestaoDeClientes.Infra.Repositories;
+using GestaoDeClientes.UI.Popup;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,12 +28,19 @@ namespace GestaoDeClientes.UI.Views
         public event EventHandler OnCancelarClicado;
         CadastrarAgendamentoView cadastrarAgendamentoView = new CadastrarAgendamentoView();
         AgendamentoRepository agendamentoRepository = new AgendamentoRepository();
+        DetalhesAgendamento detalhesAgendamentoView = new DetalhesAgendamento();
         List<Agendamento> agendamentos = new List<Agendamento>();
         public AgendamentoView()
         {
             InitializeComponent();
         }
 
+        private void DetalhesAgendamento_OnCancelarClicado(object sender, EventArgs e)
+        {
+            primeiraGrid.Children.Remove(detalhesAgendamentoView);
+            gridPrincipal.IsEnabled = true;
+            CarregarAgendamentos();
+        }
 
         private void CadastrarAgendamentoView_OnCancelarClicado(object sender, EventArgs e)
         {
@@ -79,7 +87,21 @@ namespace GestaoDeClientes.UI.Views
 
         private void btnAtualizar_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                Button buttonAtualizar = sender as Button;
 
+                Agendamento agendamentoParaAtualizar = buttonAtualizar.DataContext as Agendamento;
+
+                detalhesAgendamentoView = new DetalhesAgendamento(agendamentoParaAtualizar);
+
+                primeiraGrid.Children.Add(detalhesAgendamentoView);
+                detalhesAgendamentoView.OnCancelarClicado += DetalhesAgendamento_OnCancelarClicado;
+            }
+            catch (Exception ex)
+            {
+                GCMessageBox.Show(ex.Message, GCMessageBox.MessageBoxStatus.Error);
+            }
         }
 
         private void UserControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -98,7 +120,7 @@ namespace GestaoDeClientes.UI.Views
         {
             if (this.IsVisible)
             {
-                CarregarAgendamentos(); 
+                CarregarAgendamentos();
             }
         }
 

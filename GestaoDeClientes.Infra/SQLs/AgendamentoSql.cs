@@ -26,6 +26,14 @@ namespace GestaoDeClientes.Infra.SQLs
             );";
 
 
+        public static string Update = @"
+            UPDATE Agendamento SET
+                IdCliente = @IdCliente,
+                IdProduto = @IdProduto,
+                DataAgendamento = @DataAgendamento,
+                NomeCliente = @NomeCliente,
+                NomeProduto = @NomeProduto
+            WHERE Id = @Id;";
 
         public static string Delete = @"DELETE FROM Agendamento WHERE Id = @Id";
 
