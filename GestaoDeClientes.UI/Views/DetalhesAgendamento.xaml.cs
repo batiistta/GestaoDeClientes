@@ -1,5 +1,6 @@
 ﻿using GestaoDeClientes.Domain;
 using GestaoDeClientes.Domain.Models;
+using GestaoDeClientes.Infra.Interfaces;
 using GestaoDeClientes.Infra.Repositories;
 using GestaoDeClientes.UI.Popup;
 using System;
@@ -22,7 +23,7 @@ namespace GestaoDeClientes.UI.Views
     /// <summary>
     /// Interação lógica para DetalhesAgendamento.xam
     /// </summary>
-    public partial class DetalhesAgendamento : UserControl
+    public partial class DetalhesAgendamento : UserControl, IRemoverJanela
     {
         public event EventHandler OnCancelarClicado;
         private Agendamento _agendamento;

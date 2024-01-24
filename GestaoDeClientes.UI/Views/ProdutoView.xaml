@@ -209,12 +209,12 @@
                                                                         <GridViewColumn.CellTemplate>
                                                                             <DataTemplate>
                                                                                 <StackPanel Orientation="Horizontal">
-                                                                                    <Button Click="btnDeletar_Click">
-                                                                                        <materialDesign:PackIcon Kind="Delete" Width="15" Height="15"/>
+                                                                                    <Button Click="btnDeletar_Click" Background="#607D8B" BorderBrush="#607D8B" Foreground="#FFFFFF">
+                                                                                        <materialDesign:PackIcon Kind="Delete"  Width="15" Height="15"/>
                                                                                     </Button>
                                                                                     <TextBlock Width="5"/>
                                                                                     <Button Click="btnAtualizar_Click">
-                                                                                        <materialDesign:PackIcon Kind="Pencil" Width="15" Height="15"/>
+                                                                                        <materialDesign:PackIcon Kind="Pencil" Background="#4CAF50" BorderBrush="#4CAF50" Foreground="#FFFFFF"  Width="15" Height="15"/>
                                                                                     </Button>
                                                                                 </StackPanel>
                                                                             </DataTemplate>
