@@ -190,7 +190,7 @@
                                                                                     </Button>
                                                                                     <TextBlock Width="5"/>
                                                                                     <Button Click="btnAtualizar_Click">
-                                                                                        <materialDesign:PackIcon Kind="Pencil" Background="#4CAF50" BorderBrush="#4CAF50" Foreground="#FFFFFF"  Width="15" Height="15"/>
+                                                                                        <materialDesign:PackIcon Kind="Pencil"  BorderBrush="#4CAF50" Foreground="#FFFFFF"  Width="15" Height="15"/>
                                                                                     </Button>
                                                                                 </StackPanel>
                                                                             </DataTemplate>
