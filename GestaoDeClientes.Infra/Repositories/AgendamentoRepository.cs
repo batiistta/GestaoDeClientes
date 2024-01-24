@@ -73,9 +73,30 @@ namespace GestaoDeClientes.Infra.Repositories
             throw new NotImplementedException();
         }
 
-        public Task UpdateAsync(Agendamento entity)
+        public async Task UpdateAsync(Agendamento entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (var connection = new SqliteConnection(connString))
+                {
+                    SQLitePCL.Batteries.Init();
+                    connection.Open();
+                    connection.Execute(AgendamentoSql.Update, new
+                    {
+                        Id = entity.Id,
+                        IdCliente = entity.IdCliente,
+                        IdProduto = entity.IdProduto,
+                        DataAgendamento = entity.DataAgendamento,
+                        NomeCliente = entity.NomeCliente,
+                        NomeProduto = entity.NomeProduto
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
+
     }
 }
