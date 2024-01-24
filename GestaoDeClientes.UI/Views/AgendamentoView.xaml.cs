@@ -24,48 +24,67 @@ namespace GestaoDeClientes.UI.Views
     /// </summary>
     public partial class AgendamentoView : UserControl
     {
-        public event EventHandler ChildWindowClosed;
-        public event EventHandler OnCancelarClicado;
+        #region Propriedades
         CadastrarAgendamentoView cadastrarAgendamentoView = new CadastrarAgendamentoView();
         AgendamentoRepository agendamentoRepository = new AgendamentoRepository();
         DetalhesAgendamento detalhesAgendamentoView = new DetalhesAgendamento();
         List<Agendamento> agendamentos = new List<Agendamento>();
+        #endregion
+
+        #region Construtores
         public AgendamentoView()
         {
             InitializeComponent();
         }
+        #endregion
 
+        #region Eventos
+        private void UserControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (!this.IsVisible)
+            {
+                RemoverJanelasFilhas();
+            }
+        }
+        private void listViewFiles_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (this.IsVisible)
+            {
+                CarregarAgendamentos();
+            }
+        }
         private void DetalhesAgendamento_OnCancelarClicado(object sender, EventArgs e)
         {
             primeiraGrid.Children.Remove(detalhesAgendamentoView);
             gridPrincipal.IsEnabled = true;
             CarregarAgendamentos();
         }
-
         private void CadastrarAgendamentoView_OnCancelarClicado(object sender, EventArgs e)
         {
             primeiraGrid.Children.Remove(cadastrarAgendamentoView);
             gridPrincipal.IsEnabled = true;
             CarregarAgendamentos();
         }
+        #endregion
 
+        #region Botões
         private void btnCadastrarAgendamento_Click(object sender, RoutedEventArgs e)
         {
-            primeiraGrid.Children.Add(cadastrarAgendamentoView);
-            cadastrarAgendamentoView.OnCancelarClicado += CadastrarAgendamentoView_OnCancelarClicado;
-            gridPrincipal.IsEnabled = false;
-        }
-
-        private void RemoverJanelasFilhas()
-        {
-            foreach (var child in primeiraGrid.Children.OfType<IRemoverJanela>().ToList())
+            try
             {
-                child.RemoverJanela();
+                primeiraGrid.Children.Add(cadastrarAgendamentoView);
+                cadastrarAgendamentoView.OnCancelarClicado += CadastrarAgendamentoView_OnCancelarClicado;
+                gridPrincipal.IsEnabled = false;
+            }
+            catch (Exception ex)
+            {
+                cadastrarAgendamentoView.OnCancelarClicado -= CadastrarAgendamentoView_OnCancelarClicado;
+                gridPrincipal.IsEnabled = false;
+                GCMessageBox.Show(ex.Message, "Erro", GCMessageBox.MessageBoxStatus.Error);
             }
 
-            gridPrincipal.IsEnabled = true;
         }
-        private void btnDeletar_Click(object sender, RoutedEventArgs e)
+        private async void btnDeletar_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -75,16 +94,15 @@ namespace GestaoDeClientes.UI.Views
 
                 if (MessageBox.Show("Deseja realmente excluir o agendamento?", "Excluir", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 {
-                    agendamentoRepository.DeleteAsync(agendamentoParaDeletar.Id);
+                    await agendamentoRepository.DeleteAsync(agendamentoParaDeletar.Id);
                     CarregarAgendamentos();
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                GCMessageBox.Show("Erro ao deletar agendamento", "Erro", GCMessageBox.MessageBoxStatus.Error);
             }
         }
-
         private void btnAtualizar_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -96,38 +114,53 @@ namespace GestaoDeClientes.UI.Views
                 detalhesAgendamentoView = new DetalhesAgendamento(agendamentoParaAtualizar);
 
                 primeiraGrid.Children.Add(detalhesAgendamentoView);
+
                 detalhesAgendamentoView.OnCancelarClicado += DetalhesAgendamento_OnCancelarClicado;
+
+                gridPrincipal.IsEnabled = false;
             }
             catch (Exception ex)
             {
-                GCMessageBox.Show(ex.Message, GCMessageBox.MessageBoxStatus.Error);
+                GCMessageBox.Show(ex.Message,"Erro", GCMessageBox.MessageBoxStatus.Error);
             }
         }
-
-        private void UserControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        private void btnCancelar_Click(object sender, RoutedEventArgs e)
         {
-            if (!this.IsVisible)
-            {
-                RemoverJanelasFilhas();
-            }
-            if (this.IsVisible)
-            {
-                CarregarAgendamentos();
-            }
+            listViewAgendamentos.ItemsSource = null;
+            this.Visibility = Visibility.Hidden;
         }
-
-        private void listViewAgendamentos_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        private void btnBuscarAgendamentoPorNome_Click(object sender, RoutedEventArgs e)
         {
-            if (this.IsVisible)
+            try
             {
-                CarregarAgendamentos();
+                //if (string.IsNullOrEmpty(txtBusca.Text))
+                //{
+                //    CarregarAgendamentos();
+                //}
+                //    agendamentos = agendamentos.Where(x => x.NomeCliente.ToLower().Contains(txtBusca.Text.ToLower())).ToList();
+                //    listViewAgendamentos.ItemsSource = agendamentos;
+            }
+            catch (Exception ex)
+            {
+                GCMessageBox.Show(ex.Message, "Erro", GCMessageBox.MessageBoxStatus.Error);
             }
         }
+        #endregion
 
+        #region Métodos
         private void CarregarAgendamentos()
         {
             agendamentos = agendamentoRepository.GetAllAsync().Result.ToList();
             listViewAgendamentos.ItemsSource = agendamentos;
         }
+        private void RemoverJanelasFilhas()
+        {
+            foreach (var child in primeiraGrid.Children.OfType<IRemoverJanela>().ToList())
+            {
+                child.RemoverJanela();
+            }
+            gridPrincipal.IsEnabled = true;
+        }        
+        #endregion
     }
 }

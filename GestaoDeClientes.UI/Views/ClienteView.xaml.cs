@@ -41,16 +41,13 @@ namespace GestaoDeClientes.UI.Views
         #region Eventos
         public static readonly RoutedEvent ConsultarDigitalizacaoButtonClickEvent = EventManager.RegisterRoutedEvent(
        "ClientesButtonClick", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(ClienteView));
-
         private void UserControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if(!this.IsVisible)
             {
                 RemoverJanelasFilhas();
             }
-
         }
-
         private void listViewFiles_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (this.IsVisible)
@@ -89,19 +86,8 @@ namespace GestaoDeClientes.UI.Views
             {
                 GCMessageBox.Show(ex.Message, "Erro", GCMessageBox.MessageBoxStatus.Error);
             }
-        }
-        private async void btnBuscarClientePorNome_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                await GetByNomeAsync("NomeTeste");
-            }
-            catch (Exception ex)
-            {
-                GCMessageBox.Show(ex.Message, "Erro", GCMessageBox.MessageBoxStatus.Error);
-            }
-        }
-        private async void btnCadastrar_Click(object sender, RoutedEventArgs e)
+        }        
+        private void btnCadastrar_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -117,15 +103,20 @@ namespace GestaoDeClientes.UI.Views
             }
 
         }
-        private async void btnAtualizar_Click(object sender, RoutedEventArgs e)
+        private void btnAtualizar_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 Button btnAtualizar = sender as Button;
+
                 Cliente cliente = btnAtualizar.DataContext as Cliente;
+
                 detalhesClienteView = new DetalhesClienteView(cliente);
+
                 primeiraGrid.Children.Add(detalhesClienteView);
+
                 detalhesClienteView.OnCancelarClicado += DetalhesClienteView_OnCancelarClicado;
+
                 gridPrincipal.IsEnabled = false;
             }
             catch (Exception ex)
@@ -142,15 +133,23 @@ namespace GestaoDeClientes.UI.Views
         }
         private async void btnDeletar_Click(object sender, RoutedEventArgs e)
         {
-            Button btnDeletar = sender as Button;
-            Cliente clienteParaDeletar = btnDeletar.DataContext as Cliente;
-
-            if (GCMessageBox.Show("Deseja realmente deletar o produto " + clienteParaDeletar.Nome + "?", "Atenção", GCMessageBox.MessageBoxStatus.Ok))
+            try
             {
-                await DeleteAsync(clienteParaDeletar.Id.ToString());
-                GCMessageBox.Show("Produto deletado com sucesso!", GCMessageBox.MessageBoxStatus.Ok);
-                CarregarClientes();
+                Button btnDeletar = sender as Button;
+                Cliente clienteParaDeletar = btnDeletar.DataContext as Cliente;
+
+                if (GCMessageBox.Show("Deseja realmente deletar o produto " + clienteParaDeletar.Nome + "?", "Atenção", GCMessageBox.MessageBoxStatus.Ok))
+                {
+                    await DeleteAsync(clienteParaDeletar.Id.ToString());
+                    GCMessageBox.Show("Produto deletado com sucesso!", GCMessageBox.MessageBoxStatus.Ok);
+                    CarregarClientes();
+                }
             }
+            catch (Exception ex)
+            {
+                GCMessageBox.Show(ex.Message, "Erro", GCMessageBox.MessageBoxStatus.Error);
+            }
+
         }
         #endregion
 
@@ -167,7 +166,6 @@ namespace GestaoDeClientes.UI.Views
                 throw ex;
             }
         }
-
         private async Task<Cliente> GetByNomeAsync(string nome)
         {
             try
@@ -179,7 +177,6 @@ namespace GestaoDeClientes.UI.Views
                 throw ex;
             }
         }
-
         private async Task<Cliente> GetByIdAsync(Guid id)
         {
             try
@@ -191,7 +188,6 @@ namespace GestaoDeClientes.UI.Views
                 throw ex;
             }
         }
-
         private async Task DeleteAsync(string id)
         {
             try
@@ -203,7 +199,6 @@ namespace GestaoDeClientes.UI.Views
                 throw ex;
             }
         }
-
         private void CarregarClientes()
         {
             try
@@ -216,7 +211,6 @@ namespace GestaoDeClientes.UI.Views
                 MessageBox.Show(ex.Message);
             }
         }
-
         private void RemoverJanelasFilhas()
         {
             foreach (var child in primeiraGrid.Children.OfType<IRemoverJanela>().ToList())

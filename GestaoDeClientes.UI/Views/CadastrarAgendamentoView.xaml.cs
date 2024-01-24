@@ -1,5 +1,6 @@
 ﻿using GestaoDeClientes.Domain;
 using GestaoDeClientes.Domain.Models;
+using GestaoDeClientes.Infra.Interfaces;
 using GestaoDeClientes.Infra.Repositories;
 using GestaoDeClientes.UI.Popup;
 using System;
@@ -22,32 +23,35 @@ namespace GestaoDeClientes.UI.Views
     /// <summary>
     /// Interação lógica para CadastrarAgendamentoView.xam
     /// </summary>
-    public partial class CadastrarAgendamentoView : UserControl
+    public partial class CadastrarAgendamentoView : UserControl, IRemoverJanela
     {
-        public event EventHandler ChildWindowClosed;
+        #region Propriedades
         public event EventHandler OnCancelarClicado;
         ClienteRepository clienteRepository = new ClienteRepository();
         ProdutoRepository produtoRepository = new ProdutoRepository();
         AgendamentoRepository agendamentoRepository = new AgendamentoRepository();
+        #endregion
+
+        #region Construtor
         public CadastrarAgendamentoView()
         {
             InitializeComponent();
             this.DataContext = new Agendamento();
-            CarregarClientes();
-            CarregarProdutos();
         }
+        #endregion
 
-        private void CarregarClientes()
+        #region Eventos
+        private void UserControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            var clientes = clienteRepository.GetAllAsync();
-            cmbClientes.ItemsSource = clientes.Result;
+            if (this.IsVisible)
+            {
+                CarregarClientes();
+                CarregarProdutos();
+            }
         }
+        #endregion
 
-        private void CarregarProdutos()
-        {
-            var produtos = produtoRepository.GetAllAsync();
-            cmbProdutos.ItemsSource = produtos.Result;
-        }
+        #region Botões
 
         private async void btnCadastar_Click(object sender, RoutedEventArgs e)
         {
@@ -85,16 +89,27 @@ namespace GestaoDeClientes.UI.Views
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
+            cmbClientes.SelectedItem = null;
+            cmbProdutos.SelectedItem = null;
             OnCancelarClicado?.Invoke(this, EventArgs.Empty);
         }
+        #endregion
 
-        private void UserControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        #region Métodos
+        private void CarregarClientes()
         {
-            if (this.IsVisible)
-            {
-                CarregarClientes();
-                CarregarProdutos();
-            }
+            var clientes = clienteRepository.GetAllAsync();
+            cmbClientes.ItemsSource = clientes.Result;
         }
+        private void CarregarProdutos()
+        {
+            var produtos = produtoRepository.GetAllAsync();
+            cmbProdutos.ItemsSource = produtos.Result;
+        }
+        public void RemoverJanela()
+        {
+            OnCancelarClicado?.Invoke(this, EventArgs.Empty);
+        }
+        #endregion
     }
 }

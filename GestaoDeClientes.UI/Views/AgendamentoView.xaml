@@ -116,20 +116,54 @@
                                                     Cursor="Hand" Click="btnCadastrarAgendamento_Click"
                                                 />
 
-                                                <Button 
-                                                    Margin="20,0,0,0"
-                                                    x:Name="btnBuscarAgendamento"
-                                                    Content="Buscar Agendamento"
-                                                    FontFamily="verdana"    
-                                                    Foreground="#ffffff"
-                                                    Width="200"
-                                                    IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
-                                                    Style="{StaticResource MaterialDesignRaisedButton}"
-                                                    materialDesign:ButtonProgressAssist.IsIndeterminate="False"
-                                                    materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
-                                                    materialDesign:ButtonProgressAssist.Value="-1"
-                                                    ToolTip="Buscar Agendamento" 
-                                                    Cursor="Hand" 
+                                                <StackPanel 
+                                                    Orientation="Horizontal" 
+                                                    Margin="30,0,0,0">
+                                                    <TextBox 
+                                                        x:Name="txtSearch" 
+                                                        Margin="0,10,0,0"
+                                                        Width="150"                                                             
+                                                        VerticalAlignment="Center"                                                             
+                                                        materialDesign:HintAssist.Hint="Buscar agendamentos"                                                             
+                                                        Text="{Binding DataContext.SearchText, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}, UpdateSourceTrigger=PropertyChanged}" 
+                                                    />
+
+                                                    <Button 
+                                                        Content="Buscar"
+                                                        Margin="10,0,0,0"
+                                                        Width="100"
+                                                        Foreground="#ffffff"
+                                                        FontFamily="verdana" 
+                                                        Background="#4CAF50"
+                                                        BorderBrush="#4CAF50"
+                                                        IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                                        Style="{StaticResource MaterialDesignRaisedButton}"
+                                                        ToolTip="Buscar Clientes" 
+                                                        Cursor="Hand" 
+                                                        Click="btnBuscarAgendamentoPorNome_Click" 
+                                                    />
+                                                </StackPanel>
+                                            </StackPanel>
+
+                                            <StackPanel 
+                                                Margin="0,0,10,0" 
+                                                Orientation="Horizontal" 
+                                                HorizontalAlignment="Right" 
+                                                Grid.Column="2" 
+                                                Grid.Row="0" >
+                                                <Button
+                                                    x:Name="btnCancelar"                                                        
+                                                    Content="Cancelar"                                                        
+                                                    FontFamily="verdana"                                                        
+                                                    Foreground="White" 
+                                                    Background="#FF607D8B"
+                                                    BorderBrush="#607D8B"
+                                                    Width="100"                                                        
+                                                    IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"                                                        
+                                                    Style="{StaticResource MaterialDesignRaisedButton}"                                          
+                                                    ToolTip="Botão de cancelar"                                                         
+                                                    Cursor="Hand"                                                        
+                                                    Click="btnCancelar_Click"
                                                 />
                                             </StackPanel>
 
@@ -149,7 +183,8 @@
                                                         <ListView 
                                                             x:Name="listViewAgendamentos"
                                                             ItemsSource="{Binding Usuarios}"
-                                                            SelectionMode="Single">
+                                                            SelectionMode="Single"
+                                                            IsVisibleChanged="listViewFiles_IsVisibleChanged">
                                                             <ListView.RenderTransform>
                                                                 <TransformGroup>
                                                                     <ScaleTransform/>
@@ -167,7 +202,7 @@
                                                                         <GridViewColumn.CellTemplate>
                                                                             <DataTemplate>
                                                                                 <StackPanel Orientation="Horizontal">
-                                                                                    <Button Click="btnDeletar_Click">
+                                                                                    <Button Click="btnDeletar_Click" Background="{x:Null}">
                                                                                         <materialDesign:PackIcon Kind="Delete"  Width="15" Height="15"/>
                                                                                     </Button>
                                                                                     <TextBlock Width="5"/>

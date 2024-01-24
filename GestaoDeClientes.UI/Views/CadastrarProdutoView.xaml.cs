@@ -79,6 +79,10 @@ namespace GestaoDeClientes.UI.Views
         {
             VerificarErrosEBloquearBotao();
         }
+        private void txtQuantidadeProduto_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            VerificarErrosEBloquearBotao();
+        }
         #region Botões
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
@@ -163,5 +167,6 @@ namespace GestaoDeClientes.UI.Views
         }
 
         #endregion
+
     }
 }
