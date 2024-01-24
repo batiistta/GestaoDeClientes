@@ -94,7 +94,9 @@ namespace GestaoDeClientes.UI.Views
 
                 Usuario usuarioParaDeletar = btnDeletar.DataContext as Usuario;
 
-                if (GCMessageBox.Confirm("Deseja realmente deletar o usuario " + usuarioParaDeletar.Nome + "?", "Atenção", GCMessageBox.MessageBoxStatus.Ok))
+                bool confirmacao = GCMessageBox.Show("Deseja realmente deletar este usuário?", "Confirmação", GCMessageBox.MessageBoxStatus.Warning);
+
+                if (confirmacao)
                 {
                     await usuarioRepository.DeleteAsync(usuarioParaDeletar.Id);
                     GCMessageBox.Show("Usuário deletado com sucesso!", GCMessageBox.MessageBoxStatus.Ok);

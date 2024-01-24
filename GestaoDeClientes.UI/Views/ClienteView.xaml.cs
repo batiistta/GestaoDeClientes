@@ -34,7 +34,7 @@ namespace GestaoDeClientes.UI.Views
         #region Construtores
         public ClienteView()
         {
-            InitializeComponent();            
+            InitializeComponent();
         }
         #endregion
 
@@ -43,7 +43,7 @@ namespace GestaoDeClientes.UI.Views
        "ClientesButtonClick", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(ClienteView));
         private void UserControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            if(!this.IsVisible)
+            if (!this.IsVisible)
             {
                 RemoverJanelasFilhas();
             }
@@ -86,7 +86,7 @@ namespace GestaoDeClientes.UI.Views
             {
                 GCMessageBox.Show(ex.Message, "Erro", GCMessageBox.MessageBoxStatus.Error);
             }
-        }        
+        }
         private void btnCadastrar_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -138,12 +138,16 @@ namespace GestaoDeClientes.UI.Views
                 Button btnDeletar = sender as Button;
                 Cliente clienteParaDeletar = btnDeletar.DataContext as Cliente;
 
-                if (GCMessageBox.Show("Deseja realmente deletar o produto " + clienteParaDeletar.Nome + "?", "Atenção", GCMessageBox.MessageBoxStatus.Ok))
+                bool confirmacao = GCMessageBox.Confirm("Deseja realmente deletar o cliente?", "Deletar", GCMessageBox.MessageBoxStatus.Warning);
+
+                if (confirmacao)
                 {
                     await DeleteAsync(clienteParaDeletar.Id.ToString());
                     GCMessageBox.Show("Produto deletado com sucesso!", GCMessageBox.MessageBoxStatus.Ok);
                     CarregarClientes();
                 }
+
+
             }
             catch (Exception ex)
             {
@@ -159,9 +163,9 @@ namespace GestaoDeClientes.UI.Views
         {
             try
             {
-                return await clienteRepository.GetAllAsync(); 
+                return await clienteRepository.GetAllAsync();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw ex;
             }
@@ -215,7 +219,7 @@ namespace GestaoDeClientes.UI.Views
         {
             foreach (var child in primeiraGrid.Children.OfType<IRemoverJanela>().ToList())
             {
-                child.RemoverJanela();                
+                child.RemoverJanela();
             }
 
             gridPrincipal.IsEnabled = true;

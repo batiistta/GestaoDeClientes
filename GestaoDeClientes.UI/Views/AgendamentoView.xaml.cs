@@ -92,11 +92,14 @@ namespace GestaoDeClientes.UI.Views
 
                 Agendamento agendamentoParaDeletar = btnDeletar.DataContext as Agendamento;
 
-                if (MessageBox.Show("Deseja realmente excluir o agendamento?", "Excluir", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                bool confirmacao = GCMessageBox.Confirm("Deseja realmente deletar o agendamento?", "Deletar", GCMessageBox.MessageBoxStatus.Warning);
+
+                if (confirmacao)
                 {
                     await agendamentoRepository.DeleteAsync(agendamentoParaDeletar.Id);
                     CarregarAgendamentos();
                 }
+
             }
             catch (Exception ex)
             {
@@ -121,7 +124,7 @@ namespace GestaoDeClientes.UI.Views
             }
             catch (Exception ex)
             {
-                GCMessageBox.Show(ex.Message,"Erro", GCMessageBox.MessageBoxStatus.Error);
+                GCMessageBox.Show(ex.Message, "Erro", GCMessageBox.MessageBoxStatus.Error);
             }
         }
         private void btnCancelar_Click(object sender, RoutedEventArgs e)
@@ -160,7 +163,7 @@ namespace GestaoDeClientes.UI.Views
                 child.RemoverJanela();
             }
             gridPrincipal.IsEnabled = true;
-        }        
+        }
         #endregion
     }
 }

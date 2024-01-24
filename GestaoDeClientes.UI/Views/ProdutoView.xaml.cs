@@ -108,13 +108,16 @@ namespace GestaoDeClientes.UI.Views
 
                 Produto produtoParaDeletar = btnDeletar.DataContext as Produto;
 
-                if (MessageBox.Show("Deseja realmente deletar o produto " + produtoParaDeletar.Nome + "?", "Atenção", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                bool confirmacao = GCMessageBox.Confirm("Deseja realmente deletar o produto?", "Deletar", GCMessageBox.MessageBoxStatus.Warning);
+
+                if (confirmacao)
                 {
                     ProdutoRepository produtoRepository = new ProdutoRepository();
                     await produtoRepository.DeleteAsync(produtoParaDeletar.Id);
                     MessageBox.Show("Produto deletado com sucesso!");
                     CarregarProdutos();
                 }
+
             }
             catch (Exception ex)
             {
@@ -128,7 +131,7 @@ namespace GestaoDeClientes.UI.Views
                 Button btnAtualizar = sender as Button;
 
                 Produto produtoParaAtualizar = btnAtualizar.DataContext as Produto;
-                
+
                 atualizarProdutoView = new DetalhesProdutoView(produtoParaAtualizar);
 
                 primeiraGrid.Children.Add(atualizarProdutoView);
@@ -184,6 +187,6 @@ namespace GestaoDeClientes.UI.Views
             }
         }
         #endregion
-        
+
     }
 }
