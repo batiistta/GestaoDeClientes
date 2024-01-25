@@ -61,11 +61,11 @@ namespace GestaoDeClientes.UI.Views
                 agendamento.Id = Guid.NewGuid().ToString();
                 agendamento.DataAgendamento = txtDataAgendamento.DisplayDate;
                 agendamento.IdCliente = (cmbClientes.SelectedItem as Cliente).Id;
-                agendamento.NomeCliente = (cmbClientes.SelectedItem as Cliente).Nome;
+                agendamento.NomeCliente = (cmbClientes.SelectedItem as Cliente).Nome.ToUpper();
 
                 if (cmbProdutos.SelectedItem != null)
                 {
-                    agendamento.NomeProduto = (cmbProdutos.SelectedItem as Produto).Nome;
+                    agendamento.NomeProduto = (cmbProdutos.SelectedItem as Produto).Nome.ToUpper();
                     agendamento.IdProduto = (cmbProdutos.SelectedItem as Produto).Id;
                 }
                 else

@@ -126,7 +126,7 @@
                                                         Width="150"                                                             
                                                         VerticalAlignment="Center"                                                             
                                                         materialDesign:HintAssist.Hint="Buscar Produto"                                                             
-                                                        Text="{Binding DataContext.SearchText, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}, UpdateSourceTrigger=PropertyChanged}" 
+                                                        Text="{Binding DataContext.SearchText, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}, UpdateSourceTrigger=PropertyChanged}" LostFocus="txtSearch_LostFocus" 
                                                     />
 
                                                     <Button 

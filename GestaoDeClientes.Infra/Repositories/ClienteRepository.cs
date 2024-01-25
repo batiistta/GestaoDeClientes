@@ -18,7 +18,7 @@ namespace GestaoDeClientes.Infra.Repositories
         string connString = string.Format("Data Source={0}", Util.Util.GetDbFilePath());
         public async Task AddAsync(Cliente cliente)
         {
-            var verificarNomeCliente = await VerifyNomeExist(cliente.Nome);
+            var verificarNomeCliente = await VerifyNomeExist(cliente.Nome.ToUpper());
 
             if (verificarNomeCliente)
                 throw new Exception("Já existe um cliente com esse nome");

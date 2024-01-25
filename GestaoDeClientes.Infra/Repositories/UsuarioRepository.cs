@@ -17,6 +17,11 @@ namespace GestaoDeClientes.Infra.Repositories
 
         public async Task AddAsync(Usuario usuario)
         {
+            var existeUsuario = await VerifyUsuarioExist(usuario.Login);
+
+            if (existeUsuario)
+                throw new Exception("Já existe um usuário cadastrado");
+
             using (var connection = new SqliteConnection(connString))
             {
                 SQLitePCL.Batteries.Init();
@@ -128,6 +133,20 @@ namespace GestaoDeClientes.Infra.Repositories
                     DataCadastro = usuario.DataCadastro,
                     Ativo = usuario.Ativo
                 });
+            }
+        }
+
+        public async Task<bool> VerifyUsuarioExist (string login)
+        {
+           using (var connection = new SqliteConnection(connString))
+            {
+                SQLitePCL.Batteries.Init();
+                connection.Open();
+                var result = await connection.QueryAsync<Usuario>(UsuarioSql.GetByLogin, new
+                {
+                    Login = login
+                });
+                return result.Any();
             }
         }
     }
