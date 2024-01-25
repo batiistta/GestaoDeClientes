@@ -122,10 +122,10 @@
                                                     Margin="30,0,0,0">
                                                     <TextBox 
                                                         x:Name="txtSearch" 
-                                                        Margin="30,10,0,0"
+                                                        Margin="0,8,0,0"
                                                         Width="150"                                                             
                                                         VerticalAlignment="Center"                                                             
-                                                        materialDesign:HintAssist.Hint="Buscar Produtos"                                                             
+                                                        materialDesign:HintAssist.Hint="Buscar Produto"                                                             
                                                         Text="{Binding DataContext.SearchText, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}, UpdateSourceTrigger=PropertyChanged}" 
                                                     />
 
