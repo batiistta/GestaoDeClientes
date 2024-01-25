@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GestaoDeClientes.Infra.SQLs;
+using System.Security.Cryptography;
 
 namespace GestaoDeClientes.Infra.Repositories
 {
@@ -16,7 +17,18 @@ namespace GestaoDeClientes.Infra.Repositories
     {
         string connString = string.Format("Data Source={0}", Util.Util.GetDbFilePath());
         public async Task AddAsync(Cliente cliente)
-        {            
+        {
+            var verificarNomeCliente = await VerifyNomeExist(cliente.Nome);
+
+            if (verificarNomeCliente)
+                throw new Exception("Já existe um cliente com esse nome");
+
+            var verificarTelefoneCliente = await VerifyTelefoneExist(cliente.Telefone);
+
+            if (verificarTelefoneCliente)
+                throw new Exception("Já existe um cliente com esse telefone");
+
+
             using (var connection = new SqliteConnection(connString))
             {
                 SQLitePCL.Batteries.Init();
@@ -105,5 +117,33 @@ namespace GestaoDeClientes.Infra.Repositories
                 });
             }
         }
-    }    
+
+        public async Task<bool> VerifyNomeExist(string nome)
+        {
+            using (var connection = new SqliteConnection(connString))
+            {
+                SQLitePCL.Batteries.Init();
+                connection.Open();
+                var result = await connection.QueryAsync<Cliente>(ClienteSql.GetByNome, new
+                {
+                    Nome = nome
+                });
+                return result.Any();
+            }
+        }
+
+        public async Task<bool> VerifyTelefoneExist(string telefone)
+        {
+            using (var connection = new SqliteConnection(connString))
+            {
+                SQLitePCL.Batteries.Init();
+                connection.Open();
+                var result = await connection.QueryAsync<Cliente>(ClienteSql.GetByTelefone, new
+                {
+                    Telefone = telefone
+                });
+                return result.Any();
+            }
+        }
+    }
 }

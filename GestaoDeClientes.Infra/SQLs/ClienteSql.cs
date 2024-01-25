@@ -43,6 +43,8 @@ namespace GestaoDeClientes.Infra.SQLs
         public static string GetAll = @"SELECT * FROM Cliente";
 
         public static string GetByNome = @"SELECT * FROM Cliente WHERE Nome = @Nome";
+
+        public static string GetByTelefone = @"SELECT * FROM Cliente WHERE Telefone = @Telefone";
     }
 
 
