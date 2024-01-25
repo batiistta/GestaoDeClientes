@@ -120,6 +120,11 @@ namespace GestaoDeClientes.Infra.Repositories
 
         public async Task UpdateAsync(Usuario usuario)
         {
+            var loginExiste = await VerifyUsarioExist(usuario.Login, usuario.Id.ToString());
+
+            if (loginExiste)
+                new Exception("Já existe um usuário com esse login!");
+
             using (var connection = new SqliteConnection(connString))
             {
                 connection.Open();
@@ -136,9 +141,9 @@ namespace GestaoDeClientes.Infra.Repositories
             }
         }
 
-        public async Task<bool> VerifyUsuarioExist (string login)
+        public async Task<bool> VerifyUsuarioExist(string login)
         {
-           using (var connection = new SqliteConnection(connString))
+            using (var connection = new SqliteConnection(connString))
             {
                 SQLitePCL.Batteries.Init();
                 connection.Open();
@@ -146,6 +151,23 @@ namespace GestaoDeClientes.Infra.Repositories
                 {
                     Login = login
                 });
+                return result.Any();
+            }
+        }
+
+        public async Task<bool> VerifyUsarioExist(string login, string usuarioId)
+        {
+            using (var connection = new SqliteConnection(connString))
+            {
+                SQLitePCL.Batteries.Init();
+                connection.Open();
+
+                var result = await connection.QueryAsync<Usuario>(UsuarioSql.GetByNomeAndNotId, new
+                {
+                    Login = login,
+                    Id = usuarioId
+                });
+
                 return result.Any();
             }
         }

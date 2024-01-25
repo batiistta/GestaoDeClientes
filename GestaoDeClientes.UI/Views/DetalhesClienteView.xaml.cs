@@ -57,7 +57,7 @@ namespace GestaoDeClientes.UI.Views
             catch (Exception ex)
             {
                 OnCancelarClicado?.Invoke(this, EventArgs.Empty);
-                GCMessageBox.Show("Erro ao atualizar cliente!", "Erro", GCMessageBox.MessageBoxStatus.Error);
+                GCMessageBox.Show(ex.Message, "Erro", GCMessageBox.MessageBoxStatus.Error);
             }            
         }
         private void btnCancel_Click(object sender, RoutedEventArgs e)

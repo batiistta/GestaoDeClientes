@@ -101,6 +101,13 @@ namespace GestaoDeClientes.Infra.Repositories
 
         public async Task UpdateAsync(Cliente cliente)
         {
+            var verificaNomeExiste = await VerifyNomeExist(cliente.Nome.ToUpper(), cliente.Id);
+            if (verificaNomeExiste)
+                throw new Exception("Já existe um cliente com esse nome");
+
+            var verificaTelefoneExiste = await VerifyTelefoneExist(cliente.Telefone, cliente.Id);
+            if (verificaTelefoneExiste)
+                throw new Exception("Já existe um cliente com esse telefone");
             using (var connection = new SqliteConnection(connString))
             {
                 SQLitePCL.Batteries.Init();
@@ -142,6 +149,40 @@ namespace GestaoDeClientes.Infra.Repositories
                 {
                     Telefone = telefone
                 });
+                return result.Any();
+            }
+        }
+
+        public async Task<bool> VerifyNomeExist(string nome, string clienteId)
+        {
+            using (var connection = new SqliteConnection(connString))
+            {
+                SQLitePCL.Batteries.Init();
+                connection.Open();
+
+                var result = await connection.QueryAsync<Cliente>(ClienteSql.GetByNomeAndNotId, new
+                {
+                    Nome = nome,
+                    Id = clienteId
+                });
+
+                return result.Any();
+            }
+        }
+
+        public async Task<bool> VerifyTelefoneExist(string telefone, string clienteId)
+        {
+            using (var connection = new SqliteConnection(connString))
+            {
+                SQLitePCL.Batteries.Init();
+                connection.Open();
+
+                var result = await connection.QueryAsync<Cliente>(ClienteSql.GetByTelefoneAndNotId, new
+                {
+                    Telefone = telefone,
+                    Id = clienteId
+                });
+
                 return result.Any();
             }
         }

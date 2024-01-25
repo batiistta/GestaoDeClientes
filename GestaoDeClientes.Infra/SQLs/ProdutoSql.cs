@@ -44,5 +44,7 @@ namespace GestaoDeClientes.Infra.SQLs
         public static string GetAll = @"SELECT * FROM Produto";
 
         public static string GetByNome = @"SELECT * FROM Produto WHERE Nome = @Nome";
+
+        public static string GetByNomeAndNotId = @"SELECT * FROM Produto WHERE Nome = @Nome AND Id <> @Id;";
     }
 }
