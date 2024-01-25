@@ -63,7 +63,7 @@ namespace GestaoDeClientes.UI.Views
         {
             if (txtNomeProduto.Text.Any())
             {
-                _produto.Nome = txtNomeProduto.Text;
+                _produto.Nome = txtNomeProduto.Text.ToUpper();
             }
 
             if (produtoAtivo.IsChecked == false)

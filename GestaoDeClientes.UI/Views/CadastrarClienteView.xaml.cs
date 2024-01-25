@@ -47,7 +47,7 @@ namespace GestaoDeClientes.UI.Views
             {
                 Cliente cliente = new Cliente();
                 cliente.Id = Guid.NewGuid().ToString();
-                cliente.Nome = txtNome.Text;
+                cliente.Nome = txtNome.Text.ToUpper();
                 cliente.Telefone = txtTelefone.Text;
                 cliente.DataNascimento = (DateTime)dataNascimento;
                 cliente.DataCadastro = DateTime.Now;

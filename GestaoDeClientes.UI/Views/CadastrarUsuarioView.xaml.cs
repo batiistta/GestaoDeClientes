@@ -39,7 +39,7 @@ namespace GestaoDeClientes.UI.Views
             {
                 Usuario usuario = new Usuario();
                 usuario.Id = Guid.NewGuid().ToString();
-                usuario.Nome = txtNome.Text;
+                usuario.Nome = txtNome.Text.ToUpper();
                 usuario.Login = txtLogin.Text;
                 usuario.Senha = txtSenha.Text;
                 usuario.Email = txtEmail.Text;

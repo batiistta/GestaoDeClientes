@@ -188,5 +188,12 @@ namespace GestaoDeClientes.UI.Views
         }
         #endregion
 
+        private void txtSearch_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtSearch.Text))
+            {
+                CarregarProdutos();
+            }
+        }
     }
 }

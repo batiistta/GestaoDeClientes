@@ -95,7 +95,7 @@ namespace GestaoDeClientes.UI.Views
             {
                 Produto produto = new Produto();
                 produto.Id = Guid.NewGuid().ToString();
-                produto.Nome = txtNomeProduto.Text;
+                produto.Nome = txtNomeProduto.Text.ToUpper();
                 produto.Descricao = txtDescricaoProduto.Text;
                 produto.ValorCompra = Convert.ToDecimal(txtValorCompraProduto.Text);
                 produto.ValorUnitario = Convert.ToDecimal(txtValorUnitarioProduto.Text);

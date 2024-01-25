@@ -136,12 +136,12 @@ namespace GestaoDeClientes.UI.Views
         {
             try
             {
-                //if (string.IsNullOrEmpty(txtBusca.Text))
-                //{
-                //    CarregarAgendamentos();
-                //}
-                //    agendamentos = agendamentos.Where(x => x.NomeCliente.ToLower().Contains(txtBusca.Text.ToLower())).ToList();
-                //    listViewAgendamentos.ItemsSource = agendamentos;
+                if (string.IsNullOrEmpty(txtSearch.Text))
+                {
+                    CarregarAgendamentos();
+                }
+                agendamentos = agendamentos.Where(x => x.NomeCliente.ToLower().Contains(txtSearch.Text.ToLower())).ToList();
+                listViewAgendamentos.ItemsSource = agendamentos;
             }
             catch (Exception ex)
             {
@@ -165,5 +165,13 @@ namespace GestaoDeClientes.UI.Views
             gridPrincipal.IsEnabled = true;
         }
         #endregion
+
+        private void txtSearch_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtSearch.Text))
+            {
+                CarregarAgendamentos();
+            }
+        }
     }
 }
