@@ -1,6 +1,7 @@
 ﻿using GestaoDeClientes.Domain.Models;
 using GestaoDeClientes.Infra.Interfaces;
 using GestaoDeClientes.Infra.Repositories;
+using GestaoDeClientes.UI.Popup;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -69,13 +70,19 @@ namespace GestaoDeClientes.UI.Views
             if (produtoAtivo.IsChecked == false)
             {
                 _produto.Ativo = false;
-            }                        
-            await produtoRepository.UpdateAsync(_produto);
+            }
+            try
+            {
+                await produtoRepository.UpdateAsync(_produto);
 
-            MessageBox.Show("Produto atualizado com sucesso!", "Sucesso", MessageBoxButton.OK, MessageBoxImage.Information);
-            ProdutoView produtoView = new ProdutoView();
-            this.Content = produtoView;
-
+                GCMessageBox.Show("Produto atualizado com sucesso!", "Sucesso", GCMessageBox.MessageBoxStatus.Ok);
+                ProdutoView produtoView = new ProdutoView();
+                this.Content = produtoView;
+            }
+            catch (Exception ex)
+            {
+                GCMessageBox.Show(ex.Message, "Error", GCMessageBox.MessageBoxStatus.Error);
+            }
         }
 
         private void btnCancelar_Click(object sender, RoutedEventArgs e)

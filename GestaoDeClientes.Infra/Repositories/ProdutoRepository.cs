@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using System.CodeDom;
 using System.Windows;
+using GestaoDeClientes.Domain;
 
 namespace GestaoDeClientes.Infra.Repositories
 {
@@ -101,6 +102,11 @@ namespace GestaoDeClientes.Infra.Repositories
 
         public async Task UpdateAsync(Produto produto)
         {
+            var verificarNomeExiste = await VerifyNomeExist(produto.Nome, produto.Id.ToString());
+
+            if (verificarNomeExiste)
+                throw new Exception("Já existe um produto com esse nome");
+
             using (var connection = new SqliteConnection(connString))
             {
                 SQLitePCL.Batteries.Init();
@@ -130,6 +136,24 @@ namespace GestaoDeClientes.Infra.Repositories
                 });
                 return result.Any();
             }
-        }   
+        }
+
+        public async Task<bool> VerifyNomeExist(string nome, string produtoId)
+        {
+            using (var connection = new SqliteConnection(connString))
+            {
+                SQLitePCL.Batteries.Init();
+                connection.Open();
+
+                var result = await connection.QueryAsync<Produto>(ProdutoSql.GetByNomeAndNotId, new
+                {
+                    Nome = nome,
+                    Id = produtoId
+                });
+
+                return result.Any();
+            }
+        }
+
     }
 }

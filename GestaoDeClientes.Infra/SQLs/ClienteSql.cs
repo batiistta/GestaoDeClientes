@@ -45,7 +45,9 @@ namespace GestaoDeClientes.Infra.SQLs
         public static string GetByNome = @"SELECT * FROM Cliente WHERE Nome = @Nome";
 
         public static string GetByTelefone = @"SELECT * FROM Cliente WHERE Telefone = @Telefone";
+
+        public const string GetByNomeAndNotId = @"SELECT * FROM Cliente WHERE Nome = @Nome AND Id <> @Id;";
+
+        public const string GetByTelefoneAndNotId = @"SELECT * FROM Cliente WHERE Telefone = @Telefone AND Id <> @Id;";
     }
-
-
 }

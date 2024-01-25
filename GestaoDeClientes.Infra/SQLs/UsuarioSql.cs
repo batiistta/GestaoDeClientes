@@ -47,6 +47,8 @@ namespace GestaoDeClientes.Infra.SQLs
 
         public static string GetByLogin = @"SELECT * FROM Usuario WHERE Login = @Login";
 
+        public static string GetByNomeAndNotId = @"SELECT * FROM Usuario WHERE Nome = @Nome AND Id <> @Id;";
+
 
     }
 }
