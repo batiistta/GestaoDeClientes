@@ -19,6 +19,12 @@ namespace GestaoDeClientes.Infra.Repositories
         string connString = string.Format("Data Source={0}", Util.Util.GetDbFilePath());
         public async Task AddAsync(Produto produto)
         {
+            var verificarNomeProduto = await VerifyNomeExist(produto.Nome);
+
+            if (verificarNomeProduto)
+                throw new Exception("Já existe um produto com esse nome");
+
+
             using (var connection = new SqliteConnection(connString))
             {
                 SQLitePCL.Batteries.Init();
@@ -54,7 +60,6 @@ namespace GestaoDeClientes.Infra.Repositories
             {
                 MessageBox.Show(ex.Message);
             }
-
         }
 
         public async Task<IEnumerable<Produto>> GetAllAsync()
@@ -112,5 +117,19 @@ namespace GestaoDeClientes.Infra.Repositories
                 });
             }
         }
+
+        public async Task<bool> VerifyNomeExist (string nome)
+        {
+            using (var connection = new SqliteConnection(connString))
+            {
+                SQLitePCL.Batteries.Init();
+                connection.Open();
+                var result = await connection.QueryAsync<Produto>(ProdutoSql.GetByNome, new
+                {
+                    Nome = nome
+                });
+                return result.Any();
+            }
+        }   
     }
 }
