@@ -62,15 +62,6 @@ namespace GestaoDeClientes.UI.Views
                 e.Handled = true;
             }
         }
-        private void txtValor_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            TextBox textBox = sender as TextBox;
-
-            if (decimal.TryParse(textBox.Text, out decimal value))
-            {
-                textBox.Text = string.Format(CultureInfo.GetCultureInfo("pt-BR"), "{0:N2}", value);
-            }
-        }
         private void txtDescricaoProduto_TextChanged(object sender, TextChangedEventArgs e)
         {
             VerificarErrosEBloquearBotao();
@@ -120,7 +111,7 @@ namespace GestaoDeClientes.UI.Views
         #region Métodos
         private bool IsNumberOnly(string text)
         {
-            return System.Text.RegularExpressions.Regex.IsMatch(text, @"^[0-9]+$");
+            return System.Text.RegularExpressions.Regex.IsMatch(text, @"^[0-9,.]+$");
         }
         private bool IsTextOnly(string input)
         {
