@@ -27,11 +27,21 @@ namespace GestaoDeClientes.Infra.Repositories
                 {
                     Id = entity.Id,
                     IdCliente = entity.IdCliente,
-                    IdProduto = entity.IdProduto,
+                    IdServico = entity.IdServico,
+                    IdsServicos = entity.IdsServicos.ToString(),
                     DataAgendamento = entity.DataAgendamento,
                     NomeCliente = entity.NomeCliente,
-                    NomeProduto = entity.NomeProduto
+                    NomeServico = entity.NomeServico
                 });
+
+                foreach (var idServico in entity.IdsServicos)
+                {
+                    connection.Execute(AgendamentoServicoSql.Insert, new
+                    {
+                        IdAgendamento = entity.Id,
+                        IdServico = idServico
+                    });
+                }
             }
         }
 
@@ -39,6 +49,28 @@ namespace GestaoDeClientes.Infra.Repositories
         {
             try
             {
+                IEnumerable<Agendamento> agendamentos = new List<Agendamento>();
+                using (var connection = new SqliteConnection(connString))
+                {
+                    SQLitePCL.Batteries.Init();
+                    connection.Open();
+                   agendamentos = connection.Query<Agendamento>(AgendamentoSql.GetAll);
+                }
+                foreach (var agendamento in agendamentos)
+                {
+                    if (agendamento.Id == id)
+                    {
+                        foreach (var idServico in agendamento.IdsServicos)
+                        {
+                            using (var connection = new SqliteConnection(connString))
+                            {
+                                SQLitePCL.Batteries.Init();
+                                connection.Open();
+                                connection.Execute(AgendamentoServicoSql.Delete, new { IdAgendamento = id });
+                            }
+                        }
+                    }
+                }
                 using (var connection = new SqliteConnection(connString))
                 {
                     SQLitePCL.Batteries.Init();
@@ -85,10 +117,10 @@ namespace GestaoDeClientes.Infra.Repositories
                     {
                         Id = entity.Id,
                         IdCliente = entity.IdCliente,
-                        IdProduto = entity.IdProduto,
+                        IdServico = entity.IdServico,
                         DataAgendamento = entity.DataAgendamento,
                         NomeCliente = entity.NomeCliente,
-                        NomeProduto = entity.NomeProduto
+                        NomeServico = entity.NomeServico
                     });
                 }
             }

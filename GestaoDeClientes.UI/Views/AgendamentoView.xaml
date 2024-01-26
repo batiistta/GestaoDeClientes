@@ -197,7 +197,7 @@
                                                                 <GridView>
                                                                     <GridViewColumn Header="Data Agendamento" DisplayMemberBinding="{Binding DataAgendamento}" Width="200"/>
                                                                     <GridViewColumn Header="Cliente" DisplayMemberBinding="{Binding NomeCliente}" Width="200"></GridViewColumn>
-                                                                    <GridViewColumn Header="Produto" DisplayMemberBinding="{Binding NomeProduto}" Width="200"></GridViewColumn>
+                                                                    <GridViewColumn Header="Servico" DisplayMemberBinding="{Binding NomeServico}" Width="200"></GridViewColumn>
                                                                     <GridViewColumn Header="Ações" Width="150">
                                                                         <GridViewColumn.CellTemplate>
                                                                             <DataTemplate>

@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="GestaoDeClientes.UI.Views.DetalhesProdutoView"
+﻿<UserControl x:Class="GestaoDeClientes.UI.Views.DetalhesServicoView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -23,7 +23,7 @@
                             Height="auto">
                             <TextBlock 
                                 HorizontalAlignment="Center"
-                                Text="Editar Produto"
+                                Text="Editar Servico"
                                 FontWeight="Bold"
                                 FontSize="20"                                       
                                 FontFamily="verdana" 
@@ -42,7 +42,7 @@
                             />
                             <AdornerDecorator>
                                 <TextBox 
-                                    x:Name="txtNomeProduto"    
+                                    x:Name="txtNomeServico"    
                                     TextChanged="txtText_textChanged"
                                     VerticalAlignment="Center"
                                     Width="300" 
@@ -76,7 +76,7 @@
                                 Foreground="#FF4D4D4D"
                             />
                             <TextBox 
-                                x:Name="txtDescricaoProduto"
+                                x:Name="txtDescricaoServico"
                                 VerticalAlignment="Center" 
                                 Width="300" 
                                 Height="32" 
@@ -108,7 +108,7 @@
                                 Foreground="#FF4D4D4D"
                             />
                             <TextBox 
-                                x:Name="txtValorCompraProduto"
+                                x:Name="txtValorCompraServico"
                                 VerticalAlignment="Center" 
                                 Width="300" 
                                 Height="32" 
@@ -136,7 +136,7 @@
                                 FontWeight="Bold" 
                                 Foreground="#FF4D4D4D"/>
                             <TextBox
-                                x:Name="txtValorUnitarioProduto"
+                                x:Name="txtValorUnitarioServico"
                                 VerticalAlignment="Center" 
                                 Width="300" 
                                 Height="32" 
@@ -164,7 +164,7 @@
                                 FontWeight="Bold" 
                                 Foreground="#FF4D4D4D"/>
                             <TextBox 
-                                x:Name="txtQuantidadeProduto"
+                                x:Name="txtQuantidadeServico"
                                 VerticalAlignment="Center" 
                                 Width="300" 
                                 Height="32" 
@@ -196,7 +196,7 @@
                                 Foreground="#FF4D4D4D"
                             />
                             <ToggleButton
-                                x:Name="produtoAtivo"
+                                x:Name="ServicoAtivo"
                                 IsChecked="{Binding Path=DataContext.Ativo, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Mode=TwoWay}"
                                 Style="{StaticResource MaterialDesignSwitchToggleButton}"
                                 ToolTip="MaterialDesignSwitchToggleButton" 

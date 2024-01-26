@@ -178,7 +178,7 @@
                                 Foreground="#FF4D4D4D"
                             />
                             <ToggleButton
-                                x:Name="produtoAtivo"
+                                x:Name="ServicoAtivo"
                                 IsChecked="{Binding Path=DataContext.Ativo, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Mode=TwoWay}"
                                 Style="{StaticResource MaterialDesignSwitchToggleButton}"
                                 ToolTip="MaterialDesignSwitchToggleButton" 

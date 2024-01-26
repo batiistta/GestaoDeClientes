@@ -84,10 +84,10 @@
                         </StackPanel>
 
                         <StackPanel Width="300" Margin="0,18,0,0">
-                            <Label Content="Produto:" FontWeight="Bold" Foreground="#FF4D4D4D" />
+                            <Label Content="Servico:" FontWeight="Bold" Foreground="#FF4D4D4D" />
                             <AdornerDecorator>
                                 <ComboBox
-                                    x:Name="cmbProdutos"
+                                    x:Name="cmbServicos"
                                     VerticalAlignment="Center"
                                     Width="300"
                                     Height="32"
@@ -95,9 +95,42 @@
                                     Foreground="Black"
                                     BorderBrush="#89000000"
                                     BorderThickness="0,0,0,1"
-                                    DisplayMemberPath="Nome" SelectedValuePath="Id">
+                                    SelectedValuePath="Id">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding Nome}" VerticalAlignment="Center"/>
+                                                <Button 
+                                                    x:Name="btnAdicionar"
+                                                    HorizontalAlignment="Right"
+                                                    Width="20" 
+                                                    Height="20"
+                                                    Foreground="#FFFFFF"
+                                                    Click="btnAdicionar_Click"
+                                                    Tag="{Binding Id}" 
+                                                    Margin="5,0"
+                                                >
+                                                    <materialDesign:PackIcon Kind="Plus" />
+                                                </Button>
+                                                <Button 
+                                                    x:Name="btnRemover"
+                                                    HorizontalAlignment="Right"
+                                                    Width="20" 
+                                                    Height="20" 
+                                                    Foreground="#FFFFFF"
+                                                    Click="btnRemover_Click"
+                                                    Tag="{Binding Id}" 
+                                                    Margin="5,0"
+                                                >
+                                                    <materialDesign:PackIcon Kind="Plus"/>
+                                                </Button>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
                                     <ComboBox.ItemsSource>
-                                        <Binding Path="DataContext.Clientes" RelativeSource="{RelativeSource AncestorType={x:Type UserControl}}" />
+                                        <Binding Path="DataContext.Clientes" 
+                                                 RelativeSource="{RelativeSource AncestorType={x:Type UserControl}}" 
+                                        />
                                     </ComboBox.ItemsSource>
                                 </ComboBox>
                             </AdornerDecorator>

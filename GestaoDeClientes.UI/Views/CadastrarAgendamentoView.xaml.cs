@@ -5,6 +5,7 @@ using GestaoDeClientes.Infra.Repositories;
 using GestaoDeClientes.UI.Popup;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,10 +26,18 @@ namespace GestaoDeClientes.UI.Views
     /// </summary>
     public partial class CadastrarAgendamentoView : UserControl, IRemoverJanela
     {
+        public List<string> ServicosSelecionadosIds { get; set; } = new List<string>();
+
+        private void AddServico(string servicoId)
+        {
+            if (!ServicosSelecionadosIds.Contains(servicoId))
+                ServicosSelecionadosIds.Add(servicoId);
+        }
+
         #region Propriedades
         public event EventHandler OnCancelarClicado;
         ClienteRepository clienteRepository = new ClienteRepository();
-        ProdutoRepository produtoRepository = new ProdutoRepository();
+        ServicoRepository ServicoRepository = new ServicoRepository();
         AgendamentoRepository agendamentoRepository = new AgendamentoRepository();
         #endregion
 
@@ -46,7 +55,7 @@ namespace GestaoDeClientes.UI.Views
             if (this.IsVisible)
             {
                 CarregarClientes();
-                CarregarProdutos();
+                CarregarServicos();
             }
         }
         #endregion
@@ -62,16 +71,18 @@ namespace GestaoDeClientes.UI.Views
                 agendamento.DataAgendamento = txtDataAgendamento.DisplayDate;
                 agendamento.IdCliente = (cmbClientes.SelectedItem as Cliente).Id;
                 agendamento.NomeCliente = (cmbClientes.SelectedItem as Cliente).Nome.ToUpper();
+                agendamento.IdsServicos = ServicosSelecionadosIds;
 
-                if (cmbProdutos.SelectedItem != null)
+                if (cmbServicos.SelectedItem != null)
                 {
-                    agendamento.NomeProduto = (cmbProdutos.SelectedItem as Produto).Nome.ToUpper();
-                    agendamento.IdProduto = (cmbProdutos.SelectedItem as Produto).Id;
+                    agendamento.NomeServico = (cmbServicos.SelectedItem as Servico).Nome.ToUpper();
+                    agendamento.IdServico = (cmbServicos.SelectedItem as Servico).Id;                    
+
                 }
                 else
                 {
-                    agendamento.NomeProduto = null;
-                    agendamento.IdProduto = null;
+                    agendamento.NomeServico = null;
+                    agendamento.IdServico = null;
                 }
 
                 await agendamentoRepository.AddAsync(agendamento);
@@ -90,7 +101,8 @@ namespace GestaoDeClientes.UI.Views
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
             cmbClientes.SelectedItem = null;
-            cmbProdutos.SelectedItem = null;
+            cmbServicos.SelectedItem = null;
+            ServicosSelecionadosIds.Clear();
             OnCancelarClicado?.Invoke(this, EventArgs.Empty);
         }
         #endregion
@@ -101,15 +113,65 @@ namespace GestaoDeClientes.UI.Views
             var clientes = clienteRepository.GetAllAsync();
             cmbClientes.ItemsSource = clientes.Result;
         }
-        private void CarregarProdutos()
+        private void CarregarServicos()
         {
-            var produtos = produtoRepository.GetAllAsync();
-            cmbProdutos.ItemsSource = produtos.Result;
+            var Servicos = ServicoRepository.GetAllAsync();
+            cmbServicos.ItemsSource = Servicos.Result;
         }
         public void RemoverJanela()
         {
             OnCancelarClicado?.Invoke(this, EventArgs.Empty);
         }
         #endregion
+
+        private void btnAdicionar_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button btn && btn.Tag is string servicoId)
+            {
+                AddServico(servicoId);
+
+                btn.IsEnabled = false;
+
+                var btnRemover = GetBtnRemoverFromBtnAdicionar(btn);
+                if (btnRemover != null)
+                {
+                    btnRemover.IsEnabled = true;
+                }
+            }
+        }
+
+        private void btnRemover_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button btn && btn.Tag is string servicoId)
+            {
+                ServicosSelecionadosIds.Remove(servicoId);
+
+                var btnAdicionar = GetBtnAdicionarFromBtnRemover(btn);
+                if (btnAdicionar != null)
+                {
+                    btnAdicionar.IsEnabled = true;
+                }
+
+                btn.IsEnabled = false;
+            }
+        }
+
+        private Button GetBtnRemoverFromBtnAdicionar(Button btnAdicionar)
+        {
+            var parentStackPanel = (StackPanel)btnAdicionar.Parent;
+            var btnRemover = parentStackPanel.Children.OfType<Button>().FirstOrDefault(b => b.Name == "btnRemover");
+
+            return btnRemover;
+        }
+
+        private Button GetBtnAdicionarFromBtnRemover(Button btnRemover)
+        {
+            var parentStackPanel = (StackPanel)btnRemover.Parent;
+            var btnAdicionar = parentStackPanel.Children.OfType<Button>().FirstOrDefault(b => b.Name == "btnAdicionar");
+
+            return btnAdicionar;
+        }
+
+
     }
 }

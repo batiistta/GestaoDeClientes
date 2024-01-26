@@ -22,21 +22,21 @@ using System.Windows.Shapes;
 namespace GestaoDeClientes.UI.Views
 {
     /// <summary>
-    /// Interação lógica para ProdutoView.xam
+    /// Interação lógica para ServicoView.xam
     /// </summary>
-    public partial class ProdutoView : UserControl
+    public partial class ServicoView : UserControl
     {
         #region Propriedades
-        DetalhesProdutoView atualizarProdutoView = new DetalhesProdutoView();
-        CadastrarProdutoView cadastrarProdutoView = new CadastrarProdutoView();
-        ProdutoRepository produtoRepository = new ProdutoRepository();
-        List<Produto> produtos = new List<Produto>();
+        DetalhesServicoView atualizarServicoView = new DetalhesServicoView();
+        CadastrarServicoView cadastrarServicoView = new CadastrarServicoView();
+        ServicoRepository ServicoRepository = new ServicoRepository();
+        List<Servico> Servicos = new List<Servico>();
         public event EventHandler ChildWindowClosed;
         public event EventHandler OnCancelarClicado;
         #endregion
 
         #region Construtores
-        public ProdutoView()
+        public ServicoView()
         {
             InitializeComponent();
         }
@@ -54,28 +54,28 @@ namespace GestaoDeClientes.UI.Views
         {
             if (this.IsVisible)
             {
-                CarregarProdutos();
+                CarregarServicos();
             }
         }
-        private void CadastrarProdutoView_OnCancelarClicado(object sender, EventArgs e)
+        private void CadastrarServicoView_OnCancelarClicado(object sender, EventArgs e)
         {
-            primeiraGrid.Children.Remove(cadastrarProdutoView);
+            primeiraGrid.Children.Remove(cadastrarServicoView);
             gridPrincipal.IsEnabled = true;
-            CarregarProdutos();
+            CarregarServicos();
         }
-        private void DetalhesProdutoView_OnCancelarClicado(object sender, EventArgs e)
+        private void DetalhesServicoView_OnCancelarClicado(object sender, EventArgs e)
         {
-            primeiraGrid.Children.Remove(atualizarProdutoView);
+            primeiraGrid.Children.Remove(atualizarServicoView);
             gridPrincipal.IsEnabled = true;
-            CarregarProdutos();
+            CarregarServicos();
         }
         #region Botões
-        private void btnCadastrarProduto_Click(object sender, RoutedEventArgs e)
+        private void btnCadastrarServico_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                primeiraGrid.Children.Add(cadastrarProdutoView);
-                cadastrarProdutoView.OnCancelarClicado += CadastrarProdutoView_OnCancelarClicado;
+                primeiraGrid.Children.Add(cadastrarServicoView);
+                cadastrarServicoView.OnCancelarClicado += CadastrarServicoView_OnCancelarClicado;
                 gridPrincipal.IsEnabled = false;
             }
             catch (Exception ex)
@@ -83,17 +83,17 @@ namespace GestaoDeClientes.UI.Views
                 MessageBox.Show(ex.Message);
             }
         }
-        private async void btnBuscarProdutos_Click(object sender, RoutedEventArgs e)
+        private async void btnBuscarServicos_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 if (string.IsNullOrEmpty(txtSearch.Text))
                 {
-                    listProdutos.ItemsSource = await GetAllAsync();
+                    listServicos.ItemsSource = await GetAllAsync();
                     return;
                 }
-                produtos = (await GetAllAsync()).ToList();
-                listProdutos.ItemsSource = produtos.Where(c => c.Nome.ToLower().Contains(txtSearch.Text.ToLower()));
+                Servicos = (await GetAllAsync()).ToList();
+                listServicos.ItemsSource = Servicos.Where(c => c.Nome.ToLower().Contains(txtSearch.Text.ToLower()));
             }
             catch (Exception ex)
             {
@@ -106,16 +106,16 @@ namespace GestaoDeClientes.UI.Views
             {
                 Button btnDeletar = sender as Button;
 
-                Produto produtoParaDeletar = btnDeletar.DataContext as Produto;
+                Servico ServicoParaDeletar = btnDeletar.DataContext as Servico;
 
-                bool confirmacao = GCMessageBox.Confirm("Deseja realmente deletar o produto?", "Deletar", GCMessageBox.MessageBoxStatus.Warning);
+                bool confirmacao = GCMessageBox.Confirm("Deseja realmente deletar o Servico?", "Deletar", GCMessageBox.MessageBoxStatus.Warning);
 
                 if (confirmacao)
                 {
-                    ProdutoRepository produtoRepository = new ProdutoRepository();
-                    await produtoRepository.DeleteAsync(produtoParaDeletar.Id);
-                    MessageBox.Show("Produto deletado com sucesso!");
-                    CarregarProdutos();
+                    ServicoRepository ServicoRepository = new ServicoRepository();
+                    await ServicoRepository.DeleteAsync(ServicoParaDeletar.Id);
+                    MessageBox.Show("Servico deletado com sucesso!");
+                    CarregarServicos();
                 }
 
             }
@@ -130,12 +130,12 @@ namespace GestaoDeClientes.UI.Views
             {
                 Button btnAtualizar = sender as Button;
 
-                Produto produtoParaAtualizar = btnAtualizar.DataContext as Produto;
+                Servico ServicoParaAtualizar = btnAtualizar.DataContext as Servico;
 
-                atualizarProdutoView = new DetalhesProdutoView(produtoParaAtualizar);
+                atualizarServicoView = new DetalhesServicoView(ServicoParaAtualizar);
 
-                primeiraGrid.Children.Add(atualizarProdutoView);
-                atualizarProdutoView.OnCancelarClicado += DetalhesProdutoView_OnCancelarClicado;
+                primeiraGrid.Children.Add(atualizarServicoView);
+                atualizarServicoView.OnCancelarClicado += DetalhesServicoView_OnCancelarClicado;
                 gridPrincipal.IsEnabled = false;
 
             }
@@ -146,7 +146,7 @@ namespace GestaoDeClientes.UI.Views
         }
         private void btnCancelar_Click(object sender, RoutedEventArgs e)
         {
-            listProdutos.ItemsSource = null;
+            listServicos.ItemsSource = null;
             this.Visibility = Visibility.Hidden;
         }
         #endregion
@@ -162,12 +162,12 @@ namespace GestaoDeClientes.UI.Views
 
             gridPrincipal.IsEnabled = true;
         }
-        private void CarregarProdutos()
+        private void CarregarServicos()
         {
             try
             {
-                produtos = produtoRepository.GetAllAsync().Result.ToList();
-                listProdutos.ItemsSource = produtos;
+                Servicos = ServicoRepository.GetAllAsync().Result.ToList();
+                listServicos.ItemsSource = Servicos;
             }
             catch (Exception ex)
             {
@@ -175,11 +175,11 @@ namespace GestaoDeClientes.UI.Views
             }
         }
 
-        private async Task<IEnumerable<Produto>> GetAllAsync()
+        private async Task<IEnumerable<Servico>> GetAllAsync()
         {
             try
             {
-                return await produtoRepository.GetAllAsync();
+                return await ServicoRepository.GetAllAsync();
             }
             catch (Exception ex)
             {
@@ -192,7 +192,7 @@ namespace GestaoDeClientes.UI.Views
         {
             if (string.IsNullOrEmpty(txtSearch.Text))
             {
-                CarregarProdutos();
+                CarregarServicos();
             }
         }
     }

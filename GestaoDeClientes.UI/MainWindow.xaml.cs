@@ -39,7 +39,7 @@ namespace GestaoDeClientes.UI
         private void LimparViews()
         {
             clienteView.Visibility = Visibility.Hidden;
-            produtoView.Visibility = Visibility.Hidden;
+            ServicoView.Visibility = Visibility.Hidden;
             usuarioView.Visibility = Visibility.Hidden;
             agendamentoView.Visibility = Visibility.Hidden;
         }
@@ -55,9 +55,9 @@ namespace GestaoDeClientes.UI
                     clienteView.Visibility = Visibility.Visible;
                     return;
                 }
-                if (screen.GetType() == typeof(ProdutoView))
+                if (screen.GetType() == typeof(ServicoView))
                 {
-                    produtoView.Visibility = Visibility.Visible;
+                    ServicoView.Visibility = Visibility.Visible;
                     return;
                 }
                 if (screen.GetType() == typeof(UsuarioView))
@@ -77,9 +77,9 @@ namespace GestaoDeClientes.UI
         {
             switchSreen(clienteView);
         }
-        private void btnProduto_Click(object sender, RoutedEventArgs e)
+        private void btnServico_Click(object sender, RoutedEventArgs e)
         {
-            switchSreen(produtoView);
+            switchSreen(ServicoView);
         }
         private void btnUsuario_Click(object sender, RoutedEventArgs e)
         {

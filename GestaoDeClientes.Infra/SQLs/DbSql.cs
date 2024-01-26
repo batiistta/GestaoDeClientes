@@ -19,26 +19,33 @@ namespace GestaoDeClientes.Infra.SQLs
                 Ativo BIT 
             );
             
-            CREATE TABLE IF NOT EXISTS Produto(
+            CREATE TABLE IF NOT EXISTS Servico(
                 Id TEXT PRIMARY KEY,
                 Nome VARCHAR(200) NOT NULL ,
                 Descricao VARCHAR(200) ,
-                ValorCompra DECIMAL(10,2) ,
-                ValorUnitario DECIMAL(10,2) ,
-                Quantidade INT,
+                Valor DECIMAL(10,2),
                 Ativo BIT 
             );
             
             CREATE TABLE IF NOT EXISTS Agendamento(
-            Id TEXT PRIMARY KEY,
-            DataAgendamento DATETIME NOT NULL,
-            IdCliente TEXT,
-            IdProduto TEXT,
-            NomeCliente TEXT,
-            NomeProduto TEXT,
-            FOREIGN KEY (IdCliente) REFERENCES Cliente(Id),
-            FOREIGN KEY (IdProduto) REFERENCES Produto(Id)
-        );
+                Id TEXT PRIMARY KEY,
+                DataAgendamento DATETIME NOT NULL,
+                IdCliente TEXT,
+                IdServico TEXT,
+                NomeCliente TEXT,
+                NomeServico TEXT,
+                IdsServicos TEXT,
+                FOREIGN KEY (IdCliente) REFERENCES Cliente(Id),
+                FOREIGN KEY (IdServico) REFERENCES Servico(Id)
+            );
+
+            CREATE TABLE IF NOT EXISTS Agendamento_Servico (
+                IdAgendamento TEXT,
+                IdServico TEXT,
+                PRIMARY KEY (IdAgendamento, IdServico),
+                FOREIGN KEY (IdAgendamento) REFERENCES Agendamento(Id),
+                FOREIGN KEY (IdServico) REFERENCES Servico(Id)
+            );
             
             CREATE TABLE IF NOT EXISTS Usuario(
                 Id TEXT PRIMARY KEY,
@@ -53,7 +60,7 @@ namespace GestaoDeClientes.Infra.SQLs
             INSERT OR IGNORE INTO Usuario (Id, Login, Senha, Nome, Email, DataCadastro, Ativo)
             VALUES ('1', 'admin', 'admin', 'Administrador', NULL, DATETIME('now'), 1);
         );"
-        ;       
+        ;      
 
     }
 }

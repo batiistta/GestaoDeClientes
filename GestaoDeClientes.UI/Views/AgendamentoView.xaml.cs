@@ -65,6 +65,14 @@ namespace GestaoDeClientes.UI.Views
             gridPrincipal.IsEnabled = true;
             CarregarAgendamentos();
         }
+
+        private void txtSearch_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtSearch.Text))
+            {
+                CarregarAgendamentos();
+            }
+        }
         #endregion
 
         #region Botões
@@ -165,13 +173,5 @@ namespace GestaoDeClientes.UI.Views
             gridPrincipal.IsEnabled = true;
         }
         #endregion
-
-        private void txtSearch_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (string.IsNullOrEmpty(txtSearch.Text))
-            {
-                CarregarAgendamentos();
-            }
-        }
     }
 }

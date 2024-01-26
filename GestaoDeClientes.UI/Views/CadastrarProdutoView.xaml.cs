@@ -22,33 +22,33 @@ using System.Windows.Shapes;
 namespace GestaoDeClientes.UI.Views
 {
     /// <summary>
-    /// Interação lógica para CadastrarProdutoView.xam
+    /// Interação lógica para CadastrarServicoView.xam
     /// </summary>
-    public partial class CadastrarProdutoView : UserControl, IRemoverJanela
+    public partial class CadastrarServicoView : UserControl, IRemoverJanela
     {
         #region Propriedades
         public event EventHandler ChildWindowClosed;
         public event EventHandler OnCancelarClicado;
-        ProdutoRepository produtoRepository = new ProdutoRepository();
+        ServicoRepository ServicoRepository = new ServicoRepository();
         List<BindingExpression> bindingExpressions = new List<BindingExpression>();
         #endregion
 
         #region Construtores
-        public CadastrarProdutoView()
+        public CadastrarServicoView()
         {                       
             InitializeComponent();
-            this.DataContext = new Produto();
+            this.DataContext = new Servico();
         }
         #endregion
 
         #region Eventos
         private void UserControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            txtNomeProduto.Focus();
+            txtNomeServico.Focus();
             Limpar();
             btnCadastrar.IsEnabled = false;
         }
-        private void txtNomeProduto_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        private void txtNomeServico_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             if (!IsTextOnly(e.Text))
             {
@@ -62,15 +62,11 @@ namespace GestaoDeClientes.UI.Views
                 e.Handled = true;
             }
         }
-        private void txtDescricaoProduto_TextChanged(object sender, TextChangedEventArgs e)
+        private void txtDescricaoServico_TextChanged(object sender, TextChangedEventArgs e)
         {
             VerificarErrosEBloquearBotao();
         }
-        private void txtNomeProduto_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            VerificarErrosEBloquearBotao();
-        }
-        private void txtQuantidadeProduto_TextChanged(object sender, TextChangedEventArgs e)
+        private void txtNomeServico_TextChanged(object sender, TextChangedEventArgs e)
         {
             VerificarErrosEBloquearBotao();
         }
@@ -84,18 +80,16 @@ namespace GestaoDeClientes.UI.Views
         {
             try
             {
-                Produto produto = new Produto();
-                produto.Id = Guid.NewGuid().ToString();
-                produto.Nome = txtNomeProduto.Text.ToUpper();
-                produto.Descricao = txtDescricaoProduto.Text;
-                produto.ValorCompra = Convert.ToDecimal(txtValorCompraProduto.Text);
-                produto.ValorUnitario = Convert.ToDecimal(txtValorUnitarioProduto.Text);
-                produto.Quantidade = Convert.ToInt32(txtQuantidadeProduto.Text);
-                produto.Ativo = true;
+                Servico Servico = new Servico();
+                Servico.Id = Guid.NewGuid().ToString();
+                Servico.Nome = txtNomeServico.Text.ToUpper();
+                Servico.Descricao = txtDescricaoServico.Text;
+                Servico.Valor = Convert.ToDecimal(txtValorCompraServico.Text);
+                Servico.Ativo = true;
 
-                await produtoRepository.AddAsync(produto);
+                await ServicoRepository.AddAsync(Servico);
 
-                GCMessageBox.Show("Produto cadastrado com sucesso!", "Sucesso", GCMessageBox.MessageBoxStatus.Ok);
+                GCMessageBox.Show("Servico cadastrado com sucesso!", "Sucesso", GCMessageBox.MessageBoxStatus.Ok);
                 OnCancelarClicado?.Invoke(this, EventArgs.Empty);
 
             }
@@ -119,12 +113,10 @@ namespace GestaoDeClientes.UI.Views
         }
         private void Limpar()
         {
-            ResetBindingExpressions(txtNomeProduto, txtDescricaoProduto, txtValorCompraProduto, txtValorUnitarioProduto, txtQuantidadeProduto);
-            txtNomeProduto.Text = string.Empty;
-            txtDescricaoProduto.Text = string.Empty;
-            txtValorCompraProduto.Text = string.Empty;
-            txtValorUnitarioProduto.Text = string.Empty;
-            txtQuantidadeProduto.Text = string.Empty;
+            ResetBindingExpressions(txtNomeServico, txtDescricaoServico, txtValorCompraServico);
+            txtNomeServico.Text = string.Empty;
+            txtDescricaoServico.Text = string.Empty;
+            txtValorCompraServico.Text = string.Empty;
 
             
         }
@@ -135,9 +127,8 @@ namespace GestaoDeClientes.UI.Views
         }
         private void VerificarErrosEBloquearBotao()
         {
-            bindingExpressions.Add(txtNomeProduto.GetBindingExpression(TextBox.TextProperty));
-            bindingExpressions.Add(txtDescricaoProduto.GetBindingExpression(TextBox.TextProperty));
-            bindingExpressions.Add(txtQuantidadeProduto.GetBindingExpression(TextBox.TextProperty));
+            bindingExpressions.Add(txtNomeServico.GetBindingExpression(TextBox.TextProperty));
+            bindingExpressions.Add(txtDescricaoServico.GetBindingExpression(TextBox.TextProperty));
             bool algumErro = bindingExpressions.Any(x =>
             {
                 x?.UpdateSource();

@@ -12,27 +12,29 @@ namespace GestaoDeClientes.Infra.SQLs
             INSERT INTO Agendamento(
                 Id,
                 IdCliente,
-                IdProduto,
+                IdServico,
+                IdsServicos,
                 DataAgendamento,
                 NomeCliente,
-                NomeProduto
+                NomeServico
             ) VALUES (
                 @Id,
                 @IdCliente,
-                @IdProduto,
+                @IdServico,
+                @IdsServicos,
                 @DataAgendamento,
                 @NomeCliente,
-                @NomeProduto
+                @NomeServico
             );";
 
 
         public static string Update = @"
             UPDATE Agendamento SET
                 IdCliente = @IdCliente,
-                IdProduto = @IdProduto,
+                IdServico = @IdServico,
                 DataAgendamento = @DataAgendamento,
                 NomeCliente = @NomeCliente,
-                NomeProduto = @NomeProduto
+                NomeServico = @NomeServico
             WHERE Id = @Id;";
 
         public static string Delete = @"DELETE FROM Agendamento WHERE Id = @Id";

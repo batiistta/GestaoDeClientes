@@ -84,10 +84,10 @@
                         </StackPanel>
 
                         <StackPanel Width="300" Margin="0,18,0,0">
-                            <Label Content="Produto:" FontWeight="Bold" Foreground="#FF4D4D4D" />
+                            <Label Content="Servico:" FontWeight="Bold" Foreground="#FF4D4D4D" />
                             <AdornerDecorator>
                                 <ComboBox
-                                x:Name="cmbProdutos"
+                                x:Name="cmbServicos"
                                 VerticalAlignment="Center"
                                 Width="300"
                                 Height="32"

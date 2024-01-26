@@ -15,30 +15,28 @@ using GestaoDeClientes.Domain;
 
 namespace GestaoDeClientes.Infra.Repositories
 {
-    public class ProdutoRepository : IRepository<Produto>
+    public class ServicoRepository : IRepository<Servico>
     {
         string connString = string.Format("Data Source={0}", Util.Util.GetDbFilePath());
-        public async Task AddAsync(Produto produto)
+        public async Task AddAsync(Servico Servico)
         {
-            var verificarNomeProduto = await VerifyNomeExist(produto.Nome);
+            var verificarNomeServico = await VerifyNomeExist(Servico.Nome);
 
-            if (verificarNomeProduto)
-                throw new Exception("Já existe um produto com esse nome");
+            if (verificarNomeServico)
+                throw new Exception("Já existe um Servico com esse nome");
 
 
             using (var connection = new SqliteConnection(connString))
             {
                 SQLitePCL.Batteries.Init();
                 connection.Open();
-                connection.Execute(ProdutoSql.Insert, new
+                connection.Execute(ServicoSql.Insert, new
                 {
-                    Id = produto.Id,
-                    Nome = produto.Nome,
-                    Descricao = produto.Descricao,
-                    ValorUnitario = produto.ValorUnitario,
-                    ValorCompra = produto.ValorCompra,
-                    Quantidade = produto.Quantidade,
-                    Ativo = produto.Ativo
+                    Id = Servico.Id,
+                    Nome = Servico.Nome,
+                    Descricao = Servico.Descricao,
+                    Valor = Servico.Valor,
+                    Ativo = Servico.Ativo
                 });
             }
         }
@@ -51,7 +49,7 @@ namespace GestaoDeClientes.Infra.Repositories
                 {
                     SQLitePCL.Batteries.Init();
                     connection.Open();
-                    connection.Execute(ProdutoSql.Delete, new
+                    connection.Execute(ServicoSql.Delete, new
                     {
                         Id = id
                     });
@@ -63,63 +61,61 @@ namespace GestaoDeClientes.Infra.Repositories
             }
         }
 
-        public async Task<IEnumerable<Produto>> GetAllAsync()
+        public async Task<IEnumerable<Servico>> GetAllAsync()
         {
 
             using (var connection = new SqliteConnection(connString))
             {
                 SQLitePCL.Batteries.Init();
                 connection.Open();
-                return connection.Query<Produto>(ProdutoSql.GetAll);
+                return connection.Query<Servico>(ServicoSql.GetAll);
             }
         }
 
-        public Task<Produto> GetByNomeAsync(string nome)
+        public Task<Servico> GetByNomeAsync(string nome)
         {
             using (var connection = new SqliteConnection(connString))
             {
                 SQLitePCL.Batteries.Init();
                 connection.Open();
-                return connection.QueryFirstOrDefaultAsync<Produto>(ProdutoSql.GetByNome, new
+                return connection.QueryFirstOrDefaultAsync<Servico>(ServicoSql.GetByNome, new
                 {
                     Nome = nome
                 });
             }
         }
 
-        public Task<Produto> GetByIdAsync(Guid id)
+        public Task<Servico> GetByIdAsync(Guid id)
         {
             using (var connection = new SqliteConnection(connString))
             {
                 SQLitePCL.Batteries.Init();
                 connection.Open();
-                return connection.QueryFirstOrDefaultAsync<Produto>(ProdutoSql.GetById, new
+                return connection.QueryFirstOrDefaultAsync<Servico>(ServicoSql.GetById, new
                 {
                     Id = id
                 });
             }
         }
 
-        public async Task UpdateAsync(Produto produto)
+        public async Task UpdateAsync(Servico Servico)
         {
-            var verificarNomeExiste = await VerifyNomeExist(produto.Nome, produto.Id.ToString());
+            var verificarNomeExiste = await VerifyNomeExist(Servico.Nome, Servico.Id.ToString());
 
             if (verificarNomeExiste)
-                throw new Exception("Já existe um produto com esse nome");
+                throw new Exception("Já existe um Servico com esse nome");
 
             using (var connection = new SqliteConnection(connString))
             {
                 SQLitePCL.Batteries.Init();
                 connection.Open();
-                connection.Execute(ProdutoSql.Update, new
+                connection.Execute(ServicoSql.Update, new
                 {
-                    Id = produto.Id,
-                    Nome = produto.Nome,
-                    Descricao = produto.Descricao,
-                    ValorUnitario = produto.ValorUnitario,
-                    ValorCompra = produto.ValorCompra,
-                    Quantidade = produto.Quantidade,
-                    Ativo = produto.Ativo
+                    Id = Servico.Id,
+                    Nome = Servico.Nome,
+                    Descricao = Servico.Descricao,
+                    Valor = Servico.Valor,
+                    Ativo = Servico.Ativo
                 });
             }
         }
@@ -130,7 +126,7 @@ namespace GestaoDeClientes.Infra.Repositories
             {
                 SQLitePCL.Batteries.Init();
                 connection.Open();
-                var result = await connection.QueryAsync<Produto>(ProdutoSql.GetByNome, new
+                var result = await connection.QueryAsync<Servico>(ServicoSql.GetByNome, new
                 {
                     Nome = nome
                 });
@@ -138,17 +134,17 @@ namespace GestaoDeClientes.Infra.Repositories
             }
         }
 
-        public async Task<bool> VerifyNomeExist(string nome, string produtoId)
+        public async Task<bool> VerifyNomeExist(string nome, string ServicoId)
         {
             using (var connection = new SqliteConnection(connString))
             {
                 SQLitePCL.Batteries.Init();
                 connection.Open();
 
-                var result = await connection.QueryAsync<Produto>(ProdutoSql.GetByNomeAndNotId, new
+                var result = await connection.QueryAsync<Servico>(ServicoSql.GetByNomeAndNotId, new
                 {
                     Nome = nome,
-                    Id = produtoId
+                    Id = ServicoId
                 });
 
                 return result.Any();

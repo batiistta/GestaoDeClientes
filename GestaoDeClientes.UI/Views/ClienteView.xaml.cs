@@ -143,7 +143,7 @@ namespace GestaoDeClientes.UI.Views
                 if (confirmacao)
                 {
                     await DeleteAsync(clienteParaDeletar.Id.ToString());
-                    GCMessageBox.Show("Produto deletado com sucesso!", GCMessageBox.MessageBoxStatus.Ok);
+                    GCMessageBox.Show("Servico deletado com sucesso!", GCMessageBox.MessageBoxStatus.Ok);
                     CarregarClientes();
                 }
 

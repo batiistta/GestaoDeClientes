@@ -28,7 +28,7 @@ namespace GestaoDeClientes.UI.Views
         public event EventHandler OnCancelarClicado;
         private Agendamento _agendamento;
         ClienteRepository clienteRepository = new ClienteRepository();
-        ProdutoRepository produtoRepository = new ProdutoRepository();
+        ServicoRepository ServicoRepository = new ServicoRepository();
         AgendamentoRepository agendamentoRepository = new AgendamentoRepository();
 
         public DetalhesAgendamento()
@@ -40,14 +40,14 @@ namespace GestaoDeClientes.UI.Views
             InitializeComponent();
 
             CarregarClientes();
-            CarregarProdutos();
+            CarregarServicos();
 
             this.DataContext = agendamento;
             _agendamento = agendamento;
 
             txtDataAgendamento.Text = agendamento.DataAgendamento.ToString();
             cmbClientes.Text = agendamento.NomeCliente;
-            cmbProdutos.Text = agendamento.NomeProduto;
+            cmbServicos.Text = agendamento.NomeServico;
         }
         private void CarregarClientes()
         {
@@ -55,10 +55,10 @@ namespace GestaoDeClientes.UI.Views
             cmbClientes.ItemsSource = clientes.Result;
         }
 
-        private void CarregarProdutos()
+        private void CarregarServicos()
         {
-            var produtos = produtoRepository.GetAllAsync();
-            cmbProdutos.ItemsSource = produtos.Result;
+            var Servicos = ServicoRepository.GetAllAsync();
+            cmbServicos.ItemsSource = Servicos.Result;
         }
 
         private async void btnAtualizar_Click(object sender, RoutedEventArgs e)
@@ -67,8 +67,8 @@ namespace GestaoDeClientes.UI.Views
             {
                 Agendamento agendamento = new Agendamento();
                 agendamento.Id = _agendamento.Id;
-                agendamento.NomeProduto = (cmbProdutos.SelectedItem as Produto).Nome;
-                agendamento.IdProduto = (cmbProdutos.SelectedItem as Produto).Id;
+                agendamento.NomeServico = (cmbServicos.SelectedItem as Servico).Nome;
+                agendamento.IdServico = (cmbServicos.SelectedItem as Servico).Id;
                 agendamento.NomeCliente = (cmbClientes.SelectedItem as Cliente).Nome;
                 agendamento.IdCliente = (cmbClientes.SelectedItem as Cliente).Id;
                 agendamento.DataAgendamento = txtDataAgendamento.DisplayDate;

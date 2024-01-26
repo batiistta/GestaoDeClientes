@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="GestaoDeClientes.UI.Views.CadastrarProdutoView"
+﻿<UserControl x:Class="GestaoDeClientes.UI.Views.CadastrarServicoView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -23,7 +23,7 @@
                                  Height="auto">
                             <TextBlock 
                                 HorizontalAlignment="Center"
-                                Text="Cadastro de Produto"
+                                Text="Cadastro de Servico"
                                 FontWeight="Bold"
                                 FontSize="20"                                       
                                 FontFamily="verdana" 
@@ -39,9 +39,9 @@
                                      Foreground="#FF4D4D4D"/>
                             <AdornerDecorator>
                                 <TextBox 
-                                    x:Name="txtNomeProduto" 
-                                    TextChanged="txtNomeProduto_TextChanged"
-                                    PreviewTextInput="txtNomeProduto_PreviewTextInput"
+                                    x:Name="txtNomeServico" 
+                                    TextChanged="txtNomeServico_TextChanged"
+                                    PreviewTextInput="txtNomeServico_PreviewTextInput"
                                     VerticalAlignment="Center"
                                     Width="300" 
                                     Height="32" 
@@ -74,8 +74,8 @@
                                 Foreground="#FF4D4D4D"
                             />
                             <TextBox 
-                                x:Name="txtDescricaoProduto"
-                                TextChanged="txtDescricaoProduto_TextChanged"
+                                x:Name="txtDescricaoServico"
+                                TextChanged="txtDescricaoServico_TextChanged"
                                 VerticalAlignment="Center" 
                                 Width="300" 
                                 Height="32" 
@@ -99,14 +99,13 @@
 
                         <StackPanel Width="300"  
                                  Margin="0,18,0,0">
-
                             <Label 
-                                Content="Valor da Compra:" 
+                                Content="Valor:" 
                                 FontWeight="Bold" 
                                 Foreground="#FF4D4D4D"
                             />
                             <TextBox 
-                                x:Name="txtValorCompraProduto"
+                                x:Name="txtValorCompraServico"
                                 PreviewTextInput="txtValor_PreviewTextInput"
                                 VerticalAlignment="Center" 
                                 Width="300" 
@@ -120,67 +119,7 @@
                                 SelectionBrush="#FFFF8A50" 
                                 BorderThickness="0,0,0,1">
                             </TextBox>
-                        </StackPanel>
-
-                        <StackPanel 
-                            Width="300"  
-                            Margin="0,18,0,0">
-
-                            <Label 
-                                Content="Valor Unitário:" 
-                                FontWeight="Bold" 
-                                Foreground="#FF4D4D4D"
-                            />
-                            <TextBox 
-                                x:Name="txtValorUnitarioProduto"
-                                PreviewTextInput="txtValor_PreviewTextInput"
-                                VerticalAlignment="Center" 
-                                Width="300" 
-                                Height="32" 
-                                Background="#FFFBFCFF" 
-                                Foreground="Black"
-                                materialDesign:TextFieldAssist.CharacterCounterVisibility="Hidden"
-                                MaxLength="10" 
-                                BorderBrush="#89000000" 
-                                CaretBrush="#FFFF5722" 
-                                SelectionBrush="#FFFF8A50" 
-                                BorderThickness="0,0,0,1">
-                            </TextBox>
-                        </StackPanel>
-
-                        <StackPanel 
-                            Width="300"  
-                            Margin="0,18,0,0">
-
-                            <Label 
-                                Content="Quantidade:" 
-                                FontWeight="Bold" 
-                                Foreground="#FF4D4D4D"
-                            />
-                            <TextBox 
-                                x:Name="txtQuantidadeProduto"
-                                PreviewTextInput="txtValor_PreviewTextInput"
-                                TextChanged="txtQuantidadeProduto_TextChanged"
-                                VerticalAlignment="Center" 
-                                Width="300" 
-                                Height="32"
-                                Background="#FFFBFCFF" 
-                                Foreground="Black"
-                                materialDesign:TextFieldAssist.CharacterCounterVisibility="Hidden"
-                                MaxLength="3" 
-                                BorderBrush="#89000000" 
-                                CaretBrush="#FFFF5722" 
-                                SelectionBrush="#FFFF8A50" 
-                                BorderThickness="0,0,0,1">
-                                <TextBox.Text>
-                                    <Binding Path="DataContext.Quantidade" RelativeSource="{RelativeSource AncestorType={x:Type UserControl}}" UpdateSourceTrigger="PropertyChanged">
-                                        <Binding.ValidationRules>
-                                            <local:MinLengthValidationRule MinLength="1" />
-                                        </Binding.ValidationRules>
-                                    </Binding>
-                                </TextBox.Text>
-                            </TextBox>
-                        </StackPanel>
+                        </StackPanel>  
 
                         <StackPanel 
                             Width="300"  
@@ -192,7 +131,7 @@
                                 Foreground="#FF4D4D4D"
                             />
                             <ToggleButton
-                                x:Name="produtoAtivo"
+                                x:Name="ServicoAtivo"
                                 IsChecked="{Binding Path=DataContext.Ativo, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Mode=TwoWay}"
                                 Style="{StaticResource MaterialDesignSwitchToggleButton}"
                                 ToolTip="MaterialDesignSwitchToggleButton" 

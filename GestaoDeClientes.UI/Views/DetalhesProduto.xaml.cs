@@ -20,36 +20,36 @@ using System.Windows.Shapes;
 namespace GestaoDeClientes.UI.Views
 {
     /// <summary>
-    /// Interação lógica para DetalhesProdutoView.xam
+    /// Interação lógica para DetalhesServicoView.xam
     /// </summary>
-    public partial class DetalhesProdutoView : UserControl, IRemoverJanela
+    public partial class DetalhesServicoView : UserControl, IRemoverJanela
     {
         #region Propriedades
         public event EventHandler OnCancelarClicado;
-        ProdutoRepository produtoRepository = new ProdutoRepository();
+        ServicoRepository ServicoRepository = new ServicoRepository();
         List<BindingExpression> bindingExpressions = new List<BindingExpression>();
-        private Produto _produto;
+        private Servico _Servico;
 
         #endregion
 
         #region Construtores
-        public DetalhesProdutoView()
+        public DetalhesServicoView()
         {
             InitializeComponent();
         }
 
-        public DetalhesProdutoView(Produto produto)
+        public DetalhesServicoView(Servico Servico)
         {
             InitializeComponent();
-            this.DataContext = produto;
-            _produto = produto;
+            this.DataContext = Servico;
+            _Servico = Servico;
         }
         #endregion
 
         #region Eventos
         private void UserControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            txtNomeProduto.Focus();
+            txtNomeServico.Focus();
             btnAtualizar.IsEnabled = false;
         }
 
@@ -62,22 +62,22 @@ namespace GestaoDeClientes.UI.Views
         #region Botões
         private async void btnAtualizar_Click(object sender, RoutedEventArgs e)
         {
-            if (txtNomeProduto.Text.Any())
+            if (txtNomeServico.Text.Any())
             {
-                _produto.Nome = txtNomeProduto.Text.ToUpper();
+                _Servico.Nome = txtNomeServico.Text.ToUpper();
             }
 
-            if (produtoAtivo.IsChecked == false)
+            if (ServicoAtivo.IsChecked == false)
             {
-                _produto.Ativo = false;
+                _Servico.Ativo = false;
             }
             try
             {
-                await produtoRepository.UpdateAsync(_produto);
+                await ServicoRepository.UpdateAsync(_Servico);
 
-                GCMessageBox.Show("Produto atualizado com sucesso!", "Sucesso", GCMessageBox.MessageBoxStatus.Ok);
-                ProdutoView produtoView = new ProdutoView();
-                this.Content = produtoView;
+                GCMessageBox.Show("Servico atualizado com sucesso!", "Sucesso", GCMessageBox.MessageBoxStatus.Ok);
+                ServicoView ServicoView = new ServicoView();
+                this.Content = ServicoView;
             }
             catch (Exception ex)
             {
@@ -89,8 +89,8 @@ namespace GestaoDeClientes.UI.Views
         {
             try
             {
-                ProdutoView produtoView = new ProdutoView();
-                this.Content = produtoView;
+                ServicoView ServicoView = new ServicoView();
+                this.Content = ServicoView;
             }
             catch (Exception ex)
             {
@@ -106,9 +106,9 @@ namespace GestaoDeClientes.UI.Views
         }
         private void VerificarErrosEBloquearBotao()
         {
-            bindingExpressions.Add(txtNomeProduto.GetBindingExpression(TextBox.TextProperty));
-            bindingExpressions.Add(txtDescricaoProduto.GetBindingExpression(TextBox.TextProperty));
-            bindingExpressions.Add(txtQuantidadeProduto.GetBindingExpression(TextBox.TextProperty));
+            bindingExpressions.Add(txtNomeServico.GetBindingExpression(TextBox.TextProperty));
+            bindingExpressions.Add(txtDescricaoServico.GetBindingExpression(TextBox.TextProperty));
+            bindingExpressions.Add(txtQuantidadeServico.GetBindingExpression(TextBox.TextProperty));
             bool algumErro = bindingExpressions.Any(x =>
             {
                 x?.UpdateSource();

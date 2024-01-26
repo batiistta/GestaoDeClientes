@@ -123,14 +123,14 @@
                                 <Button  
                                     Command="{Binding HomePageCommand}" 
                                     FontSize="16" 
-                                    Content="Produtos" 
+                                    Content="Servicos" 
                                     Background="Transparent"
                                     BorderBrush="Transparent" 
                                     Foreground="#FFF" 
                                     HorizontalAlignment="Left" 
                                     Margin="30,0,0,0" 
                                     Height="50" 
-                                    Click="btnProduto_Click"
+                                    Click="btnServico_Click"
                                 />
                             </Grid>
 
@@ -213,7 +213,7 @@
             </Grid>
             <Grid Grid.Row="1" Grid.Column="1">
                 <local:ClienteView x:Name="clienteView" Visibility="Hidden"></local:ClienteView>
-                <local:ProdutoView x:Name="produtoView" Visibility="Hidden"></local:ProdutoView>
+                <local:ServicoView x:Name="ServicoView" Visibility="Hidden"></local:ServicoView>
                 <local:UsuarioView x:Name="usuarioView" Visibility="Hidden"></local:UsuarioView>
                 <local:AgendamentoView x:Name="agendamentoView" Visibility="Hidden"></local:AgendamentoView>
             </Grid>

@@ -66,8 +66,9 @@
     <Compile Include="Enum\ErroCode.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Models\Agendamento.cs" />
+    <Compile Include="Models\AgendamentoServico.cs" />
     <Compile Include="Models\Cliente.cs" />
-    <Compile Include="Models\Produto.cs" />
+    <Compile Include="Models\Servico.cs" />
     <Compile Include="Models\Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

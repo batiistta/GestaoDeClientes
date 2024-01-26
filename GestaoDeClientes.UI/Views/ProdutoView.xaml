@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="GestaoDeClientes.UI.Views.ProdutoView"
+﻿<UserControl x:Class="GestaoDeClientes.UI.Views.ServicoView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
               xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
@@ -80,7 +80,7 @@
                                                 />
                                                 <TextBlock 
                                                     HorizontalAlignment="Center"
-                                                    Text="Produtos" 
+                                                    Text="Servicos" 
                                                     FontFamily="verdana" 
                                                     Width="150"
                                                     Margin="5,2,0,0"
@@ -103,8 +103,8 @@
                                                 Grid.Column="0" 
                                                 Grid.Row="0" >
                                                 <Button 
-                                                    x:Name="btnCadastrarProduto"
-                                                    Content="Cadastrar Produto"
+                                                    x:Name="btnCadastrarServico"
+                                                    Content="Cadastrar Servico"
                                                     FontFamily="verdana"
                                                     Foreground="#ffffff"
                                                     Background="#4CAF50"
@@ -112,8 +112,8 @@
                                                     Width="200"
                                                     IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
                                                     Style="{StaticResource MaterialDesignRaisedButton}"
-                                                    ToolTip="Cadastrar Produto" 
-                                                    Cursor="Hand" Click="btnCadastrarProduto_Click"
+                                                    ToolTip="Cadastrar Servico" 
+                                                    Cursor="Hand" Click="btnCadastrarServico_Click"
                                                         
                                                 />
 
@@ -125,7 +125,7 @@
                                                         Margin="0,8,0,0"
                                                         Width="150"                                                             
                                                         VerticalAlignment="Center"                                                             
-                                                        materialDesign:HintAssist.Hint="Buscar Produto"                                                             
+                                                        materialDesign:HintAssist.Hint="Buscar Servico"                                                             
                                                         Text="{Binding DataContext.SearchText, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}, UpdateSourceTrigger=PropertyChanged}" LostFocus="txtSearch_LostFocus" 
                                                     />
 
@@ -141,7 +141,7 @@
                                                         Style="{StaticResource MaterialDesignRaisedButton}"
                                                         ToolTip="Buscar Clientes" 
                                                         Cursor="Hand" 
-                                                        Click="btnBuscarProdutos_Click" 
+                                                        Click="btnBuscarServicos_Click" 
                                                     />
                                                 </StackPanel>
 
@@ -185,8 +185,8 @@
                                                             <RowDefinition Height="*"></RowDefinition>
                                                         </Grid.RowDefinitions>
                                                         <ListView 
-                                                            x:Name="listProdutos"
-                                                            ItemsSource="{Binding CarregarProdutos}"
+                                                            x:Name="listServicos"
+                                                            ItemsSource="{Binding CarregarServicos}"
                                                             SelectionMode="Single" 
                                                             IsVisibleChanged="listViewFiles_IsVisibleChanged">     
                                                             <ListView.RenderTransform>
