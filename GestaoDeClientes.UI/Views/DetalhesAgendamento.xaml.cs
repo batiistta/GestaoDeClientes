@@ -30,6 +30,7 @@ namespace GestaoDeClientes.UI.Views
         ClienteRepository clienteRepository = new ClienteRepository();
         ServicoRepository ServicoRepository = new ServicoRepository();
         AgendamentoRepository agendamentoRepository = new AgendamentoRepository();
+        AgendamentoServicoRepository agendamentoServicoRepository = new AgendamentoServicoRepository();
 
         public DetalhesAgendamento()
         {
@@ -47,7 +48,6 @@ namespace GestaoDeClientes.UI.Views
 
             txtDataAgendamento.Text = agendamento.DataAgendamento.ToString();
             cmbClientes.Text = agendamento.NomeCliente;
-            cmbServicos.Text = agendamento.NomeServico;
         }
         private void CarregarClientes()
         {
@@ -67,13 +67,12 @@ namespace GestaoDeClientes.UI.Views
             {
                 Agendamento agendamento = new Agendamento();
                 agendamento.Id = _agendamento.Id;
-                agendamento.NomeServico = (cmbServicos.SelectedItem as Servico).Nome;
-                agendamento.IdServico = (cmbServicos.SelectedItem as Servico).Id;
                 agendamento.NomeCliente = (cmbClientes.SelectedItem as Cliente).Nome;
                 agendamento.IdCliente = (cmbClientes.SelectedItem as Cliente).Id;
                 agendamento.DataAgendamento = txtDataAgendamento.DisplayDate;
 
                 await agendamentoRepository.UpdateAsync(agendamento);
+
 
                 GCMessageBox.Show("Agendamento atualizado com sucesso!", GCMessageBox.MessageBoxStatus.Ok);
                 OnCancelarClicado?.Invoke(this, EventArgs.Empty);

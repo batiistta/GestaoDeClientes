@@ -181,7 +181,7 @@ namespace GestaoDeClientes.UI.Views
                 throw ex;
             }
         }
-        private async Task<Cliente> GetByIdAsync(Guid id)
+        private async Task<Cliente> GetByIdAsync(string id)
         {
             try
             {

@@ -93,7 +93,6 @@
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="11*"></ColumnDefinition>
                                                 <ColumnDefinition Width="290*"/>
-                                                <ColumnDefinition Width="75*"></ColumnDefinition>
                                             </Grid.ColumnDefinitions>
                                             <StackPanel 
                                                 Margin="8,8,8,8" 
@@ -149,7 +148,7 @@
                                                 Margin="0,0,10,0" 
                                                 Orientation="Horizontal" 
                                                 HorizontalAlignment="Right" 
-                                                Grid.Column="2" 
+                                                Grid.Column="1" 
                                                 Grid.Row="0" >
                                                 <Button
                                                     x:Name="btnCancelar"                                                        
@@ -195,9 +194,9 @@
                                                             </ListView.RenderTransform>
                                                             <ListView.View>
                                                                 <GridView>
-                                                                    <GridViewColumn Header="Data Agendamento" DisplayMemberBinding="{Binding DataAgendamento}" Width="200"/>
-                                                                    <GridViewColumn Header="Cliente" DisplayMemberBinding="{Binding NomeCliente}" Width="200"></GridViewColumn>
-                                                                    <GridViewColumn Header="Servico" DisplayMemberBinding="{Binding NomeServico}" Width="200"></GridViewColumn>
+                                                                    <GridViewColumn Header="Data Agendamento" DisplayMemberBinding="{Binding DataAgendamento}" Width="483"/>
+                                                                    <GridViewColumn Header="Cliente" DisplayMemberBinding="{Binding NomeCliente}" Width="483"></GridViewColumn>
+                                                                    <GridViewColumn Header="Servico" DisplayMemberBinding="{Binding NomeServico}" Width="483"></GridViewColumn>
                                                                     <GridViewColumn Header="Ações" Width="150">
                                                                         <GridViewColumn.CellTemplate>
                                                                             <DataTemplate>

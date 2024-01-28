@@ -25,10 +25,15 @@ namespace GestaoDeClientes.UI.Views
     public partial class AgendamentoView : UserControl
     {
         #region Propriedades
-        CadastrarAgendamentoView cadastrarAgendamentoView = new CadastrarAgendamentoView();
-        AgendamentoRepository agendamentoRepository = new AgendamentoRepository();
-        DetalhesAgendamento detalhesAgendamentoView = new DetalhesAgendamento();
-        List<Agendamento> agendamentos = new List<Agendamento>();
+        private CadastrarAgendamentoView cadastrarAgendamentoView = new CadastrarAgendamentoView();
+        private AgendamentoRepository agendamentoRepository = new AgendamentoRepository();
+        private DetalhesAgendamento detalhesAgendamentoView = new DetalhesAgendamento();
+        private List<Agendamento> agendamentos = new List<Agendamento>();
+        private AgendamentoServicoRepository agendamentoServicoRepository = new AgendamentoServicoRepository();
+        private List<AgendamentoServico> servicos = new List<AgendamentoServico>();
+        private ServicoRepository servicoRepository = new ServicoRepository();
+        private Servico servico;
+        
         #endregion
 
         #region Construtores
@@ -159,10 +164,42 @@ namespace GestaoDeClientes.UI.Views
         #endregion
 
         #region Métodos
-        private void CarregarAgendamentos()
+        private async void CarregarAgendamentos()
         {
             agendamentos = agendamentoRepository.GetAllAsync().Result.ToList();
-            listViewAgendamentos.ItemsSource = agendamentos;
+            servicos = agendamentoServicoRepository.GetAllAsync().Result.ToList();
+            List<Agendamento> novosAgendamentos = new List<Agendamento>();
+            string[] nomesServicos;
+
+            foreach (var agendamento in agendamentos)
+            {
+                var idsServicos = servicos
+                    .Where(x => x.IdAgendamento == agendamento.Id)
+                    .Select(x => x.IdServico)
+                    .ToList();
+
+                nomesServicos = await Task.WhenAll(idsServicos.Select(async id => await ObterNomeServicoPorId(id)));
+
+                foreach (var nomeServico in nomesServicos)
+                {
+                    var novoAgendamento = new Agendamento
+                    {
+                        Id = agendamento.Id,
+                        DataAgendamento = agendamento.DataAgendamento,
+                        NomeCliente = agendamento.NomeCliente,
+                        NomeServico = nomeServico.ToString()
+                    };
+
+                    novosAgendamentos.Add(novoAgendamento);
+                }
+
+            }
+            listViewAgendamentos.ItemsSource = novosAgendamentos;
+        }
+        private  async Task<string> ObterNomeServicoPorId(string idServico)
+        {
+            servico = await servicoRepository.GetByIdAsync(idServico);
+            return servico?.Nome ?? "Nome do Serviço Desconhecido";
         }
         private void RemoverJanelasFilhas()
         {

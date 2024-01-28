@@ -85,7 +85,7 @@ namespace GestaoDeClientes.Infra.Repositories
             }
         }
 
-        public Task<Servico> GetByIdAsync(Guid id)
+        public Task<Servico> GetByIdAsync(string id)
         {
             using (var connection = new SqliteConnection(connString))
             {

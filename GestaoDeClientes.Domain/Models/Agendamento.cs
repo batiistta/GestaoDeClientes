@@ -12,8 +12,6 @@ namespace GestaoDeClientes.Domain.Models
         public DateTime DataAgendamento { get; set; }
         public string IdCliente { get; set; }   
         public string NomeCliente { get; set; }
-        public string IdServico { get; set; }
         public string NomeServico { get; set; }
-        public List<string> IdsServicos { get; set; }
     }
 }

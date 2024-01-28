@@ -25,20 +25,14 @@ namespace GestaoDeClientes.UI.Views
     /// Interação lógica para CadastrarAgendamentoView.xam
     /// </summary>
     public partial class CadastrarAgendamentoView : UserControl, IRemoverJanela
-    {
-        public List<string> ServicosSelecionadosIds { get; set; } = new List<string>();
-
-        private void AddServico(string servicoId)
-        {
-            if (!ServicosSelecionadosIds.Contains(servicoId))
-                ServicosSelecionadosIds.Add(servicoId);
-        }
-
+    { 
         #region Propriedades
         public event EventHandler OnCancelarClicado;
         ClienteRepository clienteRepository = new ClienteRepository();
         ServicoRepository ServicoRepository = new ServicoRepository();
         AgendamentoRepository agendamentoRepository = new AgendamentoRepository();
+        AgendamentoServicoRepository agendamentoServicoRepository = new AgendamentoServicoRepository();
+        public List<string> ServicosSelecionadosIds { get; set; } = new List<string>();
         #endregion
 
         #region Construtor
@@ -70,20 +64,9 @@ namespace GestaoDeClientes.UI.Views
                 agendamento.Id = Guid.NewGuid().ToString();
                 agendamento.DataAgendamento = txtDataAgendamento.DisplayDate;
                 agendamento.IdCliente = (cmbClientes.SelectedItem as Cliente).Id;
-                agendamento.NomeCliente = (cmbClientes.SelectedItem as Cliente).Nome.ToUpper();
-                agendamento.IdsServicos = ServicosSelecionadosIds;
-
-                if (cmbServicos.SelectedItem != null)
-                {
-                    agendamento.NomeServico = (cmbServicos.SelectedItem as Servico).Nome.ToUpper();
-                    agendamento.IdServico = (cmbServicos.SelectedItem as Servico).Id;                    
-
-                }
-                else
-                {
-                    agendamento.NomeServico = null;
-                    agendamento.IdServico = null;
-                }
+                agendamento.NomeCliente = (cmbClientes.SelectedItem as Cliente).Nome.ToUpper(); 
+                
+                await AdicionarServicosSelecionados(agendamento);
 
                 await agendamentoRepository.AddAsync(agendamento);
 
@@ -106,7 +89,6 @@ namespace GestaoDeClientes.UI.Views
             OnCancelarClicado?.Invoke(this, EventArgs.Empty);
         }
         #endregion
-
         #region Métodos
         private void CarregarClientes()
         {
@@ -121,6 +103,19 @@ namespace GestaoDeClientes.UI.Views
         public void RemoverJanela()
         {
             OnCancelarClicado?.Invoke(this, EventArgs.Empty);
+        }
+        private void AddServico(string servicoId)
+        {
+            if (!ServicosSelecionadosIds.Contains(servicoId))
+                ServicosSelecionadosIds.Add(servicoId);
+        }
+
+        private async Task AdicionarServicosSelecionados(Agendamento agendamento)
+        {
+            foreach (var servicoId in ServicosSelecionadosIds)
+            {
+                await agendamentoServicoRepository.AddAsync(agendamento.Id, servicoId);
+            }
         }
         #endregion
 

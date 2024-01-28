@@ -31,12 +31,8 @@ namespace GestaoDeClientes.Infra.SQLs
                 Id TEXT PRIMARY KEY,
                 DataAgendamento DATETIME NOT NULL,
                 IdCliente TEXT,
-                IdServico TEXT,
                 NomeCliente TEXT,
-                NomeServico TEXT,
-                IdsServicos TEXT,
-                FOREIGN KEY (IdCliente) REFERENCES Cliente(Id),
-                FOREIGN KEY (IdServico) REFERENCES Servico(Id)
+                FOREIGN KEY (IdCliente) REFERENCES Cliente(Id)
             );
 
             CREATE TABLE IF NOT EXISTS Agendamento_Servico (
