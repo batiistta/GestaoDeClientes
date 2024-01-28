@@ -81,6 +81,7 @@
     <Compile Include="Interfaces\IStartupRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AgendamentoRepository.cs" />
+    <Compile Include="Repositories\AgendamentoServicoRepository.cs" />
     <Compile Include="Repositories\ClienteRepository.cs" />
     <Compile Include="Repositories\ServicoRepository.cs" />
     <Compile Include="Repositories\UsuarioRepository.cs" />

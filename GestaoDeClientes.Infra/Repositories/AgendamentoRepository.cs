@@ -27,21 +27,9 @@ namespace GestaoDeClientes.Infra.Repositories
                 {
                     Id = entity.Id,
                     IdCliente = entity.IdCliente,
-                    IdServico = entity.IdServico,
-                    IdsServicos = entity.IdsServicos.ToString(),
                     DataAgendamento = entity.DataAgendamento,
-                    NomeCliente = entity.NomeCliente,
-                    NomeServico = entity.NomeServico
+                    NomeCliente = entity.NomeCliente
                 });
-
-                foreach (var idServico in entity.IdsServicos)
-                {
-                    connection.Execute(AgendamentoServicoSql.Insert, new
-                    {
-                        IdAgendamento = entity.Id,
-                        IdServico = idServico
-                    });
-                }
             }
         }
 
@@ -55,22 +43,7 @@ namespace GestaoDeClientes.Infra.Repositories
                     SQLitePCL.Batteries.Init();
                     connection.Open();
                    agendamentos = connection.Query<Agendamento>(AgendamentoSql.GetAll);
-                }
-                foreach (var agendamento in agendamentos)
-                {
-                    if (agendamento.Id == id)
-                    {
-                        foreach (var idServico in agendamento.IdsServicos)
-                        {
-                            using (var connection = new SqliteConnection(connString))
-                            {
-                                SQLitePCL.Batteries.Init();
-                                connection.Open();
-                                connection.Execute(AgendamentoServicoSql.Delete, new { IdAgendamento = id });
-                            }
-                        }
-                    }
-                }
+                }                
                 using (var connection = new SqliteConnection(connString))
                 {
                     SQLitePCL.Batteries.Init();
@@ -95,7 +68,7 @@ namespace GestaoDeClientes.Infra.Repositories
             }
         }
 
-        public Task<Agendamento> GetByIdAsync(Guid id)
+        public Task<Agendamento> GetByIdAsync(string id)
         {
             throw new NotImplementedException();
         }
@@ -117,10 +90,8 @@ namespace GestaoDeClientes.Infra.Repositories
                     {
                         Id = entity.Id,
                         IdCliente = entity.IdCliente,
-                        IdServico = entity.IdServico,
                         DataAgendamento = entity.DataAgendamento,
-                        NomeCliente = entity.NomeCliente,
-                        NomeServico = entity.NomeServico
+                        NomeCliente = entity.NomeCliente
                     });
                 }
             }
