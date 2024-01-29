@@ -13,7 +13,7 @@
             <Border Background="#FFFFFF" 
              CornerRadius="30" 
              Width="400" 
-             Height="380"
+             Height="500"
              >
                 <materialDesign:Card materialDesign:ElevationAssist.Elevation="Dp8" Background="#F4F4F4">
                     <StackPanel VerticalAlignment="Center">
@@ -95,35 +95,11 @@
                                     Foreground="Black"
                                     BorderBrush="#89000000"
                                     BorderThickness="0,0,0,1"
-                                    SelectedValuePath="Id">
+                                    SelectedValuePath="Id" SelectionChanged="cmbServicos_SelectionChanged">
                                     <ComboBox.ItemTemplate>
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal">
                                                 <TextBlock Text="{Binding Nome}" VerticalAlignment="Center"/>
-                                                <Button 
-                                                    x:Name="btnAdicionar"
-                                                    HorizontalAlignment="Right"
-                                                    Width="20" 
-                                                    Height="20"
-                                                    Foreground="#FFFFFF"
-                                                    Click="btnAdicionar_Click"
-                                                    Tag="{Binding Id}" 
-                                                    Margin="5,0"
-                                                >
-                                                    <materialDesign:PackIcon Kind="Plus" />
-                                                </Button>
-                                                <Button 
-                                                    x:Name="btnRemover"
-                                                    HorizontalAlignment="Right"
-                                                    Width="20" 
-                                                    Height="20" 
-                                                    Foreground="#FFFFFF"
-                                                    Click="btnRemover_Click"
-                                                    Tag="{Binding Id}" 
-                                                    Margin="5,0"
-                                                >
-                                                    <materialDesign:PackIcon Kind="Plus"/>
-                                                </Button>
                                             </StackPanel>
                                         </DataTemplate>
                                     </ComboBox.ItemTemplate>
@@ -134,8 +110,23 @@
                                     </ComboBox.ItemsSource>
                                 </ComboBox>
                             </AdornerDecorator>
-                        </StackPanel>                     
+                        </StackPanel>
 
+                        <StackPanel                            
+                             Width="300"  
+                              Margin="0,18,0,0"
+                                 >
+                            <Label
+                             Content="Serviços Adicionados:"
+                             FontWeight="Bold"
+                             Foreground="#FF4D4D4D"
+                                x:Name="lblServicoAdicionado"
+                                Visibility="Collapsed"/>
+                            <TextBlock
+                                x:Name="txtbServicoAdicionado"
+                                Visibility="Collapsed">
+                            </TextBlock>
+                        </StackPanel>
 
                         <StackPanel 
                             Orientation="Horizontal" 

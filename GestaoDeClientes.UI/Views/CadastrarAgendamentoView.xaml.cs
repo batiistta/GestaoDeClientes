@@ -25,7 +25,7 @@ namespace GestaoDeClientes.UI.Views
     /// Interação lógica para CadastrarAgendamentoView.xam
     /// </summary>
     public partial class CadastrarAgendamentoView : UserControl, IRemoverJanela
-    { 
+    {
         #region Propriedades
         public event EventHandler OnCancelarClicado;
         ClienteRepository clienteRepository = new ClienteRepository();
@@ -33,6 +33,7 @@ namespace GestaoDeClientes.UI.Views
         AgendamentoRepository agendamentoRepository = new AgendamentoRepository();
         AgendamentoServicoRepository agendamentoServicoRepository = new AgendamentoServicoRepository();
         public List<string> ServicosSelecionadosIds { get; set; } = new List<string>();
+        public List<Servico> servicosAdicionados = new List<Servico>();
         #endregion
 
         #region Construtor
@@ -51,6 +52,12 @@ namespace GestaoDeClientes.UI.Views
                 CarregarClientes();
                 CarregarServicos();
             }
+            else
+            {
+                servicosAdicionados.Clear();
+                txtbServicoAdicionado.Visibility = Visibility.Collapsed;
+                lblServicoAdicionado.Visibility = Visibility.Collapsed;
+            }
         }
         #endregion
 
@@ -64,9 +71,7 @@ namespace GestaoDeClientes.UI.Views
                 agendamento.Id = Guid.NewGuid().ToString();
                 agendamento.DataAgendamento = txtDataAgendamento.DisplayDate;
                 agendamento.IdCliente = (cmbClientes.SelectedItem as Cliente).Id;
-                agendamento.NomeCliente = (cmbClientes.SelectedItem as Cliente).Nome.ToUpper(); 
-                
-                await AdicionarServicosSelecionados(agendamento);
+                agendamento.NomeCliente = (cmbClientes.SelectedItem as Cliente).Nome.ToUpper();
 
                 await agendamentoRepository.AddAsync(agendamento);
 
@@ -104,69 +109,28 @@ namespace GestaoDeClientes.UI.Views
         {
             OnCancelarClicado?.Invoke(this, EventArgs.Empty);
         }
-        private void AddServico(string servicoId)
-        {
-            if (!ServicosSelecionadosIds.Contains(servicoId))
-                ServicosSelecionadosIds.Add(servicoId);
-        }
 
-        private async Task AdicionarServicosSelecionados(Agendamento agendamento)
-        {
-            foreach (var servicoId in ServicosSelecionadosIds)
-            {
-                await agendamentoServicoRepository.AddAsync(agendamento.Id, servicoId);
-            }
-        }
         #endregion
 
-        private void btnAdicionar_Click(object sender, RoutedEventArgs e)
+        private void cmbServicos_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (sender is Button btn && btn.Tag is string servicoId)
+            if (this.IsVisible)
             {
-                AddServico(servicoId);
+                lblServicoAdicionado.Visibility = Visibility.Visible;
+                txtbServicoAdicionado.Visibility = Visibility.Visible;
 
-                btn.IsEnabled = false;
-
-                var btnRemover = GetBtnRemoverFromBtnAdicionar(btn);
-                if (btnRemover != null)
+                if (cmbServicos.SelectedItem != null)
                 {
-                    btnRemover.IsEnabled = true;
+                    var servico = cmbServicos.SelectedItem as Servico;
+
+                    if (!servicosAdicionados.Contains(servico))
+                    {
+                        servicosAdicionados.Add(servico);
+                        txtbServicoAdicionado.Text += servico.Nome.ToString() + "\n";
+                    }
                 }
             }
+
         }
-
-        private void btnRemover_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is Button btn && btn.Tag is string servicoId)
-            {
-                ServicosSelecionadosIds.Remove(servicoId);
-
-                var btnAdicionar = GetBtnAdicionarFromBtnRemover(btn);
-                if (btnAdicionar != null)
-                {
-                    btnAdicionar.IsEnabled = true;
-                }
-
-                btn.IsEnabled = false;
-            }
-        }
-
-        private Button GetBtnRemoverFromBtnAdicionar(Button btnAdicionar)
-        {
-            var parentStackPanel = (StackPanel)btnAdicionar.Parent;
-            var btnRemover = parentStackPanel.Children.OfType<Button>().FirstOrDefault(b => b.Name == "btnRemover");
-
-            return btnRemover;
-        }
-
-        private Button GetBtnAdicionarFromBtnRemover(Button btnRemover)
-        {
-            var parentStackPanel = (StackPanel)btnRemover.Parent;
-            var btnAdicionar = parentStackPanel.Children.OfType<Button>().FirstOrDefault(b => b.Name == "btnAdicionar");
-
-            return btnAdicionar;
-        }
-
-
     }
 }

@@ -113,8 +113,8 @@
     <Compile Include="Views\CadastrarClienteView.xaml.cs">
       <DependentUpon>CadastrarClienteView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\CadastrarProdutoView.xaml.cs">
-      <DependentUpon>CadastrarProdutoView.xaml</DependentUpon>
+    <Compile Include="Views\CadastrarServicoView.xaml.cs">
+      <DependentUpon>CadastrarServicoView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CadastrarUsuarioView.xaml.cs">
       <DependentUpon>CadastrarUsuarioView.xaml</DependentUpon>
@@ -128,8 +128,8 @@
     <Compile Include="Views\DetalhesClienteView.xaml.cs">
       <DependentUpon>DetalhesClienteView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\DetalhesProduto.xaml.cs">
-      <DependentUpon>DetalhesProduto.xaml</DependentUpon>
+    <Compile Include="Views\DetalhesServico.xaml.cs">
+      <DependentUpon>DetalhesServico.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\DetalhesUsuarioView.xaml.cs">
       <DependentUpon>DetalhesUsuarioView.xaml</DependentUpon>
@@ -138,8 +138,8 @@
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ValidationRules.cs" />
-    <Compile Include="Views\ProdutoView.xaml.cs">
-      <DependentUpon>ProdutoView.xaml</DependentUpon>
+    <Compile Include="Views\ServicoView.xaml.cs">
+      <DependentUpon>ServicoView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UsuarioView.xaml.cs">
       <DependentUpon>UsuarioView.xaml</DependentUpon>
@@ -180,7 +180,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\CadastrarProdutoView.xaml">
+    <Page Include="Views\CadastrarServicoView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -200,7 +200,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\DetalhesProduto.xaml">
+    <Page Include="Views\DetalhesServico.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -212,7 +212,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ProdutoView.xaml">
+    <Page Include="Views\ServicoView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
