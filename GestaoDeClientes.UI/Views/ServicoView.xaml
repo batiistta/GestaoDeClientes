@@ -201,9 +201,7 @@
                                                                 <GridView>
                                                                     <GridViewColumn Header="Nome" DisplayMemberBinding="{Binding Nome}" Width="200"/>
                                                                     <GridViewColumn Header="Descrição" DisplayMemberBinding="{Binding Descricao}" Width="200"/>
-                                                                    <GridViewColumn Header="Valor Unitário" DisplayMemberBinding="{Binding ValorUnitario}" Width="200"/>
-                                                                    <GridViewColumn Header="Valor Compra" DisplayMemberBinding="{Binding ValorCompra}" Width="200"/>
-                                                                    <GridViewColumn Header="Quantidade" DisplayMemberBinding="{Binding Quantidade}" Width="200"/>
+                                                                    <GridViewColumn Header="Valor" DisplayMemberBinding="{Binding Valor}" Width="200"/>
                                                                     <GridViewColumn Header="Ativo" DisplayMemberBinding="{Binding Ativo}" Width="100"/>
                                                                     <GridViewColumn Header="Ações" Width="150">
                                                                         <GridViewColumn.CellTemplate>
