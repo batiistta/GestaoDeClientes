@@ -112,21 +112,34 @@
                             </AdornerDecorator>
                         </StackPanel>
 
-                        <StackPanel                            
-                             Width="300"  
-                              Margin="0,18,0,0"
-                                 >
-                            <Label
-                             Content="Serviços Adicionados:"
-                             FontWeight="Bold"
-                             Foreground="#FF4D4D4D"
-                                x:Name="lblServicoAdicionado"
-                                Visibility="Collapsed"/>
-                            <TextBlock
-                                x:Name="txtbServicoAdicionado"
-                                Visibility="Collapsed">
-                            </TextBlock>
+                        <StackPanel Width="300" Margin="0,0,30,0">
+                            <ListView 
+                                x:Name="listviewSerivosAdicionados" 
+                                Visibility="Collapsed"
+                                ItemsSource="{Binding Servico}">
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn Header="Serviços Adicionados:" Width="200" DisplayMemberBinding="{Binding Nome}"/>
+                                        <GridViewColumn>
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <Button
+                                                            Content="X"
+                                                            Background="#607D8B"
+                                                            BorderBrush="#607D8B"
+                                                            Foreground="#FFFFFF"
+                                                            Width="15" Height="15"
+                                                            Click="btnRemoveServico_Click">
+                                                    </Button>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
                         </StackPanel>
+
+
 
                         <StackPanel 
                             Orientation="Horizontal" 

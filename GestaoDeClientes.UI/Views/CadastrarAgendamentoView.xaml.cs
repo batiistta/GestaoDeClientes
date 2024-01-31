@@ -5,6 +5,7 @@ using GestaoDeClientes.Infra.Repositories;
 using GestaoDeClientes.UI.Popup;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -33,7 +34,7 @@ namespace GestaoDeClientes.UI.Views
         AgendamentoRepository agendamentoRepository = new AgendamentoRepository();
         AgendamentoServicoRepository agendamentoServicoRepository = new AgendamentoServicoRepository();
         public List<string> ServicosSelecionadosIds { get; set; } = new List<string>();
-        public List<Servico> servicosAdicionados = new List<Servico>();
+        public ObservableCollection<Servico> servicosAdicionados = new ObservableCollection<Servico>();
         #endregion
 
         #region Construtor
@@ -55,8 +56,7 @@ namespace GestaoDeClientes.UI.Views
             else
             {
                 servicosAdicionados.Clear();
-                txtbServicoAdicionado.Visibility = Visibility.Collapsed;
-                lblServicoAdicionado.Visibility = Visibility.Collapsed;
+                listviewSerivosAdicionados.Visibility = Visibility.Collapsed;
             }
         }
         #endregion
@@ -116,8 +116,7 @@ namespace GestaoDeClientes.UI.Views
         {
             if (this.IsVisible)
             {
-                lblServicoAdicionado.Visibility = Visibility.Visible;
-                txtbServicoAdicionado.Visibility = Visibility.Visible;
+                listviewSerivosAdicionados.Visibility = Visibility.Visible;
 
                 if (cmbServicos.SelectedItem != null)
                 {
@@ -126,11 +125,24 @@ namespace GestaoDeClientes.UI.Views
                     if (!servicosAdicionados.Contains(servico))
                     {
                         servicosAdicionados.Add(servico);
-                        txtbServicoAdicionado.Text += servico.Nome.ToString() + "\n";
                     }
+
+                    listviewSerivosAdicionados.ItemsSource = servicosAdicionados;
                 }
             }
 
+        }
+
+        private void btnRemoveServico_Click(object sender, RoutedEventArgs e)
+        {
+            Button btnRemoverServico = sender as Button;
+            Servico servicoParaRemover = btnRemoverServico.DataContext as Servico;
+            servicosAdicionados.Remove(servicoParaRemover);
+
+            if(servicosAdicionados.Count == 0)
+            {
+                listviewSerivosAdicionados.Visibility = Visibility.Collapsed;
+            }
         }
     }
 }
