@@ -13,7 +13,7 @@
             <Border Background="#FFFFFF" 
              CornerRadius="30" 
              Width="400" 
-             Height="500"
+             Height="550"
              >
                 <materialDesign:Card materialDesign:ElevationAssist.Elevation="Dp8" Background="#F4F4F4">
                     <StackPanel VerticalAlignment="Center">
@@ -113,30 +113,33 @@
                         </StackPanel>
 
                         <StackPanel Width="300" Margin="0,0,30,0">
-                            <ListView 
+                            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                <ListView 
+                                    MaxHeight="200"
                                 x:Name="listviewSerivosAdicionados" 
                                 Visibility="Collapsed"
                                 ItemsSource="{Binding Servico}">
-                                <ListView.View>
-                                    <GridView>
-                                        <GridViewColumn Header="Serviços Adicionados:" Width="200" DisplayMemberBinding="{Binding Nome}"/>
-                                        <GridViewColumn>
-                                            <GridViewColumn.CellTemplate>
-                                                <DataTemplate>
-                                                    <Button
+                                    <ListView.View>
+                                        <GridView>
+                                            <GridViewColumn Header="Serviços Adicionados:" Width="200" DisplayMemberBinding="{Binding Nome}"/>
+                                            <GridViewColumn>
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <Button
                                                             Content="X"
                                                             Background="#607D8B"
                                                             BorderBrush="#607D8B"
                                                             Foreground="#FFFFFF"
                                                             Width="15" Height="15"
                                                             Click="btnRemoveServico_Click">
-                                                    </Button>
-                                                </DataTemplate>
-                                            </GridViewColumn.CellTemplate>
-                                        </GridViewColumn>
-                                    </GridView>
-                                </ListView.View>
-                            </ListView>
+                                                        </Button>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+                            </ScrollViewer>
                         </StackPanel>
 
 
